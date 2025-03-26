@@ -1,0 +1,48 @@
+.outer-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.inner-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border: 1px solid black;
+  height: 60vh;
+  width: 60vw;
+}
+
+.left-container {
+  height: 100%;
+  width: 50%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 30%;
+  border-bottom-right-radius: 30%;
+  background-color: #FCE883;
+}
+
+.right-container {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-fields input {
+  height: 2rem;
+  margin: 1rem 0;
+  padding: 0 0 0 10px;
+  width: 22vw;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}/*# sourceMappingURL=Auth.css.map */
