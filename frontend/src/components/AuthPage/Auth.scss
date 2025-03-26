@@ -9,14 +9,17 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    border: 1px solid black;
-    // padding: 2rem;
-    height: 60vh;
-    width: 60vw;
+    border: 1px solid yellowgreen;
+    background-color: white;
+    transition: all 1s ease;
+    overflow: hidden;
+    border-radius: 20px;
+    width: 900px;
+    box-shadow: 4px 5px 17px 13px #99EDC3;
+    height: 500px;
 }
 
 .left-container {
-    // border: 1px solid green;
     height: 100%;
     width: 50%;
     text-align: center;
@@ -30,13 +33,13 @@
 }
 
 .right-container {
-    // border: 1px solid yellow;
     width: 60%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
 }
 
 .input-fields input {
@@ -48,4 +51,36 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+
+
+.inner-container.login-mode {
+    flex-direction: row;
+}
+
+.inner-container.register-mode {
+    flex-direction: row-reverse;
+}
+
+.left-container,
+.right-container {
+    width: 50%;
+    padding: 40px;
+    transition: all 1s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+}
+
+.login-mode .left-container {
+    border-top-right-radius: 30%;
+    border-bottom-right-radius: 30%;
+}
+
+.register-mode .left-container {
+    border-top-left-radius: 30%;
+    border-bottom-left-radius: 30%;
 }
