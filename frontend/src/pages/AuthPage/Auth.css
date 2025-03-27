@@ -14,9 +14,9 @@
   transition: all 1s ease;
   overflow: hidden;
   border-radius: 20px;
-  width: 900px;
+  width: 60%;
   box-shadow: 4px 5px 17px 13px #99EDC3;
-  height: 500px;
+  height: 65%;
 }
 
 .left-container {
@@ -80,4 +80,51 @@
 .register-mode .left-container {
   border-top-left-radius: 30%;
   border-bottom-left-radius: 30%;
+}
+
+@media screen and (max-width: 768px) {
+  .inner-container {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 426px) {
+  .inner-container.login-mode {
+    flex-direction: column;
+    height: 80%;
+  }
+  .login-mode .left-container {
+    width: 100%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 30%;
+  }
+  .left-container {
+    padding: 0 0 0px;
+    height: 65%;
+    width: 100%;
+  }
+  .right-container {
+    padding: 5px;
+    width: 100%;
+  }
+  .input-fields {
+    width: 80%;
+  }
+  .input-fields form input {
+    width: 100%;
+  }
+  .inner-container.register-mode {
+    flex-direction: column-reverse;
+    height: 85%;
+    padding: 0;
+  }
+  .register-mode .left-container {
+    border-top-left-radius: 30%;
+    border-top-right-radius: 30%;
+    border-bottom-left-radius: 0%;
+  }
+}
+@media screen and (max-width: 321px) {
+  .inner-container.login-mode {
+    width: 85%;
+  }
 }/*# sourceMappingURL=Auth.css.map */

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toast';
 import { useAuth } from '../../Context/AuthContext';
-import { login, register } from '../API/api';
+import { login, register } from '../../components/API/api';
 
 import './Auth.css';
 
