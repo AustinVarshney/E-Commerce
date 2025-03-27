@@ -1,4 +1,7 @@
 body {
     margin: 0;
-    font-family: "Winky Sans", "Sans serif"
+    font-family: "Winky Sans", "Sans serif";
+    background: linear-gradient(to bottom,
+            #FFF4BC,
+            #99EDC3);
 }
