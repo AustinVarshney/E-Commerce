@@ -5,6 +5,7 @@ import Pic1 from '../../assets/Pic1.jpg'
 import Pic2 from '../../assets/Pic2.jpg'
 import Pic3 from '../../assets/Pic3.jpg'
 import 'react-slideshow-image/dist/styles.css'
+import { NavLink } from 'react-router';
 
 const fadeImages = [
   {
@@ -44,7 +45,7 @@ const SlideShow = () => {
             <div className='innerMostSSDiv1'>
               <p className='innerSSPara1' style={{ margin: '0' }}>Exclusive {fadeImage.discount}% off</p>
               <p className='innerSSPara2' style={{ margin: '0' }}>{fadeImage.title}</p>
-              <a href={fadeImage.link}><button>Order Now!</button></a>
+              <NavLink to={fadeImage.link}><button>Order Now!</button></NavLink>
             </div>
             <div className='innerMostSSDiv2'>
               <img src={fadeImage.url} />

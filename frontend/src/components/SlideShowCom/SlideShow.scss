@@ -25,12 +25,12 @@ img {
 }
 
 .innerSSPara1 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 600;
 }
 
 .innerSSPara2 {
-    font-size: 1.2rem;
+    font-size: 1.7rem;
 }
 
 .innerMostSSDiv1 {
@@ -50,11 +50,13 @@ img {
 
 .innerMostSSDiv1>a>button {
     height: 2rem;
-    width: 6rem;
+    width: 8rem;
     border-radius: 1rem;
     border: none;
     color: #00755E;
     background-color: #b1ffd8;
+    font-size: 1.1rem;
+    cursor: pointer;
 }
 
 .custom-dots {
@@ -78,6 +80,14 @@ img {
     transform: scale(1.2);
 }
 
+//Media Queries
+@media(min-width: 650px) {
+    img{
+        height: 250px;
+        width: 300px;
+    }
+}
+
 @media(min-width: 1000px) {
     .innerSSDiv1 {
         padding: 1rem 5rem;
@@ -87,9 +97,24 @@ img {
         margin: 2rem 11.5rem;
         margin-top: 4rem;
     }
+
+    .innerSSPara1 {
+        font-size: 2.2rem;
+    }
+    
+    .innerSSPara2 {
+        font-size: 1.8rem;
+    }
 }
 
-@media(max-width: 650px) {
+@media(min-width: 1200px){
+    img{
+        height: 300px;
+        width: 350px;
+    }
+}
+
+@media(max-width: 750px) {
     .innerSSDiv1 {
         flex-direction: column-reverse;
     }
