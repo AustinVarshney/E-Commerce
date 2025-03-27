@@ -38,7 +38,7 @@ a {
     padding: 0 5px;
 }
 
-.innerNavDiv2 a:hover{
+.innerNavDiv2 a:hover {
     background-color: #FCE883;
     cursor: pointer;
     border-radius: 3px;
@@ -51,7 +51,7 @@ a {
     align-items: center;
 }
 
-.innerNavDiv3:hover{
+.innerNavDiv3:hover {
     background-color: #FCE883;
     cursor: pointer;
     border-radius: 3px;
@@ -138,12 +138,12 @@ a {
     }
 }
 
-.innerNavDiv5{
+.innerNavDiv5 {
     padding: 4px 4px 0 4px;
     border-radius: 2px;
 }
 
-.innerNavDiv5:hover{
+.innerNavDiv5:hover {
     background-color: #d3d3d3;
     cursor: pointer;
 }
@@ -164,7 +164,7 @@ a {
     border-radius: 3px;
 }
 
-.innerNavDiv6 a:hover{
+.innerNavDiv6 a:hover {
     background-color: #d3d3d3;
     cursor: pointer;
 }
@@ -192,4 +192,10 @@ a {
     .innerNavDiv3 {
         margin-right: 2rem;
     }
+}
+
+#outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
