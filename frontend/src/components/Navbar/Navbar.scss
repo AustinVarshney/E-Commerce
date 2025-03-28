@@ -15,7 +15,8 @@ a {
     border-radius: 3rem;
     // box-shadow: 6px 4px 12px #ffff3e;
     background-color: #222;
-    height: 4rem;
+    height: 5rem;
+    font-size: 1.2rem;
 }
 
 .innerNavDiv1 {
@@ -194,8 +195,8 @@ a {
 
 @media(min-width: 1200px) {
     .innerNavDiv2 {
-        margin-right: 24.5rem;
-        gap: 59px;
+        margin-right: 19.5rem;
+        // gap: 59px;
     }
 }
 
