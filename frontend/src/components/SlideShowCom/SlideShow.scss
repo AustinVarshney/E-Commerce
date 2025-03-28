@@ -1,4 +1,4 @@
-img {
+.innerMostSSDiv2>img {
     height: 200px;
     width: 250px;
     border-radius: 50%;
@@ -82,9 +82,16 @@ img {
 
 //Media Queries
 @media(min-width: 650px) {
-    img{
+    .innerMostSSDiv2>img{
         height: 250px;
         width: 300px;
+    }
+}
+
+@media(min-width: 1200px){
+    .innerMostSSDiv2>img{
+        height: 300px;
+        width: 350px;
     }
 }
 
@@ -104,13 +111,6 @@ img {
     
     .innerSSPara2 {
         font-size: 1.8rem;
-    }
-}
-
-@media(min-width: 1200px){
-    img{
-        height: 300px;
-        width: 350px;
     }
 }
 
