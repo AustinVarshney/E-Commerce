@@ -25,11 +25,11 @@ const Navbar = () => {
                     <p>Logo</p>
                 </div>
                 <div className='innerNavDiv2'>
-                    <NavLink to=""><HomeIcon style={{ color: '#ff5722' }} />Home</NavLink>
-                    <NavLink to=""><ShoppingCartIcon style={{ color: '#727272' }} />Shop</NavLink>
-                    <NavLink to=""><ContactsIcon style={{ color: 'blue' }} />Contact</NavLink>
-                    <NavLink to=""><FavoriteIcon style={{ color: '#fd00ff6b' }} />WishList</NavLink>
-                    <NavLink to="/auth"><LoginIcon style={{ color: '#036207' }} />Login</NavLink>
+                    <NavLink to="/"><HomeIcon style={{ color: '#d4af37' }} />Home</NavLink>
+                    <NavLink to=""><ShoppingCartIcon style={{ color: '#d4af37' }} />Shop</NavLink>
+                    <NavLink to=""><ContactsIcon style={{ color: '#d4af37' }} />Contact</NavLink>
+                    <NavLink to=""><FavoriteIcon style={{ color: '#d4af37' }} />WishList</NavLink>
+                    <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
                 </div>
 
                 <div className={`innerNavDiv3 ${hasInteracted ? (isSidemenuOpen ? 'openBarIcon' : 'closeBarIcon') : ''}`} onClick={isOpen}>

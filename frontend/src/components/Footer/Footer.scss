@@ -1,40 +1,51 @@
+.outer-footer-container {}
+
 .outerFooterDiv1 {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     align-items: center;
-    border-top: 1px solid #00755E;
+    // border-top: 1px solid #00755E;
     margin-top: 2rem;
-    padding: 0 1.5rem;
-    background-color: #fff2b1;
+    padding: 2rem 2rem 0.5rem 2rem;
+    background: linear-gradient(30deg, #111, #5a5656);
+    border-top-left-radius: 4rem;
+    border-top-right-radius: 4rem;
 }
 
-.outerFooterDiv2{
+.outerFooterDiv1:hover {
+    box-shadow: 5px 1px 21px 5px yellow;
+}
+
+.outerFooterDiv2 {
     width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border-bottom: 0.5px solid #fff;
+    padding-bottom: 3rem;
+
 }
 
-.innerFooterDiv1{
-    max-width: 50%;
+.innerFooterDiv1 {
+    max-width: 30%;
     padding: 0.5rem;
 }
 
 .innerFooterPara1 {
     font-size: 1.8rem;
     font-weight: 500;
-    color: #00755E;
+    color: #c1bfbf;
     margin-bottom: 0.5rem;
 }
 
 .innerFooterPara2 {
     font-size: 1.4rem;
-    color: #32906c;
+    color: #c1bfbf;
     text-align: justify;
 }
 
-.innerFooterDiv4{
+.innerFooterDiv4 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -53,7 +64,7 @@
 }
 
 .innerFooterDiv2>ul>li>a {
-    color: #00755E;
+    color: #c1bfbf;
     display: block;
     position: relative;
     padding: 0.2rem 0;
@@ -67,7 +78,7 @@
     left: 0;
     width: 100%;
     height: 0.1em;
-    background-color: rgb(25, 157, 47);
+    background-color: rgb(176, 160, 38);
     opacity: 0;
     transition: opacity 300ms, transform 300ms;
 }
@@ -97,7 +108,7 @@
 
 .innerFooterDiv3>ul>li {
     font-size: 1.2rem;
-    color: #00755E;
+    color: #c1bfbf;
     margin-bottom: 0.25rem;
 }
 
@@ -106,28 +117,30 @@
     padding-top: 3.2px;
 }
 
-.outerFooterDiv3{
+.outerFooterDiv3 {
     margin: 0.5rem 0;
-    font-size: 0.8rem;
+    font-size: 1.2rem;
+    color: #c1bfbf;
+
 }
 
 //Media Queries
-@media(max-width: 800px){
-    .innerFooterDiv1{
+@media(max-width: 800px) {
+    .innerFooterDiv1 {
         max-width: 100%;
     }
 
-    .outerFooterDiv2{
+    .outerFooterDiv2 {
         flex-direction: column;
     }
 
-    .innerFooterDiv4{
+    .innerFooterDiv4 {
         width: 80%;
     }
 }
 
-@media(max-width: 465px){
-    .innerFooterDiv4{
+@media(max-width: 465px) {
+    .innerFooterDiv4 {
         width: 100%;
     }
 }

@@ -1,8 +1,8 @@
-p{
+p {
     margin: 0;
 }
 
-.innerMostProDiv1>img{
+.innerMostProDiv1>img {
     height: 150px;
     width: 150px;
     border-radius: 50%;
@@ -23,7 +23,7 @@ p{
     font-size: 2.5rem;
     font-weight: 400;
     margin: 0;
-    color: #004B49;
+    color: #fff;
 }
 
 .innerProDiv1>hr {
@@ -33,7 +33,7 @@ p{
     margin-bottom: 1.5rem;
 }
 
-.innerProDiv2{
+.innerProDiv2 {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -41,7 +41,7 @@ p{
     gap: 1rem;
 }
 
-.innerMostProDiv1{
+.innerMostProDiv1 {
     border: 2px solid #004B49;
     border-radius: 2rem;
     display: flex;
@@ -54,38 +54,38 @@ p{
     transition: box-shadow 0.3s ease-in-out;
 }
 
-.innerMostProDiv1:hover{
+.innerMostProDiv1:hover {
     box-shadow: 5px 5px 5px rgb(57, 159, 57);
 }
 
-.product-name{
+.product-name {
     font-size: 1.3rem;
     font-weight: 500;
     color: #004B49;
 }
 
-.product-description{
+.product-description {
     color: #026e59;
     font-size: 1.1rem;
     font-weight: 400;
 }
 
-.product-rating{
+.product-rating {
     margin-bottom: 0.5rem;
 }
 
-.innerMostProDiv2{
+.innerMostProDiv2 {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-.product-price{
+.product-price {
     color: #004B49;
     font-size: 1.2rem;
 }
 
-.buy-now{
+.buy-now {
     padding: 0.5rem 0.75rem;
     border-radius: 1rem;
     display: flex;
@@ -100,6 +100,6 @@ p{
     transition: box-shadow 0.3s ease-in-out;
 }
 
-.buy-now:hover{
+.buy-now:hover {
     box-shadow: 1px 1px 6px 1px #004B49;
 }

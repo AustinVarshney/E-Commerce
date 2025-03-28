@@ -5,7 +5,7 @@ a {
 
 .outerNavDiv1 {
     display: flex;
-    border: 1px solid #00755E;
+    border-bottom: 4px solid #fff;
     align-items: center;
     justify-content: space-between;
     // margin: 0 2rem;
@@ -13,14 +13,14 @@ a {
     top: 0;
     width: 90%;
     border-radius: 3rem;
-    box-shadow: 6px 4px 12px #ffff3e;
-    background-color: #ccf7cc;
-    height: 54.4px;
+    // box-shadow: 6px 4px 12px #ffff3e;
+    background-color: #222;
+    height: 4rem;
 }
 
 .innerNavDiv1 {
     margin-left: 5rem;
-    color: #004B49;
+    color: #fff;
 }
 
 .innerNavDiv2 {
@@ -35,7 +35,7 @@ a {
 .innerNavDiv2 a {
     display: flex;
     align-items: center;
-    color: #004B49;
+    color: #fff;
     gap: 0.25rem;
     padding: 0 5px;
     font-weight: 500;
@@ -43,9 +43,10 @@ a {
 }
 
 .innerNavDiv2 a:hover {
-    background-color: #FCE883;
+    background-color: #e0e0e0;
     cursor: pointer;
     border-radius: 2rem;
+    color: #000;
 }
 
 .innerNavDiv3 {

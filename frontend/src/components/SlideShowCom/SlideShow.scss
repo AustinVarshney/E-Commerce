@@ -82,14 +82,14 @@
 
 //Media Queries
 @media(min-width: 650px) {
-    .innerMostSSDiv2>img{
+    .innerMostSSDiv2>img {
         height: 250px;
         width: 300px;
     }
 }
 
-@media(min-width: 1200px){
-    .innerMostSSDiv2>img{
+@media(min-width: 1200px) {
+    .innerMostSSDiv2>img {
         height: 300px;
         width: 350px;
     }
@@ -102,13 +102,13 @@
 
     .outerSSDiv1 {
         margin: 2rem 11.5rem;
-        margin-top: 4rem;
+        margin-top: 7rem;
     }
 
     .innerSSPara1 {
         font-size: 2.2rem;
     }
-    
+
     .innerSSPara2 {
         font-size: 1.8rem;
     }
