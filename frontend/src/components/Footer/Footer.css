@@ -1,0 +1,129 @@
+.outerFooterDiv1 {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid #00755E;
+  margin-top: 2rem;
+  padding: 0 1.5rem;
+  background-color: #fff2b1;
+}
+
+.outerFooterDiv2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.innerFooterDiv1 {
+  max-width: 50%;
+  padding: 0.5rem;
+}
+
+.innerFooterPara1 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #00755E;
+  margin-bottom: 0.5rem;
+}
+
+.innerFooterPara2 {
+  font-size: 1.4rem;
+  color: #32906c;
+  text-align: justify;
+}
+
+.innerFooterDiv4 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.innerFooterDiv2 > ul {
+  list-style: none;
+  text-align: center;
+  padding: 0;
+}
+
+.innerFooterDiv2 > ul > li {
+  font-size: 1.25rem;
+  font-weight: 450;
+}
+
+.innerFooterDiv2 > ul > li > a {
+  color: #00755E;
+  display: block;
+  position: relative;
+  padding: 0.2rem 0;
+}
+
+/* Fade in */
+.innerFooterDiv2 > ul > li > a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0.1em;
+  background-color: rgb(25, 157, 47);
+  opacity: 0;
+  transition: opacity 300ms, transform 300ms;
+}
+
+.innerFooterDiv2 > ul > li > a:hover::after,
+.innerFooterDiv2 > ul > li > a:focus::after {
+  opacity: 1;
+  transform: translate3d(0, 0.2em, 0);
+}
+
+/* Scale from center */
+.innerFooterDiv2 > ul > li > a::after {
+  opacity: 1;
+  transform: scale(0);
+  transform-origin: center;
+}
+
+.innerFooterDiv2 > ul > li > a:hover::after,
+.innerFooterDiv2 > ul > li > a:focus::after {
+  transform: scale(1);
+}
+
+.innerFooterDiv3 > ul {
+  list-style: none;
+  padding: 0;
+}
+
+.innerFooterDiv3 > ul > li {
+  font-size: 1.2rem;
+  color: #00755E;
+  margin-bottom: 0.25rem;
+}
+
+.innerFooterDiv3 > ul > li:nth-child(1) {
+  font-weight: 600;
+  padding-top: 3.2px;
+}
+
+.outerFooterDiv3 {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 800px) {
+  .innerFooterDiv1 {
+    max-width: 100%;
+  }
+  .outerFooterDiv2 {
+    flex-direction: column;
+  }
+  .innerFooterDiv4 {
+    width: 80%;
+  }
+}
+@media (max-width: 465px) {
+  .innerFooterDiv4 {
+    width: 100%;
+  }
+}/*# sourceMappingURL=Footer.css.map */

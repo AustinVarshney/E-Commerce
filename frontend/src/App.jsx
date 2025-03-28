@@ -14,7 +14,7 @@ function App() {
         <Routes>
           <Route path='/' element={<MainLayout />}>
             <Route index element={<Home />} />
-            <Route path='auth' element={<Auth />} />
+            <Route path='auth' element={<Auth/>} />
           </Route>
         </Routes>
       </Router>

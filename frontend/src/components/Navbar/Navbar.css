@@ -14,6 +14,7 @@ a {
   border-radius: 3rem;
   box-shadow: 6px 4px 12px #ffff3e;
   background-color: #ccf7cc;
+  height: 54.4px;
 }
 
 .innerNavDiv1 {
@@ -22,7 +23,7 @@ a {
 }
 
 .innerNavDiv2 {
-  margin-right: 10.5rem;
+  margin-right: 16.5rem;
   display: flex;
   width: 400px;
   justify-content: space-between;
@@ -37,12 +38,13 @@ a {
   gap: 0.25rem;
   padding: 0 5px;
   font-weight: 500;
+  padding: 1rem;
 }
 
 .innerNavDiv2 a:hover {
   background-color: #FCE883;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 2rem;
 }
 
 .innerNavDiv3 {
@@ -96,7 +98,7 @@ a {
   flex-direction: column;
   align-items: flex-end;
   visibility: hidden;
-  z-index: 10;
+  z-index: 100;
   font-weight: 400;
 }
 
@@ -156,14 +158,16 @@ a {
   gap: 0.25rem;
   padding: 0.5rem 0.5rem;
   border-radius: 3px;
+  justify-content: center;
 }
 
 .innerNavDiv6 a:hover {
   background-color: #d3d3d3;
   cursor: pointer;
+  border-radius: 2rem;
 }
 
-@media (max-width: 825px) {
+@media (max-width: 950px) {
   .innerNavDiv2 {
     display: none;
   }
@@ -177,7 +181,7 @@ a {
 }
 @media (min-width: 1200px) {
   .innerNavDiv2 {
-    margin-right: 19.5rem;
+    margin-right: 24.5rem;
     gap: 59px;
   }
 }
