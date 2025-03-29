@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  border: 1px solid yellowgreen;
+  border: 1px solid #1a1a1a;
   background-color: white;
   transition: all 1s ease;
   overflow: hidden;
@@ -29,7 +29,17 @@
   justify-content: center;
   border-top-right-radius: 30%;
   border-bottom-right-radius: 30%;
-  background-color: #FCE883;
+  background-color: #D4AF37;
+  font-size: 2rem;
+}
+
+.left-container > h3 {
+  margin: 0;
+}
+
+.left-container > .account {
+  font-size: 1rem;
+  margin: 1rem 0 2rem 0;
 }
 
 .right-container {
@@ -82,15 +92,44 @@
   border-bottom-left-radius: 30%;
 }
 
+.register-button,
+.login-button {
+  background-color: #1a1a1a !important;
+  color: #fff !important;
+  border: 1px solid #1a1a1a !important;
+}
+
+.login-button {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 2rem 0 !important;
+}
+
+.register-button:hover,
+.login-button:hover {
+  background-color: #282727 !important;
+}
+
+.heading {
+  font-size: 2.5rem;
+}
+
+.forgot-password {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 768px) {
   .inner-container {
     width: 80%;
   }
 }
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 575px) {
   .inner-container.login-mode {
     flex-direction: column;
     height: 80%;
+    position: absolute;
+    top: 8rem;
   }
   .login-mode .left-container {
     width: 100%;
@@ -101,6 +140,17 @@
     padding: 0 0 0px;
     height: 65%;
     width: 100%;
+    font-size: 1.5rem;
+  }
+  .left-container > .account {
+    margin: 1rem 0;
+  }
+  .right-container > .heading {
+    font-size: 2rem;
+    margin: 0rem 0 1rem 0;
+  }
+  .login-button {
+    margin: 1rem 0 0 6rem !important;
   }
   .right-container {
     padding: 5px;
@@ -123,8 +173,16 @@
     border-bottom-left-radius: 0%;
   }
 }
+@media screen and (max-width: 376px) {
+  .login-button {
+    margin: 1rem 0 0 5rem !important;
+  }
+}
 @media screen and (max-width: 321px) {
   .inner-container.login-mode {
     width: 85%;
+  }
+  .login-button {
+    margin: 1rem 0 0 4.5rem !important;
   }
 }/*# sourceMappingURL=Auth.css.map */

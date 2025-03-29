@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react'
-import './SlideShow.scss'
-import { Fade, Zoom } from 'react-slideshow-image';
-import Pic1 from '../../assets/Pic1.jpg'
-import Pic2 from '../../assets/Pic2.jpg'
-import Pic3 from '../../assets/Pic3.jpg'
-import 'react-slideshow-image/dist/styles.css'
+import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router';
+import { Fade } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+import Pic1 from '../../assets/Pic1.jpg';
+import Pic2 from '../../assets/Pic2.jpg';
+import Pic3 from '../../assets/Pic3.jpg';
+import './SlideShow.scss';
 
 const fadeImages = [
   {
