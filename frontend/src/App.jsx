@@ -4,7 +4,7 @@ import './App.css';
 import Auth from './pages/AuthPage/Auth';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
-import BorderDesign from './components/BorderDesign/BorderDesign';
+import MovingBorder from './components/MovingBorder/MovingBorder';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +16,7 @@ function App() {
           <Route path='/' element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path='auth' element={<Auth/>} />
-            <Route path='borderTest' element={<BorderDesign/>} />
+            <Route path='borderTest' element={<MovingBorder/>} />
           </Route>
         </Routes>
       </Router>
