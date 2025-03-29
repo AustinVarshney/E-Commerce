@@ -56,12 +56,14 @@ a {
     padding: 0 8px;
     align-items: center;
     color: white;
+    transition: 0.3s ease-in-out;
 }
 
 .innerNavDiv3:hover {
     background-color: #FCE883;
     cursor: pointer;
     border-radius: 3px;
+    color: #000;
 }
 
 .openBarIcon {
@@ -179,7 +181,7 @@ a {
     border-radius: 2rem;
 }
 
-@media(max-width: 950px) {
+@media(max-width: 900px) {
     .innerNavDiv2 {
         display: none;
     }
@@ -194,7 +196,14 @@ a {
     }
 }
 
-@media(min-width: 1200px) {
+@media((min-width: 900px) and (max-width: 950px)){
+    .innerNavDiv2{
+        gap: 9px;
+        margin-right: 15.5rem;
+    }
+}
+
+@media(min-width: 950px) {
     .innerNavDiv2 {
         margin-right: 19.5rem;
         // gap: 59px;

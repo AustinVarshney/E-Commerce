@@ -92,7 +92,11 @@ const PopProducts = () => {
       <div className='innerProDiv2'>
         {products.map((product, index) => (
           <div className='innerMostProDiv1'>
-            <img src={product.image} alt={product.name} className="product-image" />
+            <div className='container'>
+            <img src={product.image} alt={product.name} className="product-image"/>
+            </div>
+              
+           
             <div className="product-info">
               <p className="product-name">{product.name}</p>
               <p className="product-description">{truncateText(product.description, 5)}</p>
@@ -102,7 +106,7 @@ const PopProducts = () => {
               <div className='innerMostProDiv2'>
                 <p className="product-price">₹{product.price}</p>
                 <NavLink to={product.link}>
-                  <button className="buy-now">Buy Now <AddShoppingCartIcon/></button>
+                  <button className="buy-now">Buy Now <AddShoppingCartIcon /></button>
                 </NavLink>
               </div>
 
