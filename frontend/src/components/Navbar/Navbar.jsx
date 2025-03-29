@@ -5,8 +5,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import React, { useState } from 'react';
-import { NavLink } from 'react-router';
+import React, { useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import './Navbar.scss';
 
 const Navbar = () => {
@@ -18,13 +18,34 @@ const Navbar = () => {
         setHasInteracted(true);
     }
 
+    const navRef = useRef(null);
+
+    // useEffect(() => {
+    //         const timeline = gsap.timeline();
+    
+    //         timeline.from(".innerNavDiv1", {
+    //             y: -30,
+    //             opacity: 0,
+    //             duration: 0.8
+    //         });
+    
+    //         timeline.from(".innerNavDiv2 a", {
+    //             y: -20,
+    //             opacity: 0,
+    //             stagger: 0.15,
+    //             duration: 0.6
+    //         });
+    // }, []);
+    
+    
+
     return (
         <div id="outer-container">
             <div className='outerNavDiv1'>
                 <div className='innerNavDiv1'>
                     <p>Logo</p>
                 </div>
-                <div className='innerNavDiv2'>
+                <div className='innerNavDiv2' ref={navRef}>
                     <NavLink to="/"><HomeIcon style={{ color: '#d4af37' }} />Home</NavLink>
                     <NavLink to=""><ShoppingCartIcon style={{ color: '#d4af37' }} />Shop</NavLink>
                     <NavLink to=""><ContactsIcon style={{ color: '#d4af37' }} />Contact</NavLink>

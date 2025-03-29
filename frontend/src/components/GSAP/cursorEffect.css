@@ -1,0 +1,13 @@
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  mix-blend-mode: difference;
+}/*# sourceMappingURL=cursorEffect.css.map */
