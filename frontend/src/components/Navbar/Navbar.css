@@ -52,6 +52,7 @@ a {
   height: 40px;
   padding: 0 8px;
   align-items: center;
+  color: white;
 }
 
 .innerNavDiv3:hover {
