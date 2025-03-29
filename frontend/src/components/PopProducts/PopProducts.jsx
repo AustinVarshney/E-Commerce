@@ -1,11 +1,11 @@
-import React from 'react'
-import './PopProducts.scss'
-import { NavLink } from 'react-router';
-import Pic4 from '../../assets/Pic4.jpg'
-import Pic5 from '../../assets/Pic5.jpg'
-import Pic6 from '../../assets/Pic6.jpg'
-import Pic7 from '../../assets/Pic7.jpg'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import React from 'react';
+import { NavLink } from 'react-router';
+import Pic4 from '../../assets/Pic4.jpg';
+import Pic5 from '../../assets/Pic5.jpg';
+import Pic6 from '../../assets/Pic6.jpg';
+import Pic7 from '../../assets/Pic7.jpg';
+import './PopProducts.scss';
 
 const products = [
   {
@@ -93,10 +93,10 @@ const PopProducts = () => {
         {products.map((product, index) => (
           <div className='innerMostProDiv1'>
             <div className='PopProductcontainer'>
-            <img src={product.image} alt={product.name} className="product-image"/>
+              <img src={product.image} alt={product.name} className="product-image" />
             </div>
-              
-           
+
+
             <div className="product-info">
               <p className="product-name">{product.name}</p>
               <p className="product-description">{truncateText(product.description, 5)}</p>

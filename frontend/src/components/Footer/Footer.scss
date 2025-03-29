@@ -39,7 +39,7 @@
     width: max-content;
 }
 
-.innerFooterPara1::before{
+.innerFooterPara1::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -156,20 +156,20 @@
     }
 }
 
-@media(max-width: 550px){
-    .innerFooterPara1{
+@media(max-width: 550px) {
+    .innerFooterPara1 {
         font-size: 1.6rem;
     }
 
-    .innerFooterPara2{
+    .innerFooterPara2 {
         font-size: 1.2rem;
     }
-    
-    .innerFooterDiv2 > ul > li{
+
+    .innerFooterDiv2>ul>li {
         font-size: 1.15rem;
     }
 
-    .innerFooterDiv3 > ul > li{
+    .innerFooterDiv3>ul>li {
         font-size: 1.1rem;
     }
 }

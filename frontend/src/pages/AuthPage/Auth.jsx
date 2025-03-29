@@ -173,7 +173,7 @@ function Auth() {
                 />
                 {!isRegister && <p className="forgot-password">Forgot password?</p>}
 
-                <Stack spacing={2} direction="row" style={{display: 'flex', justifyContent: 'center', marginTop: '0.5rem'}}>
+                <Stack spacing={2} direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '0.5rem' }}>
                   <Button variant="outlined" type='submit' className="login-button">
                     {isRegister ? 'Register' : 'Login'}
                   </Button>
