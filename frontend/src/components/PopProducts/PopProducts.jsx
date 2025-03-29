@@ -92,7 +92,7 @@ const PopProducts = () => {
       <div className='innerProDiv2'>
         {products.map((product, index) => (
           <div className='innerMostProDiv1'>
-            <div className='container'>
+            <div className='PopProductcontainer'>
             <img src={product.image} alt={product.name} className="product-image"/>
             </div>
               

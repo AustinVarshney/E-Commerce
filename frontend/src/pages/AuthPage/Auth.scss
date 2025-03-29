@@ -159,9 +159,9 @@
         margin: 0rem 0 1rem 0;
     }
 
-    .login-button {
-        margin: 1rem 0 0 6rem !important;
-    }
+    // .login-button {
+    //     margin: 1rem 0 0 6rem !important;
+    // }
 
     .right-container {
         padding: 5px;
@@ -189,20 +189,20 @@
     }
 }
 
-@media screen and (max-width : 376px) {
-    .login-button {
-        margin: 1rem 0 0 5rem !important;
-    }
+// @media screen and (max-width : 376px) {
+//     .login-button {
+//         margin: 1rem 0 0 5rem !important;
+//     }
 
-}
+// }
 
 @media screen and (max-width : 321px) {
     .inner-container.login-mode {
         width: 85%;
     }
 
-    .login-button {
-        margin: 1rem 0 0 4.5rem !important;
-    }
+    // .login-button {
+    //     margin: 1rem 0 0 4.5rem !important;
+    // }
 
 }
