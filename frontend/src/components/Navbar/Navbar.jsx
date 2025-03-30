@@ -2,16 +2,22 @@ import CloseIcon from '@mui/icons-material/Close';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import HomeIcon from '@mui/icons-material/Home';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
+import PeopleIcon from '@mui/icons-material/People';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Avatar } from '@mui/material';
 import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../Context/AuthContext';
 import './Navbar.scss';
 
 const Navbar = () => {
     const [isSidemenuOpen, setIsSidemenuOpen] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false);
+    const { isLoggedIn, username, logoutContext } = useAuth();
+    // const navigate = useNavigate();
 
     let isOpen = () => {
         setIsSidemenuOpen(!isSidemenuOpen);
@@ -22,13 +28,13 @@ const Navbar = () => {
 
     // useEffect(() => {
     //         const timeline = gsap.timeline();
-    
+
     //         timeline.from(".innerNavDiv1", {
     //             y: -30,
     //             opacity: 0,
     //             duration: 0.8
     //         });
-    
+
     //         timeline.from(".innerNavDiv2 a", {
     //             y: -20,
     //             opacity: 0,
@@ -36,8 +42,11 @@ const Navbar = () => {
     //             duration: 0.6
     //         });
     // }, []);
-    
-    
+
+    // const handleLogout = () => {
+    //     logout();
+    //     navigate("/");
+    // }
 
     return (
         <div id="outer-container">
@@ -48,9 +57,28 @@ const Navbar = () => {
                 <div className='innerNavDiv2' ref={navRef}>
                     <NavLink to="/"><HomeIcon style={{ color: '#d4af37' }} />Home</NavLink>
                     <NavLink to=""><ShoppingCartIcon style={{ color: '#d4af37' }} />Shop</NavLink>
-                    <NavLink to=""><ContactsIcon style={{ color: '#d4af37' }} />Contact</NavLink>
+                    <NavLink to=""><PeopleIcon style={{ color: '#d4af37' }} />Contact</NavLink>
                     <NavLink to=""><FavoriteIcon style={{ color: '#d4af37' }} />WishList</NavLink>
-                    <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
+                    {!isLoggedIn ? (
+                        <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
+                    ) : (
+                        <>
+                            <div className='user-details'>
+                                <div id='user-Logo'>{username[0]}</div>
+                                <p style={{ color: "white" }}>{username}</p>
+                                <div className='user-options'>
+                                    <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
+                                        <Avatar src="/broken-image.jpg" />
+                                        <p>Profile</p>
+                                    </span>
+                                    <span id='logout-button-details'>
+                                        <LockOpenIcon style={{ color: "#ff4d4d" }} />
+                                        <p onClick={logoutContext} className="logout-btn">Logout</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 <div className={`innerNavDiv3 ${hasInteracted ? (isSidemenuOpen ? 'openBarIcon' : 'closeBarIcon') : ''}`} onClick={isOpen}>
@@ -66,12 +94,32 @@ const Navbar = () => {
                         <NavLink to=""><ShoppingCartIcon style={{ color: '#727272' }} />Shop</NavLink>
                         <NavLink to=""><ContactsIcon style={{ color: 'blue' }} />Contact</NavLink>
                         <NavLink to=""><FavoriteIcon style={{ color: '#fd00ff6b' }} />WishList</NavLink>
-                        <NavLink to="/auth"><LoginIcon style={{ color: '#036207' }} />Login</NavLink>
+
+                        {!isLoggedIn ? (
+                            <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
+                        ) : (
+                            <>
+                                <div className='user-details'>
+                                    <div id='user-Logo'>{username[0]}</div>
+                                    <p style={{ color: "#222" }}>{username}</p>
+                                    <div className='user-options'>
+                                        <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
+                                            <Avatar src="/broken-image.jpg" />
+                                            <p>Profile</p>
+                                        </span>
+                                        <span id='logout-button-details'>
+                                            <LockOpenIcon style={{ color: "#ff4d4d" }} />
+                                            <p onClick={logoutContext} className="logout-btn">Logout</p>
+                                        </span>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
 
             </div>
-        </div>
+        </div >
     )
 }
 
