@@ -99,13 +99,13 @@ const Navbar = () => {
                             <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
                         ) : (
                             <>
-                                <div className='user-details'>
+                                <div className='user-details' >
                                     <div id='user-Logo'>{username[0]}</div>
                                     <p style={{ color: "#222" }}>{username}</p>
-                                    <div className='user-options'>
+                                    <div className='user-options' style={{ width: "8.75rem", right: "-2rem", backgroundColor: "#fff", border: "none" }}>
                                         <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                                             <Avatar src="/broken-image.jpg" />
-                                            <p>Profile</p>
+                                            <p style={{ color: "#222" }}>Profile</p>
                                         </span>
                                         <span id='logout-button-details'>
                                             <LockOpenIcon style={{ color: "#ff4d4d" }} />
