@@ -56,7 +56,7 @@ const Navbar = () => {
                 </div>
                 <div className='innerNavDiv2' ref={navRef}>
                     <NavLink to="/"><HomeIcon style={{ color: '#d4af37' }} />Home</NavLink>
-                    <NavLink to=""><ShoppingCartIcon style={{ color: '#d4af37' }} />Shop</NavLink>
+                    <NavLink to="/products"><ShoppingCartIcon style={{ color: '#d4af37' }} />Shop</NavLink>
                     <NavLink to=""><PeopleIcon style={{ color: '#d4af37' }} />Contact</NavLink>
                     <NavLink to=""><FavoriteIcon style={{ color: '#d4af37' }} />WishList</NavLink>
                     {!isLoggedIn ? (
@@ -90,8 +90,8 @@ const Navbar = () => {
                         <CloseIcon />
                     </div>
                     <div className='innerNavDiv6'>
-                        <NavLink to=""><HomeIcon style={{ color: '#ff5722' }} />Home</NavLink>
-                        <NavLink to=""><ShoppingCartIcon style={{ color: '#727272' }} />Shop</NavLink>
+                        <NavLink to="/"><HomeIcon style={{ color: '#ff5722' }} />Home</NavLink>
+                        <NavLink to="/products"><ShoppingCartIcon style={{ color: '#727272' }} />Shop</NavLink>
                         <NavLink to=""><ContactsIcon style={{ color: 'blue' }} />Contact</NavLink>
                         <NavLink to=""><FavoriteIcon style={{ color: '#fd00ff6b' }} />WishList</NavLink>
 

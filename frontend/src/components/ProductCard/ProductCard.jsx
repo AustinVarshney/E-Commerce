@@ -8,16 +8,16 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
-const ProductCard = () => {
+const ProductCard = ({PicImg, discount, heading, linkToProduct, rating, reviews, price, linkToCard}) => {
     return (
         <div className='outer-ProductCard-containr'>
             <div className='image-ProCard'>
-                <img src={Pic1} alt="Img not found" />
+                <img src={PicImg} alt="Img not found" />
             </div>
             <div className='content-ProCard'>
                 <div className='content-ProCard-1'>
                     <div className='discount-ProCard'>
-                        <p>Up to x% off</p>
+                        <p>Up to {discount}% off</p>
                     </div>
                     <div className='Favourite-ProCard'>
                         <VisibilityIcon className='favourite-1-ProCard' style={{ fontSize: '1.2rem', padding: '0.25rem' }}/>
@@ -26,7 +26,7 @@ const ProductCard = () => {
                 </div>
                 <div className='content-ProCard-2'>
                     <div className='heading-ProCard'>
-                        <a href=''>Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max</a>
+                        <a href={linkToProduct}>{heading}</a>
                     </div>
                     <div className='reviews-ProCard'>
                         <p className='stars-ProCard'>
@@ -36,8 +36,8 @@ const ProductCard = () => {
                             <StarBorderIcon style={{ fontSize: '1.5rem' }} />
                             <StarBorderIcon style={{ fontSize: '1.5rem' }} />
                         </p>
-                        <p className='rate-ProCard'>5.0</p>
-                        <p className='total-reviews-ProCard'>(455)</p>
+                        <p className='rate-ProCard'>{rating}</p>
+                        <p className='total-reviews-ProCard'>({reviews})</p>
                     </div>
                     <div className='two-more-options-ProCard'>
                         <div className='advanced-option-ProCard'>
@@ -49,8 +49,8 @@ const ProductCard = () => {
                     </div>
                 </div>
                 <div className='content-ProCard-3'>
-                    <p className='price-ProCard'>$ 1,699</p>
-                    <a href="" className='add-to-card-ProCard'><AddShoppingCartIcon style={{fontSize: '1.25rem'}}/> Add to cart</a>
+                    <p className='price-ProCard'>$ {price}</p>
+                    <a href={linkToCard} className='add-to-card-ProCard'><AddShoppingCartIcon style={{fontSize: '1.25rem'}}/> Add to cart</a>
                 </div>
             </div>
         </div>

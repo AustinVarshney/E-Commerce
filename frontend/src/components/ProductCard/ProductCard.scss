@@ -1,46 +1,50 @@
-.outer-ProductCard-containr{
-    margin-top: 2rem;
-    margin-left: 2rem;
+.outer-ProductCard-containr {
+    // margin-top: 2rem;
+    // margin-left: 2rem;
     border: 1px solid greenyellow;
     width: 17.5rem;
     padding: 1rem 1.5rem;
     border-radius: 1.75rem;
     background-color: #1b1b2c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.image-ProCard{
+.image-ProCard {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 14rem;
 }
 
-.image-ProCard>img{
+.image-ProCard>img {
     height: 12.5rem;
-    width: 12.5rem;
+    width: 18rem;
     border-radius: 0.5rem;
 }
 
-.content-ProCard{
+.content-ProCard {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.content-ProCard-1{
+.content-ProCard-1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.discount-ProCard>p{
+.discount-ProCard>p {
     background-color: green;
     color: white;
     padding: 0.1rem 0.5rem;
     font-size: 0.85rem;
 }
 
-.Favourite-ProCard{
+.Favourite-ProCard {
     color: rgba(255, 255, 255, 0.783);
     display: flex;
     justify-content: center;
@@ -48,42 +52,50 @@
     gap: 1.5rem;
 }
 
-.favourite-1-ProCard{
+.favourite-1-ProCard {
     cursor: pointer;
     border-radius: 0.25rem;
     padding: 0.25rem;
 }
 
-.favourite-1-ProCard:hover{
+.favourite-1-ProCard:hover {
     background-color: gray;
 }
 
-.favourite-2-ProCard{
+.favourite-2-ProCard {
     cursor: pointer;
     border-radius: 0.25rem;
     padding: 0.25rem;
 }
 
-.favourite-2-ProCard:hover{
+.favourite-2-ProCard:hover {
     background-color: gray;
 }
 
-.content-ProCard-2{
+.content-ProCard-2 {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.heading-ProCard>a{
+.heading-ProCard>a {
     color: white;
     font-size: 1.45rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  text-overflow: ellipsis;
+//     max-height: 2.9rem; /* Adjust based on font-size and line-height */
+//   line-height: 1.45rem; /* Ensure proper spacing */
+//   word-break: break-word;
 }
 
-.heading-ProCard>a:hover{
+.heading-ProCard>a:hover {
     text-decoration: underline;
 }
 
-.reviews-ProCard{
+.reviews-ProCard {
     display: flex;
     gap: 0.6rem;
     align-items: center;
@@ -91,44 +103,44 @@
     color: white;
 }
 
-.stars-ProCard{
+.stars-ProCard {
     display: flex;
 }
 
-.rate-ProCard{
+.rate-ProCard {
     font-size: 1.35rem;
 }
 
-.total-reviews-ProCard{
+.total-reviews-ProCard {
     color: rgb(167, 165, 165);
     font-size: 0.8rem;
 }
 
-.two-more-options-ProCard{
+.two-more-options-ProCard {
     color: rgba(224, 222, 222, 0.877);
     display: flex;
     gap: 2.5rem;
     font-size: 0.9rem;
 }
 
-.advanced-option-ProCard{
+.advanced-option-ProCard {
     display: flex;
     align-items: center;
     gap: 0.3rem;
 }
 
-.content-ProCard-3{
+.content-ProCard-3 {
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.price-ProCard{
+.price-ProCard {
     font-size: 1.65rem;
 }
 
-.add-to-card-ProCard{
+.add-to-card-ProCard {
     background-color: green;
     color: white;
     display: flex;
@@ -139,6 +151,30 @@
     gap: 0.3rem;
 }
 
-.add-to-card-ProCard:hover{
+.add-to-card-ProCard:hover {
     background-color: rgb(7, 97, 7);
+}
+
+@media(max-width: 762px) {
+    .outer-ProductCard-containr {
+        width: 16rem;
+    }
+}
+
+@media((max-width: 1115px) and (min-width: 910px)) {
+    .outer-ProductCard-containr {
+        width: 22rem;
+    }
+}
+
+@media(max-width: 715px) {
+    .outer-ProductCard-containr {
+        width: 25rem;
+    }
+}
+
+@media(max-width: 490px) {
+    .image-ProCard>img {
+        width: 90%;
+    }
 }
