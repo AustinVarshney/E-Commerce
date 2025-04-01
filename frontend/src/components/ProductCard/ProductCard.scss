@@ -85,10 +85,10 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  text-overflow: ellipsis;
-//     max-height: 2.9rem; /* Adjust based on font-size and line-height */
-//   line-height: 1.45rem; /* Ensure proper spacing */
-//   word-break: break-word;
+    text-overflow: ellipsis;
+    //     max-height: 2.9rem; /* Adjust based on font-size and line-height */
+    //   line-height: 1.45rem; /* Ensure proper spacing */
+    //   word-break: break-word;
 }
 
 .heading-ProCard>a:hover {

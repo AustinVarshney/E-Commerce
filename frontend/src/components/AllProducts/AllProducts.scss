@@ -1,8 +1,13 @@
-.outer-AllPro-container{
+.outer-AllPro-container {
     margin-top: 1.5rem;
 }
 
-.heading-AllPro{
+.blurred> *:not(.filter-items-AllPro){
+    filter: brightness(0.5);
+    pointer-events: none;
+}
+
+.heading-AllPro {
     color: white;
     font-size: 2.5rem;
     position: relative;
@@ -11,7 +16,7 @@
     align-items: center;
 }
 
-.heading-AllPro::before{
+.heading-AllPro::before {
     content: '';
     position: absolute;
     bottom: 0;
@@ -21,15 +26,16 @@
     border-radius: 2rem;
 }
 
-.filter-AllPro{
+.filter-AllPro {
     margin-top: 1.5rem;
     display: flex;
     justify-content: flex-end;
     width: 95%;
     position: relative;
+    gap: 2rem;
 }
 
-.filter-AllPro>button{
+.filter-AllPro>button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,12 +47,23 @@
     gap: 0.3rem;
 }
 
-.filter-AllPro>button:hover{
+.filter-AllPro>button:hover {
     background-color: #e0e0e0d4;
     cursor: pointer;
 }
 
-.sorted-list-container-AllPro{
+.filter-items-AllPro {
+    height: 30rem;
+    width: 40rem;
+    background-color: white;
+    border: 1px solid black;
+    position: absolute;
+    right: calc(50vw - 20rem);
+    top: calc(50vh - 15rem);
+    z-index: 10;
+}
+
+.sorted-list-container-AllPro {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -59,7 +76,7 @@
     border-radius: 0.5rem;
 }
 
-.sorted-list-container-AllPro>button{
+.sorted-list-container-AllPro>button {
     width: 100%;
     font-size: 1rem;
     padding: 0.25rem;
@@ -69,16 +86,16 @@
     background-color: white;
 }
 
-.sorted-list-container-AllPro>button:hover{
+.sorted-list-container-AllPro>button:hover {
     background-color: #E0E0E0;
     cursor: pointer;
 }
 
-.cards-AllPro{
+.cards-AllPro {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: center;
+    align-items: stretch;
     padding: 1rem;
     margin: 1rem;
     gap: 1rem;

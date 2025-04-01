@@ -10,6 +10,8 @@ import Pic6 from '../../assets/Pic6.jpg';
 import Pic7 from '../../assets/Pic7.jpg';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import CloseIcon from '@mui/icons-material/Close';
 
 const products = [
     { PicImg: Pic1, discount: 36, heading: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max', rating: 4.7, reviews: 336, price: 5600 },
@@ -23,10 +25,15 @@ const products = [
 
 const AllProducts = () => {
     const [isOpenSort, setisOpenSort] = useState(false);
+    const [isFilterSectionOpen, setisFilterSectionOpen] = useState(false);
     const [sortedProducts, setSortedProducts] = useState([...products]);
 
     const handleSortSection = () => {
         setisOpenSort(!isOpenSort);
+    }
+
+    const handleFilterSection = () => {
+        setisFilterSectionOpen(!isFilterSectionOpen);
     }
 
     // Sorting Function
@@ -36,19 +43,19 @@ const AllProducts = () => {
         setisOpenSort(!isOpenSort);
 
         switch (criteria) {
-            case 'Most Popular':  
+            case 'Most Popular':
                 sortedArray.sort((a, b) => b.rating - a.rating);
                 break;
-            case 'Increasing Price':  
+            case 'Increasing Price':
                 sortedArray.sort((a, b) => a.price - b.price);
                 break;
-            case 'Decreasing Price':  
+            case 'Decreasing Price':
                 sortedArray.sort((a, b) => b.price - a.price);
                 break;
-            case 'No. of Reviews':  
+            case 'No. of Reviews':
                 sortedArray.sort((a, b) => b.reviews - a.reviews);
                 break;
-            case 'Discount %':  
+            case 'Discount %':
                 sortedArray.sort((a, b) => b.discount - a.discount);
                 break;
             default:
@@ -60,13 +67,17 @@ const AllProducts = () => {
     };
 
     return (
-        <div className='outer-AllPro-container'>
+        <div className={`outer-AllPro-container ${isFilterSectionOpen ? 'blurred' : ''}`}>
+            <div className='filter-items-AllPro' style={isFilterSectionOpen ? {} : {display: 'none'}}>
+                <button onClick={handleFilterSection}><CloseIcon/></button>
+            </div>
             <div className='heading-AllPro'>
                 <p>Accessories</p>
             </div>
             <div className='filter-AllPro'>
+                <button onClick={handleFilterSection}><FilterAltIcon />Filter<KeyboardArrowDownIcon /></button>
                 <button onClick={handleSortSection}><SwapVertIcon />Sort<KeyboardArrowDownIcon /></button>
-                <div className='sorted-list-container-AllPro' style={isOpenSort ? {} : {display: 'none'}}>
+                <div className='sorted-list-container-AllPro' style={isOpenSort ? {} : { display: 'none' }}>
                     <button onClick={() => [handleSort('Most Popular'), handleSortSection()]}>Most Popular</button>
                     <button onClick={() => handleSort('Increasing Price')}>Increasing Price</button>
                     <button onClick={() => handleSort('Decreasing Price')}>Decreasing Price</button>
