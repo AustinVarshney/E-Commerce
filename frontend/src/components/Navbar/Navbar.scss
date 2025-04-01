@@ -59,7 +59,7 @@ a {
     transition: 0.3s ease-in-out;
 }
 
-.innerNavDiv3:hover {
+.hemburger:hover {
     background-color: #FCE883;
     cursor: pointer;
     border-radius: 3px;
@@ -188,7 +188,8 @@ a {
 
     .innerNavDiv3 {
         display: flex;
-        margin-right: 5rem;
+        margin-right: 3rem;
+        gap: 1rem;
     }
 
     .innerNavDiv4 {
@@ -230,7 +231,6 @@ a {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
     cursor: pointer;
 
     #user-Logo {

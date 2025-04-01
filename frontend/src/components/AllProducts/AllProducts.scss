@@ -52,18 +52,7 @@
     cursor: pointer;
 }
 
-.filter-items-AllPro {
-    height: 30rem;
-    width: 40rem;
-    background-color: white;
-    border: 1px solid black;
-    position: absolute;
-    right: calc(50vw - 20rem);
-    top: calc(50vh - 15rem);
-    z-index: 10;
-}
-
-.sorted-list-container-AllPro {
+.sorted-list-container-AllPro{
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -95,8 +84,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: stretch;
+    align-items: center;
     padding: 1rem;
-    margin: 1rem;
-    gap: 1rem;
 }

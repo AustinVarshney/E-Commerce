@@ -1,3 +1,4 @@
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import CloseIcon from '@mui/icons-material/Close';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -12,6 +13,7 @@ import React, { useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import './Navbar.scss';
+
 
 const Navbar = () => {
     const [isSidemenuOpen, setIsSidemenuOpen] = useState(false);
@@ -64,8 +66,9 @@ const Navbar = () => {
                     ) : (
                         <>
                             <div className='user-details'>
-                                <div id='user-Logo'>{username[0]}</div>
-                                <p style={{ color: "white" }}>{username}</p>
+                                <div id='user-Logo'>{username[0]} </div>
+                                <ArrowDropDownIcon style={{ color: "#fff" }} />
+                                {/* <p style={{ color: "white" }}>{username}</p> */}
                                 <div className='user-options'>
                                     <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                                         <Avatar src="/broken-image.jpg" />
@@ -81,40 +84,41 @@ const Navbar = () => {
                     )}
                 </div>
 
-                <div className={`innerNavDiv3 ${hasInteracted ? (isSidemenuOpen ? 'openBarIcon' : 'closeBarIcon') : ''}`} onClick={isOpen}>
-                    <MenuIcon />
-                </div>
 
+
+                <div className={`innerNavDiv3 ${hasInteracted ? (isSidemenuOpen ? 'openBarIcon' : 'closeBarIcon') : ''}`} onClick={isOpen}>
+                    {!isLoggedIn ? (
+                        <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
+                    ) : (
+                        <>
+                            <div className='user-details' >
+                                <div id='user-Logo'>{username[0]}</div>
+                                {/* <p style={{ color: "#222" }}>{username}</p> */}
+                                <div className='user-options' style={{ width: "8.75rem", right: "-2rem", backgroundColor: "#fff", border: "none" }}>
+                                    <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
+                                        <Avatar src="/broken-image.jpg" />
+                                        <p style={{ color: "#222" }}>Profile</p>
+                                    </span>
+                                    <span id='logout-button-details'>
+                                        <LockOpenIcon style={{ color: "#ff4d4d" }} />
+                                        <p onClick={logoutContext} className="logout-btn">Logout</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </>
+                    )}
+                    <MenuIcon className="hemburger" />
+                </div>
                 <div className={`innerNavDiv4 ${hasInteracted ? (isSidemenuOpen ? 'openSideBar' : 'closeSideBar') : ''}`} onClick={isOpen} style={hasInteracted ? {} : {}}>
                     <div className='innerNavDiv5'>
                         <CloseIcon />
                     </div>
+
                     <div className='innerNavDiv6'>
                         <NavLink to="/"><HomeIcon style={{ color: '#ff5722' }} />Home</NavLink>
                         <NavLink to="/products"><ShoppingCartIcon style={{ color: '#727272' }} />Shop</NavLink>
                         <NavLink to=""><ContactsIcon style={{ color: 'blue' }} />Contact</NavLink>
                         <NavLink to=""><FavoriteIcon style={{ color: '#fd00ff6b' }} />WishList</NavLink>
-
-                        {!isLoggedIn ? (
-                            <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
-                        ) : (
-                            <>
-                                <div className='user-details' >
-                                    <div id='user-Logo'>{username[0]}</div>
-                                    <p style={{ color: "#222" }}>{username}</p>
-                                    <div className='user-options' style={{ width: "8.75rem", right: "-2rem", backgroundColor: "#fff", border: "none" }}>
-                                        <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
-                                            <Avatar src="/broken-image.jpg" />
-                                            <p style={{ color: "#222" }}>Profile</p>
-                                        </span>
-                                        <span id='logout-button-details'>
-                                            <LockOpenIcon style={{ color: "#ff4d4d" }} />
-                                            <p onClick={logoutContext} className="logout-btn">Logout</p>
-                                        </span>
-                                    </div>
-                                </div>
-                            </>
-                        )}
                     </div>
                 </div>
 
