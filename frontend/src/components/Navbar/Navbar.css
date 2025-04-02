@@ -61,7 +61,7 @@ a {
   background-color: #FCE883;
   cursor: pointer;
   border-radius: 3px;
-  color: #222 !important;
+  color: #000;
 }
 
 .openBarIcon {
@@ -72,30 +72,34 @@ a {
   animation: rotateBarIconAgain 500ms ease-out 0s;
 }
 
+.sideBar-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 18%;
+}
+
 @keyframes rotateBarIcon {
   from {
     transform: rotate(0deg);
     opacity: 1;
   }
-
   to {
     transform: rotate(180deg);
     opacity: 0;
   }
 }
-
 @keyframes rotateBarIconAgain {
   from {
     transform: rotate(180deg);
     opacity: 0;
   }
-
   to {
     transform: rotate(0deg);
     opacity: 1;
   }
 }
-
 .innerNavDiv4 {
   position: absolute;
   background-color: white;
@@ -116,38 +120,36 @@ a {
 
 .openSideBar {
   animation: sideBarComing 500ms linear 0s;
+  visibility: visible;
 }
 
 .closeSideBar {
   animation: sideBarGoing 500ms ease-out 0s;
+  visibility: hidden;
 }
 
 @keyframes sideBarComing {
   from {
-    transform: translateX(1rem);
+    transform: translateX(2rem);
     opacity: 0;
   }
-
   to {
     transform: translateX(0px);
     opacity: 1;
   }
 }
-
 @keyframes sideBarGoing {
   from {
     transform: translateX(0px);
     opacity: 1;
     visibility: visible;
   }
-
   to {
-    transform: translateX(-0.5rem);
+    transform: translateX(2rem);
     opacity: 0;
     visibility: hidden;
   }
 }
-
 .innerNavDiv5 {
   padding: 4px;
   border-radius: 2px;
@@ -191,73 +193,70 @@ a {
   background-color: #d3d3d3;
   cursor: pointer;
   border-radius: 2rem;
+  color: black;
 }
 
-@media (max-width: 900px) {
+.profile-details-smaller {
+  display: none;
+}
+
+@media ((min-width: 768px) and (max-width: 800px)) {
+  .innerNavDiv1 {
+    margin-left: 1.5rem;
+  }
+  .innerNavDiv2 {
+    gap: 6px;
+    margin-right: 36rem;
+  }
+}
+@media ((min-width: 800px) and (max-width: 950px)) {
+  .innerNavDiv1 {
+    margin-left: 3rem;
+  }
+  .innerNavDiv2 {
+    gap: 6px;
+    margin-right: 36rem;
+  }
+}
+@media (max-width: 768px) {
+  .innerNavDiv1 {
+    margin-left: 5rem;
+  }
   .innerNavDiv2 {
     display: none;
-    padding-top: 8rem;
-    flex-direction: column;
-    top: 0%;
-    height: 100vh;
-    color: #111;
-    position: fixed;
-    height: 50rem;
-    background-color: #222;
-    z-index: 100;
-    right: -2.5rem;
-    justify-content: flex-start;
-    align-items: center;
-    width: 55%;
-    margin: 0;
   }
-
-  .innerNavDiv2 a {
-    padding: 1rem 1rem 0 0;
-  }
-
-  .menu-options {
-    display: inline-block;
-  }
-
   .innerNavDiv3 {
     display: flex;
     margin-right: 5rem;
   }
-
   .innerNavDiv4 {
     display: flex;
   }
+  .profile-details-smaller {
+    display: inline;
+  }
 }
-
 @media (min-width: 950px) {
   .innerNavDiv2 {
-    margin-right: 19.5rem;
+    margin-right: 43rem;
   }
 }
-
-@media screen and (max-width: 601px) {
-  .innerNavDiv2 {
-    width: 62%;
-  }
-}
-
 @media (max-width: 550px) {
   .innerNavDiv1 {
     margin-left: 2rem;
   }
-
   .innerNavDiv3 {
     margin-right: 2rem;
   }
+  .sideBar-profile-container {
+    width: 8rem;
+  }
 }
-
 @media (min-width: 550px) {
   .innerNavDiv4 {
     width: 17rem;
   }
 }
-
 #outer-container {
   display: flex;
   justify-content: center;
@@ -270,7 +269,6 @@ a {
   align-items: center;
   cursor: pointer;
 }
-
 .user-details #user-Logo {
   background-color: #d4af37;
   color: #1a1a1a;
@@ -285,7 +283,6 @@ a {
   align-items: center;
   font-size: 1.5rem;
 }
-
 .user-details .user-options {
   display: none;
   flex-direction: column;
@@ -304,7 +301,6 @@ a {
   height: 8rem;
   width: 8rem;
 }
-
 .user-details .user-options #logout-button-details {
   display: flex;
   justify-content: center;
@@ -313,27 +309,20 @@ a {
   margin-top: 0.5rem;
   border-top: 1px solid #fff;
 }
-
 .user-details .user-options p {
   margin: 0.5rem 0;
   color: #fff;
   white-space: nowrap;
 }
-
 .user-details .user-options p:hover {
   color: #d4af37;
 }
-
 .user-details .user-options .logout-btn {
   color: #ff4d4d;
 }
-
 .user-details .user-options .logout-btn:hover {
   color: #ff1a1a;
 }
-
 .user-details:hover .user-options {
   display: flex;
-}
-
-/*# sourceMappingURL=Navbar.css.map */
+}/*# sourceMappingURL=Navbar.css.map */

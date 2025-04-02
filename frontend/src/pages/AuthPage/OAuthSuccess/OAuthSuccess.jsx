@@ -10,8 +10,8 @@ function OAuthSuccess() {
 
 
         if (authToken && username) {
-            localStorage.setItem("Google Auth Toke : ", authToken);
-            localStorage.setItem("Google Username : ", username);
+            localStorage.setItem("authToken", authToken);
+            localStorage.setItem("username", username);
 
             console.log("OAuth Login Successful:", authToken, username);
         }
@@ -19,7 +19,10 @@ function OAuthSuccess() {
         navigate("/", { replace: true });
     }, [navigate]);
     return (
-        <h3>Redirecting....</h3>
+        <h3 style={{
+            color:
+                "#fff"
+        }}>Redirecting....</h3>
     )
 }
 
