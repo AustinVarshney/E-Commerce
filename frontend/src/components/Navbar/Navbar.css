@@ -15,6 +15,7 @@ a {
   background-color: #222;
   height: 5rem;
   font-size: 1.2rem;
+  position: relative;
 }
 
 .innerNavDiv1 {
@@ -50,14 +51,13 @@ a {
 
 .innerNavDiv3 {
   display: none;
-  height: 40px;
-  padding: 0 8px;
+  padding: 5px 8px;
   align-items: center;
   color: white;
   transition: 0.3s ease-in-out;
 }
 
-.hemburger:hover {
+.innerNavDiv3:hover {
   background-color: #FCE883;
   cursor: pointer;
   border-radius: 3px;
@@ -77,33 +77,41 @@ a {
     transform: rotate(0deg);
     opacity: 1;
   }
+
   to {
     transform: rotate(180deg);
     opacity: 0;
   }
 }
+
 @keyframes rotateBarIconAgain {
   from {
     transform: rotate(180deg);
     opacity: 0;
   }
+
   to {
     transform: rotate(0deg);
     opacity: 1;
   }
 }
+
 .innerNavDiv4 {
   position: absolute;
-  right: 10px;
-  top: 10px;
   background-color: white;
   border-radius: 4px;
   padding: 0.5rem 2rem;
   flex-direction: column;
-  align-items: flex-end;
   visibility: hidden;
   z-index: 100;
   font-weight: 400;
+  height: 100vh;
+  width: 14rem;
+  align-items: center;
+  right: 0;
+  top: 0;
+  background-color: #2f2e2e;
+  border: 1px solid black;
 }
 
 .openSideBar {
@@ -119,40 +127,55 @@ a {
     transform: translateX(1rem);
     opacity: 0;
   }
+
   to {
     transform: translateX(0px);
     opacity: 1;
   }
 }
+
 @keyframes sideBarGoing {
   from {
     transform: translateX(0px);
     opacity: 1;
     visibility: visible;
   }
+
   to {
     transform: translateX(-0.5rem);
     opacity: 0;
     visibility: hidden;
   }
 }
+
 .innerNavDiv5 {
-  padding: 4px 4px 0 4px;
+  padding: 4px;
   border-radius: 2px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
-.innerNavDiv5:hover {
+.close-icon-Nav {
+  padding: 4px;
+  border-radius: 0.25rem;
+  color: white;
+}
+
+.close-icon-Nav:hover {
   background-color: #d3d3d3;
   cursor: pointer;
+  color: black;
 }
 
 .innerNavDiv6 {
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
+  margin-top: 2rem;
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .innerNavDiv6 a {
@@ -161,22 +184,13 @@ a {
   padding: 0.5rem 0.5rem;
   border-radius: 3px;
   justify-content: center;
+  color: white;
 }
 
 .innerNavDiv6 a:hover {
   background-color: #d3d3d3;
   cursor: pointer;
   border-radius: 2rem;
-}
-
-.menu-options {
-  display: none;
-}
-
-.hemburger {
-  color: #fff;
-  margin-right: 2rem;
-  display: none;
 }
 
 @media (max-width: 900px) {
@@ -197,55 +211,53 @@ a {
     width: 55%;
     margin: 0;
   }
+
   .innerNavDiv2 a {
     padding: 1rem 1rem 0 0;
   }
+
   .menu-options {
     display: inline-block;
   }
+
   .innerNavDiv3 {
     display: flex;
-    margin-right: 3rem;
-    gap: 1rem;
+    margin-right: 5rem;
   }
+
   .innerNavDiv4 {
     display: flex;
   }
 }
-@media ((min-width: 900px) and (max-width: 950px)) {
-  .innerNavDiv2 {
-    gap: 9px;
-    margin-right: 15.5rem;
-  }
-}
+
 @media (min-width: 950px) {
   .innerNavDiv2 {
     margin-right: 19.5rem;
   }
 }
+
 @media screen and (max-width: 601px) {
   .innerNavDiv2 {
     width: 62%;
   }
 }
+
 @media (max-width: 550px) {
   .innerNavDiv1 {
     margin-left: 2rem;
   }
+
   .innerNavDiv3 {
     margin-right: 2rem;
   }
 }
-@media screen and (max-width: 426px) {
-  .innerNavDiv2 {
-    width: 75%;
+
+@media (min-width: 550px) {
+  .innerNavDiv4 {
+    width: 17rem;
   }
 }
-@media screen and (max-width: 326px) {
-  .innerNavDiv2 {
-    width: 100%;
-  }
-}
+
 #outer-container {
   display: flex;
   justify-content: center;
@@ -258,6 +270,7 @@ a {
   align-items: center;
   cursor: pointer;
 }
+
 .user-details #user-Logo {
   background-color: #d4af37;
   color: #1a1a1a;
@@ -272,6 +285,7 @@ a {
   align-items: center;
   font-size: 1.5rem;
 }
+
 .user-details .user-options {
   display: none;
   flex-direction: column;
@@ -290,6 +304,7 @@ a {
   height: 8rem;
   width: 8rem;
 }
+
 .user-details .user-options #logout-button-details {
   display: flex;
   justify-content: center;
@@ -298,25 +313,27 @@ a {
   margin-top: 0.5rem;
   border-top: 1px solid #fff;
 }
+
 .user-details .user-options p {
   margin: 0.5rem 0;
   color: #fff;
   white-space: nowrap;
 }
+
 .user-details .user-options p:hover {
   color: #d4af37;
 }
+
 .user-details .user-options .logout-btn {
   color: #ff4d4d;
 }
+
 .user-details .user-options .logout-btn:hover {
   color: #ff1a1a;
 }
+
 .user-details:hover .user-options {
   display: flex;
 }
 
-.menu-open {
-  display: inline-flex;
-  border-left: 2px solid #8b8888;
-}/*# sourceMappingURL=Navbar.css.map */
+/*# sourceMappingURL=Navbar.css.map */
