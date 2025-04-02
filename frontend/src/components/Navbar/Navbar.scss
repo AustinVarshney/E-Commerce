@@ -78,8 +78,20 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
-    width: 18%
+    gap: 0.8rem;
+}
+
+.login-small {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.login-small:hover {
+    background-color: #e0e0e0;
+    cursor: pointer;
+    border-radius: 2rem;
+    color: #000;
+    padding: 0.2rem 0.5rem
 }
 
 @keyframes rotateBarIcon {
@@ -224,7 +236,7 @@ a {
 
     .innerNavDiv2 {
         gap: 6px;
-        margin-right: 36rem;
+        margin-right: 13rem;
     }
 }
 
@@ -235,7 +247,7 @@ a {
 
     .innerNavDiv2 {
         gap: 6px;
-        margin-right: 36rem;
+        margin-right: 13rem;
     }
 }
 
@@ -258,13 +270,17 @@ a {
     }
 
     .profile-details-smaller {
-        display: inline;
+        display: flex;
+    }
+
+    .profile-details-smaller>a {
+        color: #fff;
     }
 }
 
 @media(min-width: 950px) {
     .innerNavDiv2 {
-        margin-right: 43rem;
+        margin-right: 18rem;
         // gap: 59px;
     }
 }

@@ -8,14 +8,23 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:5001/auth/google/callback",
     passReqToCallback: true
 },
-    function (accessToken, refreshToken, profile, cb) {
-        console.log("Google Profile : ", profile)
-        // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        // return cb(err, user);
-        // });
-        return done(null, profile);
-    }
-));
+    async (request, accessToken, refreshToken, profile, done) => {
+        try {
+            console.log("Google Profile:", profile);
+            return done(null, profile);
+        } catch (error) {
+            return done(error, null);
+        }
+    }));
+
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+})
+
+passport.deserializeUser((user, done) => {
+    done(null, user);
+})
 
 passport.serializeUser((user, done) => {
     done(null, user);

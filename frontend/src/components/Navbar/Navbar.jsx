@@ -59,7 +59,7 @@ const Navbar = () => {
                 <div className='sideBar-profile-container' >
                     <p className='profile-details-smaller'>
                         {!isLoggedIn ? (
-                            <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
+                            <NavLink to="/auth"><span className='login-small'><LoginIcon style={{ color: '#d4af37' }} />Login</span></NavLink>
                         ) : (
                             <div className='user-details'>
                                 <div id='user-Logo'>{username?.charAt(0)?.toUpperCase()}</div>
