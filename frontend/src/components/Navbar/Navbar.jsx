@@ -5,26 +5,66 @@ import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
+import React, { useState, useRef, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.scss';
-
-const links = [
-    { to: "/", icon: <HomeIcon style={{ color: '#d4af37' }} />, label: "Home" },
-    { to: "", icon: <ShoppingCartIcon style={{ color: '#d4af37' }} />, label: "Shop" },
-    { to: "", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact" },
-    { to: "", icon: <FavoriteIcon style={{ color: '#d4af37' }} />, label: "WishList" },
-    { to: "/auth", icon: <LoginIcon style={{ color: '#d4af37' }} />, label: "Login" }
-];
+import { useAuth } from '../../Context/AuthContext';
 
 const Navbar = () => {
     const [isSidemenuOpen, setIsSidemenuOpen] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false);
+    const [isProfileMenuOpen, setisProfileMenuOpen] = useState(false);
+    const { isLoggedIn, username, logoutContext } = useAuth();
+    const navigate = useNavigate();
 
     const toggleMenu = () => {
         setIsSidemenuOpen(!isSidemenuOpen);
         setHasInteracted(true);
     };
+
+    const handleLogout = () => {
+        logoutContext();
+        navigate("/");
+    }
+
+    const handleMouseEnter = () => {
+        setisProfileMenuOpen(true);
+    };
+    
+    const handleMouseLeave = (event) => {
+        if (!event.relatedTarget?.closest('.profile-section') && !event.relatedTarget?.closest('.profile-menu')) {
+            setisProfileMenuOpen(false);
+        }
+    };
+    
+
+    const links = [
+        { to: "/", icon: <HomeIcon style={{ color: '#d4af37' }} />, label: "Home" },
+        { to: "", icon: <ShoppingCartIcon style={{ color: '#d4af37' }} />, label: "Shop" },
+        { to: "", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact" },
+        { to: "", icon: <FavoriteIcon style={{ color: '#d4af37' }} />, label: "WishList" },
+        // { to: "/auth", icon: <LoginIcon style={{ color: '#d4af37' }} />, label: "Login" }
+        isLoggedIn
+            ? {
+                to: "", label: (
+                    <div
+                        className="profile-section"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                    >
+                        <span className="username-box">{username[0]}</span>
+                        <ArrowDropDownIcon className="dropdown-icon" />
+                    </div>
+                )
+            }
+            : { to: "/auth", icon: <LoginIcon style={{ color: '#d4af37' }} />, label: "Login" }
+    ];
+
+    const navRef = useRef(null);
 
     return (
         <div id="outer-container">
@@ -39,14 +79,27 @@ const Navbar = () => {
                 </div>
             </div>
 
-            <div className='outerNavDiv1'>
+            <div className='outerNavDiv1' >
                 <div className='innerNavDiv1'>
                     <p>Logo</p>
                 </div>
                 <div className='innerNavDiv2'>
                     {links.map((link, index) => (
-                        <NavLink key={index} to={link.to}>{link.icon}{link.label}</NavLink>
+                        <NavLink className={`${isLoggedIn ? 'logged-in' : ''}`} key={index} to={link.to}>{link.icon}{link.label}</NavLink>
                     ))}
+                    {isLoggedIn && (
+                        <div className="profile-menu"
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                            style={isProfileMenuOpen ? {} : { display: 'none' }}
+                        >
+                            <ul>
+                                <li><button className='profile-menu-items-Navbar'><AccountCircleIcon />Profile</button></li>
+                                <li><button className='profile-menu-items-Navbar'><ShoppingBasketIcon />My Orders</button></li>
+                                <li><button className='profile-menu-items-Navbar' onClick={handleLogout}><LockOpenIcon />Logout</button></li>
+                            </ul>
+                        </div>
+                    )}
                 </div>
                 <div className={`innerNavDiv3 ${hasInteracted ? (isSidemenuOpen ? 'openBarIcon' : 'closeBarIcon') : ''}`} onClick={toggleMenu}>
                     <MenuIcon />
