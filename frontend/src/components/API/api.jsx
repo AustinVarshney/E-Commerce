@@ -33,3 +33,13 @@ export const login = async (loginData) => {
         throw error;
     }
 }
+
+export const forgotPassword = async (userData) => {
+    try {
+        const response = await api.post("/auth/forgotPassword", userData);
+        console.log("Forgot Password");
+        return response.data;
+    } catch (err) {
+        console.log("Error", err);
+    }
+}

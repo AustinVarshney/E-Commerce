@@ -102,7 +102,7 @@
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  margin: 2rem 0 !important;
+  margin: 0.5rem 0 1.5rem 0 !important;
 }
 
 .register-button:hover,
@@ -112,10 +112,42 @@
 
 .heading {
   font-size: 2.5rem;
+  margin-bottom: 0;
 }
 
 .forgot-password {
   cursor: pointer;
+}
+
+.forgot-password:hover {
+  background-color: #D4AF37;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.5rem;
+  color: #fff;
+}
+
+.google-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+}
+
+.google-icon {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.google-container:hover {
+  cursor: pointer;
+  background-color: #282727;
 }
 
 @media screen and (max-width: 768px) {

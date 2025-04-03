@@ -83,7 +83,7 @@
 .cards-AllPro {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   padding: 1rem;
 }/*# sourceMappingURL=AllProducts.css.map */

@@ -72,6 +72,26 @@ a {
   animation: rotateBarIconAgain 500ms ease-out 0s;
 }
 
+.sideBar-profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.login-small {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.login-small:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+  border-radius: 2rem;
+  color: #000;
+  padding: 0.2rem 0.5rem;
+}
+
 @keyframes rotateBarIcon {
   from {
     transform: rotate(0deg);
@@ -188,13 +208,17 @@ a {
   color: black;
 }
 
+.profile-details-smaller {
+  display: none;
+}
+
 @media ((min-width: 768px) and (max-width: 800px)) {
   .innerNavDiv1 {
     margin-left: 1.5rem;
   }
   .innerNavDiv2 {
     gap: 6px;
-    margin-right: 11.5rem;
+    margin-right: 13rem;
   }
 }
 @media ((min-width: 800px) and (max-width: 950px)) {
@@ -203,7 +227,7 @@ a {
   }
   .innerNavDiv2 {
     gap: 6px;
-    margin-right: 12.5rem;
+    margin-right: 13rem;
   }
 }
 @media (min-width: 768px) {
@@ -225,10 +249,16 @@ a {
   .innerNavDiv4 {
     display: flex;
   }
+  .profile-details-smaller {
+    display: flex;
+  }
+  .profile-details-smaller > a {
+    color: #fff;
+  }
 }
 @media (min-width: 950px) {
   .innerNavDiv2 {
-    margin-right: 19.5rem;
+    margin-right: 18rem;
   }
 }
 @media (max-width: 550px) {
@@ -237,6 +267,9 @@ a {
   }
   .innerNavDiv3 {
     margin-right: 2rem;
+  }
+  .sideBar-profile-container {
+    width: 8rem;
   }
 }
 @media (min-width: 550px) {
@@ -250,81 +283,66 @@ a {
   align-items: center;
 }
 
-.profile-section {
+.user-details {
+  position: relative;
   display: flex;
   align-items: center;
-  color: black;
-  background-color: #D4AF37;
-  padding: 0.4rem 1rem;
-  border-radius: 2rem;
+  cursor: pointer;
 }
-
-.logged-in:nth-child(5):hover {
-  background-color: inherit;
-}
-
-.username-box {
+.user-details #user-Logo {
+  background-color: #d4af37;
+  color: #1a1a1a;
+  font-weight: 500;
+  padding: 0.2rem;
+  border-radius: 50%;
+  text-transform: uppercase;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5rem;
 }
-
-.profile-menu {
-  height: -moz-fit-content;
-  height: fit-content;
-  position: absolute;
-  right: 2rem;
-  top: 4rem;
-  z-index: 100;
-  border-radius: 0.5rem;
-}
-
-.profile-menu > ul {
-  display: flex;
+.user-details .user-options {
+  display: none;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin: 0;
-  border: 2px solid rgb(185, 185, 185);
-  border-radius: 0.25rem;
-}
-
-.profile-menu > ul > li {
-  list-style-type: none;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  z-index: 10;
   width: 100%;
+  border-top: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  height: 8rem;
+  width: 8rem;
+}
+.user-details .user-options #logout-button-details {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #fff;
 }
-
-.profile-menu-items-Navbar {
+.user-details .user-options p {
+  margin: 0.5rem 0;
+  color: #fff;
+  white-space: nowrap;
+}
+.user-details .user-options p:hover {
+  color: #d4af37;
+}
+.user-details .user-options .logout-btn {
+  color: #ff4d4d;
+}
+.user-details .user-options .logout-btn:hover {
+  color: #ff1a1a;
+}
+.user-details:hover .user-options {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  background-color: white;
-  padding: 0.75rem;
-  width: 11rem;
-  border-bottom: 1px solid gray;
-  background-color: #2c2c2c;
-  color: white;
-  font-size: 1.7rem;
-  gap: 0.5rem;
-  font-family: "Winky Sans", "Sans serif";
-}
-
-.profile-menu-items-Navbar:hover {
-  cursor: pointer;
-  background-color: #5d5b5b;
-}
-
-.profile-menu > ul > li:nth-child(1) > button {
-  border-top-left-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
-}
-
-.profile-menu > ul > li:nth-child(3) > button {
-  border-bottom-left-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
-  border-bottom: none;
-  color: #e95151;
 }/*# sourceMappingURL=Navbar.css.map */

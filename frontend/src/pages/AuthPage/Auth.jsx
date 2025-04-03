@@ -2,10 +2,11 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { useMutation } from "@tanstack/react-query";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toast';
-import { useAuth } from '../../Context/AuthContext';
+import googleIcon from '../../../src/assets/icons8-google.svg';
 import { login, register } from '../../components/API/api';
+import { useAuth } from '../../Context/AuthContext';
 
 import './Auth.css';
 
@@ -113,6 +114,24 @@ function Auth() {
     });
   }
 
+  const forgotPassword = useMutation({
+    mutationFn: (userData) => forgotPassword(userData),
+    onSuccess: async (response) => {
+      console.log("Forgot Password Successfully", response);
+
+      setTimeout(() => {
+        toast.success("Forgot Password Successfully");
+
+        setTimeout(() => {
+          navigate("/auth");
+        }, 1000)
+      }, 800);
+    }
+  })
+
+  const handleForgotPassword = () => {
+    forgotPassword.mutate()
+  }
   return (
     <>
       <div className="outer-container">
@@ -171,7 +190,8 @@ function Auth() {
                   onChange={handleOnChange}
                   value={userdetails.password}
                 />
-                {!isRegister && <p className="forgot-password">Forgot password?</p>}
+
+                {!isRegister && <p className="forgot-password" onClick={handleForgotPassword}>Forgot password?</p>}
 
                 <Stack spacing={2} direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '0.5rem' }}>
                   <Button variant="outlined" type='submit' className="login-button">
@@ -180,6 +200,8 @@ function Auth() {
                 </Stack>
               </form>
             </div>
+
+            <NavLink to="http://localhost:5001/auth/google" className='google-container'><span><img src={googleIcon} className='google-icon' /></span>Login with google</NavLink>
           </div>
         </div>
       </div>

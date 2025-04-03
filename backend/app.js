@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
@@ -5,6 +6,13 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const passport = require('passport')
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const session = require('express-session');
+const googleOAuth = require("./auth");
+const GoogleUser = require("./models/googleOAuth")
+
+
 
 //models
 const userRegisterInfo = require("./models/auth");
@@ -25,11 +33,70 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }
+console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
 
+
+app.use(session({
+    secret: process.env.GOOGLE_CLIENT_SECRET || 'secret',
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(cors(corsOptions))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/auth/google',
+    passport.authenticate('google', {
+        scope:
+            ['profile', 'email']
+    }
+    ));
+
+app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/' }),
+    async (req, res) => {
+        if (!req.user) {
+            return res.redirect('/login');
+        }
+
+        try {
+            const email = req.user.emails[0].value;
+            const username = req.user.displayName;
+
+            let user = await userRegisterInfo.findOne({ email });
+
+            if (!user) {
+                const randomPassword = Math.random().toString(36).slice(-8);
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(randomPassword, salt);
+
+                user = new userRegisterInfo({
+                    username,
+                    email,
+                    password: hashedPassword,
+                    mobile_number: "0000000000",
+                });
+
+                await user.save();
+                console.log("New Google User Saved:", user);
+            }
+            const token = jwt.sign({ email: user.email }, "e-commerce", { expiresIn: "0.5h" });
+
+            res.cookie("token", token, { httpOnly: true });
+            res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}`);
+
+        } catch (error) {
+            console.error("Error during Google OAuth:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
+    }
+);
+
 
 app.post('/register', async (req, res) => {
     try {
@@ -90,6 +157,10 @@ app.post("/login", async (req, res) => {
         console.error("Login error:", err);
         res.status(500).json({ message: "Server error" });
     }
+})
+
+app.get("/auth/forgotPassword", (req, res) => {
+    res.send("Done");
 })
 
 const PORT = 5001;
