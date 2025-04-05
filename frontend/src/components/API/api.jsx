@@ -36,10 +36,11 @@ export const login = async (loginData) => {
 
 export const forgotPassword = async (userData) => {
     try {
-        const response = await api.post("/auth/forgotPassword", userData);
-        console.log("Forgot Password");
+        const response = await api.patch("/auth/forgotPassword", userData);
+        console.log("Forgot Password Successful:", response.data);
         return response.data;
     } catch (err) {
-        console.log("Error", err);
+        console.error("Forgot Password Error:", err.response?.data?.message || err.message);
+        return Promise.reject(err.response?.data || { message: "Something went wrong" });
     }
-}
+};

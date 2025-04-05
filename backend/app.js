@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
-const googleOAuth = require("./auth");
+const googleOAuth = require("./authentications/google");
 const GoogleUser = require("./models/googleOAuth")
 
 
@@ -29,7 +29,7 @@ mongoose.connect(MONGO_URL)
 
 const corsOptions = {
     origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }
@@ -97,6 +97,19 @@ app.get('/auth/google/callback',
     }
 );
 
+app.get("/auth/amazon", (req, res) => {
+    passport.authenticate('amazon');
+})
+
+app.get("/auth/amazon/callback",
+    passport.authenticate('amazon', { failureRedirect: '/' }),
+    function (req, res) {
+        res.redirect('/success');
+    })
+
+app.get("/success", (req, res) => {
+    res.send("AMAZON Success");
+})
 
 app.post('/register', async (req, res) => {
     try {
@@ -159,8 +172,26 @@ app.post("/login", async (req, res) => {
     }
 })
 
-app.get("/auth/forgotPassword", (req, res) => {
-    res.send("Done");
+app.patch('/auth/forgotPassword', async (req, res) => {
+    try {
+        let { email, confirmNewPassword } = req.body;
+        let user = await userRegisterInfo.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: "No User Found" });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(confirmNewPassword, salt);
+
+        user.password = hashedPassword;
+        await user.save();
+
+        res.status(200).json({ message: "Password updated successfully" });
+
+    } catch (error) {
+        res.status(500).json({ message: "Error updating password: " + error.message });
+    }
 })
 
 const PORT = 5001;
