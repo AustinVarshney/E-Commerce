@@ -1,10 +1,10 @@
 body {
-    margin: 0;
-    font-family: "Winky Sans", "Sans serif";
-    /* background: linear-gradient(to bottom,
+        margin: 0;
+        font-family: "Winky Sans", "Sans serif";
+        /* background: linear-gradient(to bottom,
             #000000,
             #99EDC3); */
-    background: linear-gradient(45deg,
-            rgb(120, 120, 120),
-            rgb(0, 0, 0));
+        background: linear-gradient(45deg,
+                        rgb(120, 120, 120),
+                        rgb(0, 0, 0));
 }

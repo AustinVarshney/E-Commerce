@@ -218,7 +218,7 @@ a {
   }
   .innerNavDiv2 {
     gap: 6px;
-    margin-right: 13rem;
+    margin-right: 12rem;
   }
 }
 @media ((min-width: 800px) and (max-width: 950px)) {
