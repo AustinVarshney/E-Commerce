@@ -85,7 +85,7 @@ app.get('/auth/google/callback',
                 await user.save();
                 console.log("New Google User Saved:", user);
             }
-            const token = jwt.sign({ email: user.email }, "e-commerce", { expiresIn: "0.5h" });
+            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "0.5h" });
 
             res.cookie("token", token, { httpOnly: true });
             res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}`);
@@ -97,24 +97,26 @@ app.get('/auth/google/callback',
     }
 );
 
-app.get("/auth/amazon", (req, res) => {
-    passport.authenticate('amazon');
-})
+// app.get("/auth/amazon", (req, res) => {
+//     passport.authenticate('amazon');
+// })
 
-app.get("/auth/amazon/callback",
-    passport.authenticate('amazon', { failureRedirect: '/' }),
-    function (req, res) {
-        res.redirect('/success');
-    })
+// app.get("/auth/amazon/callback",
+//     passport.authenticate('amazon', { failureRedirect: '/' }),
+//     function (req, res) {
+//         res.redirect('/success');
+//     })
 
-app.get("/success", (req, res) => {
-    res.send("AMAZON Success");
-})
+// app.get("/success", (req, res) => {
+//     res.send("AMAZON Success");
+// })
 
 app.post('/register', async (req, res) => {
     try {
         const { username, email, password, mobile_number } = req.body;
-        console.log(username, email, password, mobile_number)
+        console.log("Register request received with:");
+        console.log({ username, email, password, mobile_number });
+
         if (!username || !email || !password || !mobile_number) {
             return res.status(400).json({ message: "All Fields are mandatory" });
         }
@@ -128,49 +130,33 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new userRegisterInfo({
-            username, email, password: hashedPassword, mobile_number
-        })
+            username,
+            email,
+            password: hashedPassword,
+            mobile_number
+        });
 
-        console.log(newUser);
+        console.log("User being saved:", newUser);
         await newUser.save();
 
-        const token = jwt.sign({ email: newUser.email }, "e-commerce", { expiresIn: "0.5h" })
+        const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET || "e-commerce-secret", { expiresIn: "0.5h" });
 
         res.cookie("token", token, { httpOnly: true });
-        console.log("cookie sent : ", token);
-        res.status(201).json({ message: "User registered successfully", token });
+        res.status(201).json({
+            message: "User registered successfully",
+            token,
+            user: {
+                username: newUser.username,
+                email: newUser.email
+            }
+        });
+
     } catch (err) {
         console.error("Error during signup:", err);
         res.status(500).json({ message: "Internal Server Error" });
     }
-})
+});
 
-app.post("/login", async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await userRegisterInfo.findOne({ email });
-        console.log(user);
-
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(401).json({ message: "Invalid credentials" });
-        }
-
-        const token = jwt.sign({ email: user.email }, "rupesh", { expiresIn: '0.5h' });
-
-        console.log("Login Successful for user : ", email);
-
-        res.status(200).json({ message: "Login successful", token, user: { username: user.username, email: user.email } });
-
-    } catch (err) {
-        console.error("Login error:", err);
-        res.status(500).json({ message: "Server error" });
-    }
-})
 
 app.patch('/auth/forgotPassword', async (req, res) => {
     try {

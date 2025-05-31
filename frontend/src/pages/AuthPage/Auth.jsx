@@ -32,8 +32,8 @@ function Auth() {
     confirmNewPassword: ""
   });
 
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
+  // const [otpSent, setOtpSent] = useState(false);
+  // const [otp, setOtp] = useState("");
 
   const navigate = useNavigate();
 
@@ -61,6 +61,7 @@ function Auth() {
         }
 
         toast.success("Registration Successfully");
+        // const username = userdetails.username || "Guest";
         loginContext(response.token, response.user);
         setUserDetails({
           username: "", email: "", password: "", mobile_number: ""
@@ -76,9 +77,9 @@ function Auth() {
     onError: (error) => {
       console.error("Mutation Error:", error);
     },
-    onSettled: () => {
-      console.log("Mutation Settled");
-    }
+    // onSettled: () => {
+    //   console.log("Mutation Settled");
+    // }
   })
 
   const loginMutation = useMutation({
@@ -228,7 +229,7 @@ function Auth() {
                 label="email" />
             </FormControl>
 
-            {otpSent && (
+            {/* {otpSent && (
               <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
                 <InputLabel htmlFor="otp">Enter OTP</InputLabel>
                 <OutlinedInput
@@ -240,7 +241,7 @@ function Auth() {
                   label="Enter OTP"
                 />
               </FormControl>
-            )}
+            )} */}
 
             <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
               <InputLabel htmlFor="outlined-adornment-password">new password</InputLabel>
