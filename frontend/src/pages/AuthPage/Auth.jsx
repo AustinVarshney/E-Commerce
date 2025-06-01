@@ -6,12 +6,14 @@ import Stack from '@mui/material/Stack';
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toast';
-import amazonIcon from '../../../src/assets/icons8-amazon.svg';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import googleIcon from '../../../src/assets/icons8-google.svg';
-import { forgotPassword, login, register } from '../../components/API/api';
+import { forgotPassword, login, register, sendOtp, verifyOtp } from '../../components/API/api';
 import { useAuth } from '../../Context/AuthContext';
 import './Auth.css';
+
 
 
 function Auth() {
@@ -32,8 +34,9 @@ function Auth() {
     confirmNewPassword: ""
   });
 
-  // const [otpSent, setOtpSent] = useState(false);
-  // const [otp, setOtp] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
 
   const navigate = useNavigate();
 
@@ -61,7 +64,6 @@ function Auth() {
         }
 
         toast.success("Registration Successfully");
-        // const username = userdetails.username || "Guest";
         loginContext(response.token, response.user);
         setUserDetails({
           username: "", email: "", password: "", mobile_number: ""
@@ -77,9 +79,9 @@ function Auth() {
     onError: (error) => {
       console.error("Mutation Error:", error);
     },
-    // onSettled: () => {
-    //   console.log("Mutation Settled");
-    // }
+    onSettled: () => {
+      console.log("Mutation Settled");
+    }
   })
 
   const loginMutation = useMutation({
@@ -103,6 +105,9 @@ function Auth() {
     },
     onError: (error) => {
       console.error("Login error:", error);
+      setTimeout(() => {
+        toast.error(error?.response?.data?.message || "Login failed", { autoClose: 1000 });
+      }, 700)
     }
   })
 
@@ -148,6 +153,30 @@ function Auth() {
     event.preventDefault();
   };
 
+
+  const sendOtpMutation = useMutation({
+    mutationFn: (email) => sendOtp(email),
+    onSuccess: () => {
+      toast.success("OTP sent to email.");
+      setOtpSent(true);
+    },
+    onError: () => {
+      toast.error("Failed to send OTP.");
+    },
+  });
+
+  const verifyOtpMutation = useMutation({
+    mutationFn: (data) => verifyOtp(data),
+    onSuccess: () => {
+      toast.success("OTP verified successfully.");
+      setIsOtpVerified(true);
+    },
+    onError: () => {
+      toast.error("Invalid OTP.");
+    },
+  });
+
+
   const forgot_Password = useMutation({
     mutationFn: (userData) => forgotPassword(userData),
     onSuccess: async (response) => {
@@ -155,14 +184,18 @@ function Auth() {
 
       setTimeout(() => {
         toast.success("Forgot Password Successfully");
-        forgotPasswordDetails.email = "",
-          forgotPasswordDetails.confirmNewPassword = "",
-          forgotPasswordDetails.newPassword = ""
+        setForgotPasswordDetails({
+          email: "",
+          newPassword: "",
+          confirmNewPassword: ""
+        });
         setTimeout(() => {
           navigate("/auth");
         }, 1000)
       }, 800)
-
+      setOtp("");
+      setOtpSent(false);
+      setIsOtpVerified(false);
     },
 
     onError: (error) => {
@@ -172,15 +205,24 @@ function Auth() {
   })
 
   const handleForgotPasswordSubmit = () => {
-    if (!forgotPasswordDetails.email || !forgotPasswordDetails.confirmNewPassword) {
-      toast.error("Please enter both email and new password!");
+    if (!isOtpVerified) {
+      toast.error("Please verify OTP first.");
       return;
-    } else if (forgotPasswordDetails.newPassword === forgotPasswordDetails.confirmNewPassword) {
-      forgot_Password.mutate(forgotPasswordDetails);
-    } else {
-      toast.error("Password does not match");
     }
+
+    if (!forgotPasswordDetails.newPassword || !forgotPasswordDetails.confirmNewPassword) {
+      toast.error("Please fill both password fields.");
+      return;
+    }
+
+    if (forgotPasswordDetails.newPassword !== forgotPasswordDetails.confirmNewPassword) {
+      toast.error("Passwords do not match.");
+      return;
+    }
+
+    forgot_Password.mutate(forgotPasswordDetails);
   };
+
 
   const openForgotPassword = () => {
     let forgotPasswordContainer = forgotPasswordRef.current;
@@ -195,6 +237,23 @@ function Auth() {
     }
   };
 
+  const handleSendOTP = () => {
+    if (!forgotPasswordDetails.email) {
+      toast.error("Enter your email first.");
+      return;
+    }
+    sendOtpMutation.mutate(forgotPasswordDetails.email);
+  };
+
+  const handleOtpVerification = () => {
+    if (!otp) {
+      toast.error("Please enter the OTP.");
+      return;
+    }
+    verifyOtpMutation.mutate({ email: forgotPasswordDetails.email, otp });
+  };
+
+
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -204,8 +263,10 @@ function Auth() {
 
   return (
     <>
+      <ToastContainer position="top-right"
+        autoClose={5000}
+      />
       <div className="outer-container">
-        <ToastContainer position="top-right" />
         <div
           className={`inner-container ${isRegister ? 'register-mode' : 'login-mode'}`}
         >
@@ -219,7 +280,7 @@ function Auth() {
                     <Button
                       variant="contained"
                       size="small"
-                      // onClick={handleSendOTP}
+                      onClick={handleSendOTP}
                       disabled={!forgotPasswordDetails.email}
                     >
                       Verify
@@ -229,69 +290,92 @@ function Auth() {
                 label="email" />
             </FormControl>
 
-            {/* {otpSent && (
-              <FormControl sx={{ m: 1, width: '30ch' }} variant="outlined">
-                <InputLabel htmlFor="otp">Enter OTP</InputLabel>
-                <OutlinedInput
-                  type="text"
-                  name="otp"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  id="otp"
-                  label="Enter OTP"
-                />
-              </FormControl>
-            )} */}
+            {otpSent && (
+              <>
+                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                  <InputLabel htmlFor="otp">Enter OTP</InputLabel>
+                  <OutlinedInput
+                    type="text"
+                    name="otp"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value)}
+                    id="otp"
+                    label="Enter OTP"
 
-            <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">new password</InputLabel>
-              <OutlinedInput type={showPassword ? 'text' : 'password'} name="confirmNewPassword"
-                value={forgotPasswordDetails.confirmNewPassword}
-                onChange={handleForgotPasswordChange}
-                id="outlined-adornment-password"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <Button
+                          variant="contained"
+                          size="small"
+                          onClick={handleOtpVerification}
+                          disabled={!forgotPasswordDetails.email}
+                        >
 
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label={
-                        showPassword ? 'hide the password' : 'display the password'
-                      }
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      onMouseUp={handleMouseUpPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
-            <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
-              <InputLabel htmlFor="outlined-adornment-password">confirm new password</InputLabel>
-              <OutlinedInput type={showPassword2 ? 'text' : 'password'} name='newPassword' value={forgotPasswordDetails.newPassword} onChange={handleForgotPasswordChange}
-                id="outlined-adornment-password"
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label={
-                        showPassword2 ? 'hide the password' : 'display the password'
-                      }
-                      onClick={handleClickShowPassword2}
-                      onMouseDown={handleMouseDownPassword}
-                      onMouseUp={handleMouseUpPassword}
-                      edge="end"
-                    >
-                      {showPassword2 ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                label="Password"
-              />
-            </FormControl>
+                          Verify OTP
+                        </Button>
+                      </InputAdornment>
+                    }
+                  />
 
-            <NavLink className='forgot-password-button' onClick={handleForgotPasswordSubmit}>Submit</NavLink>
+                </FormControl>
+
+              </>
+            )}
+
+
+            {isOtpVerified && (
+              <>
+                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">new password</InputLabel>
+                  <OutlinedInput type={showPassword2 ? 'text' : 'password'} name='newPassword' value={forgotPasswordDetails.newPassword} onChange={handleForgotPasswordChange}
+                    id="outlined-adornment-password"
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label={
+                            showPassword2 ? 'hide the password' : 'display the password'
+                          }
+                          onClick={handleClickShowPassword2}
+                          onMouseDown={handleMouseDownPassword}
+                          onMouseUp={handleMouseUpPassword}
+                          edge="end"
+                        >
+                          {showPassword2 ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+                <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                  <InputLabel htmlFor="outlined-adornment-password">confirm new password</InputLabel>
+                  <OutlinedInput type={showPassword ? 'text' : 'password'} name="confirmNewPassword"
+                    value={forgotPasswordDetails.confirmNewPassword}
+                    onChange={handleForgotPasswordChange}
+                    id="outlined-adornment-password"
+
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label={
+                            showPassword ? 'hide the password' : 'display the password'
+                          }
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          onMouseUp={handleMouseUpPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                  />
+                </FormControl>
+
+              </>
+            )}
+            <Button className='forgot-password-button' onClick={handleForgotPasswordSubmit} variant="contained">Submit</Button>
           </div>
           <div className="left-container">
             <h3>Welcome Back!</h3>
@@ -356,7 +440,7 @@ function Auth() {
             </div>
 
             <NavLink to="http://localhost:5001/auth/google" className='google-container'><span><img src={googleIcon} className='google-icon' /></span>Login with google</NavLink>
-            <NavLink to="http://localhost:5001/auth/amazon" className='amazon-container'><span><img src={amazonIcon} className='amazon-icon' /></span>Login with amazon</NavLink>
+            {/* <NavLink to="http://localhost:5001/auth/amazon" className='amazon-container'><span><img src={amazonIcon} className='amazon-icon' /></span>Login with amazon</NavLink> */}
           </div>
         </div>
       </div>

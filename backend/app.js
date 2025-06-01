@@ -11,7 +11,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 const googleOAuth = require("./authentications/google");
 const GoogleUser = require("./models/googleOAuth")
-
+const { sendOtpEmail } = require('./utils/mailer');
 
 
 //models
@@ -33,9 +33,8 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }
-console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
-
+// console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+// console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
 
 app.use(session({
     secret: process.env.GOOGLE_CLIENT_SECRET || 'secret',
@@ -157,6 +156,67 @@ app.post('/register', async (req, res) => {
     }
 });
 
+
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await userRegisterInfo.findOne({ email });
+        console.log(user);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: "Invalid credentials" });
+        }
+
+        const token = jwt.sign({ email: user.email }, "rupesh", { expiresIn: '0.5h' });
+
+        console.log("Login Successful for user : ", email);
+
+        res.status(200).json({ message: "Login successful", token, user: { username: user.username, email: user.email } });
+
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+})
+
+
+const otpStore = new Map();
+
+app.post('/auth/send-otp', async (req, res) => {
+    const { email } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+
+    try {
+        await sendOtpEmail(email, otp);
+        otpStore.set(email, { otp, expires: Date.now() + 5 * 60 * 1000 }); // 5 minutes
+        res.json({ message: 'OTP sent' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to send OTP' });
+    }
+});
+
+app.post('/auth/verify-otp', (req, res) => {
+    const { email, otp } = req.body;
+    const record = otpStore.get(email);
+
+    if (!record) return res.status(400).json({ message: 'OTP expired or not requested' });
+
+    if (record.otp !== otp) return res.status(400).json({ message: 'Invalid OTP' });
+
+    if (Date.now() > record.expires) {
+        otpStore.delete(email);
+        return res.status(400).json({ message: 'OTP expired' });
+    }
+
+    otpStore.delete(email); // remove after verification
+    res.json({ message: 'OTP verified' });
+});
 
 app.patch('/auth/forgotPassword', async (req, res) => {
     try {
