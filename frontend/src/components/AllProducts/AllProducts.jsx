@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AllProducts.scss';
 import ProductCard from '../ProductCard/ProductCard';
 import Pic1 from '../../assets/Pic1.jpg';
@@ -27,6 +27,14 @@ const AllProducts = () => {
     const [isOpenSort, setisOpenSort] = useState(false);
     const [isFilterSectionOpen, setisFilterSectionOpen] = useState(false);
     const [sortedProducts, setSortedProducts] = useState([...products]);
+
+    useEffect(() => {
+        if (isFilterSectionOpen) {
+            document.body.classList.add('blurred');
+        } else {
+            document.body.classList.remove('blurred');
+        }
+    });
 
     const handleSortSection = () => {
         setisOpenSort(!isOpenSort);
@@ -63,13 +71,12 @@ const AllProducts = () => {
         }
 
         setSortedProducts(sortedArray);
-        setIsOpenSort(false);
     };
 
     return (
-        <div className={`outer-AllPro-container ${isFilterSectionOpen ? 'blurred' : ''}`}>
-            <div className='filter-items-AllPro' style={isFilterSectionOpen ? {} : {display: 'none'}}>
-                <button onClick={handleFilterSection}><CloseIcon/></button>
+        <div className={`outer-AllPro-container`}>
+            <div className='filter-items-AllPro' style={isFilterSectionOpen ? {} : { display: 'none' }}>
+                <button onClick={handleFilterSection}><CloseIcon /></button>
             </div>
             <div className='heading-AllPro'>
                 <p>Accessories</p>

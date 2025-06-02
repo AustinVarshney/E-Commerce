@@ -7,3 +7,23 @@ body {
 body::-webkit-scrollbar {
     display: none;
 }
+
+.blurred{
+    filter: brightness(0.5);
+    pointer-events: none;
+}
+
+.filter-items-AllPro{
+    filter: none !important;
+    pointer-events: auto !important;
+}
+
+.navBarBlurred {
+    filter: brightness(0.4);
+    pointer-events: none;
+}
+
+.innerNavDiv4 {
+    filter: none !important;
+    pointer-events: auto !important;
+}
