@@ -120,15 +120,24 @@
 }
 
 .forgot-password:hover {
-  background-color: #D4AF37;
-  width: -moz-max-content;
-  width: max-content;
-  padding: 0.1rem 0.4rem;
-  border-radius: 0.5rem;
-  color: #fff;
+  color: #575656;
 }
 
-.google-container {
+.forgot-password-container {
+  height: 50%;
+  width: 25%;
+  background-color: #fdffff;
+  position: absolute;
+  z-index: 1;
+  border-radius: 2rem;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+}
+
+.forgot-password-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -137,9 +146,24 @@
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
-.google-icon {
+.google-container,
+.amazon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+  margin: 0.2rem 0;
+}
+
+.google-icon,
+.amazon-icon {
   display: flex;
   width: 1.5rem;
   height: 1.5rem;
