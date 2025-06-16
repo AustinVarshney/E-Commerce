@@ -1,0 +1,11 @@
+.outer-product {
+  margin: 15px 37px;
+}
+
+.back-to-products {
+  display: inline-flex;
+  font-size: 21px;
+  color: white;
+  align-items: center;
+  gap: 14px;
+}/*# sourceMappingURL=Product.css.map */
