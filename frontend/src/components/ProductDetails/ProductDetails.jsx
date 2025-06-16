@@ -74,7 +74,7 @@ const ProductDetails = () => {
         <div className="product-details">
             <div className="product_image">
                 <div className="product-main-image-container">
-                    <img src={images[currentIndex]} className="product-main-image" />
+                    <img src={images[currentIndex]} className="product-main-image" onClick={handleZoom}/>
                     <div className="left-arrow" onClick={goleft}>
                         <ArrowBackIosNewIcon style={{ fontSize: "1rem", marginLeft: "-0.1rem" }} />
                     </div>

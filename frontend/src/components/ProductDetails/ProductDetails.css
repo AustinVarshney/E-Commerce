@@ -13,7 +13,6 @@
 
 .product-main-image-container {
   width: 100%;
-  background-color: red;
   position: relative;
 }
 
@@ -108,10 +107,11 @@
   scroll-behavior: smooth;
 }
 
-.more-image-containers {
-  cursor: pointer;
+@media (max-width: 429px) {
+  .product-more-images-container {
+    justify-content: space-between;
+  }
 }
-
 .product-more-images-container::-webkit-scrollbar {
   display: none;
 }
@@ -121,6 +121,7 @@
   width: 5rem;
   -o-object-fit: cover;
      object-fit: cover;
+  cursor: pointer;
 }
 
 .product-details_info {
@@ -180,7 +181,7 @@
 
 .product-desc {
   color: rgba(255, 255, 255, 0.69);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 500;
 }
 
