@@ -16,6 +16,7 @@ const { sendOtpEmail } = require('./utils/mailer');
 
 //models
 const userRegisterInfo = require("./models/auth");
+const contactUsForm = require("./models/contact")
 
 const MONGO_URL = "mongodb://localhost:27017/e-commerce";
 mongoose.connect(MONGO_URL)
@@ -239,6 +240,17 @@ app.patch('/auth/forgotPassword', async (req, res) => {
         res.status(500).json({ message: "Error updating password: " + error.message });
     }
 })
+
+app.post('/contact', async (req, res) => {
+    try {
+        const { name, email, mobile, query } = req.body;
+        const newContact = new contactUsForm({ name, email, mobile, query });
+        await newContact.save();
+        res.status(201).json({ message: 'Contact saved successfully' });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save contact' });
+    }
+});
 
 const PORT = 5001;
 app.listen(PORT, () => {

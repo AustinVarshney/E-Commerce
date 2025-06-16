@@ -53,3 +53,13 @@ export const verifyOtp = async ({ email, otp }) => {
     const response = await axios.post(`${BASE_URL}/auth/verify-otp`, { email, otp });
     return response.data;
 };
+
+export const contact = async (formData) => {
+    try {
+        const response = await api.post('/contact', formData);
+        return response.data
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Something went wrong!');
+    }
+}

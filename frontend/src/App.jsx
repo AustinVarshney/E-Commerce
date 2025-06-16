@@ -7,6 +7,7 @@ import ProductCard from './components/ProductCard/ProductCard';
 import { AuthProvider } from './Context/AuthContext';
 import Auth from './pages/AuthPage/Auth';
 import OAuthSuccess from './pages/AuthPage/OAuthSuccess/oauthSuccess';
+import Contact from './pages/Contact/contact';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
 
@@ -25,6 +26,7 @@ function App() {
               <Route path='borderTest' element={<MovingBorder />} />
               <Route path='cardRoute' element={<ProductCard />} />
               <Route path='oauth-success' element={<OAuthSuccess />} />
+              <Route path='contact' element={<Contact />} />
             </Route>
           </Routes>
         </AuthProvider>
