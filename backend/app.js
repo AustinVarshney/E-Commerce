@@ -11,11 +11,12 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 const googleOAuth = require("./authentications/google");
 const GoogleUser = require("./models/googleOAuth")
-
+const { sendOtpEmail } = require('./utils/mailer');
 
 
 //models
 const userRegisterInfo = require("./models/auth");
+const contactUsForm = require("./models/contact")
 
 const MONGO_URL = "mongodb://localhost:27017/e-commerce";
 mongoose.connect(MONGO_URL)
@@ -33,9 +34,8 @@ const corsOptions = {
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }
-console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
-
+// console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
+// console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
 
 app.use(session({
     secret: process.env.GOOGLE_CLIENT_SECRET || 'secret',
@@ -85,7 +85,7 @@ app.get('/auth/google/callback',
                 await user.save();
                 console.log("New Google User Saved:", user);
             }
-            const token = jwt.sign({ email: user.email }, "e-commerce", { expiresIn: "0.5h" });
+            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "0.5h" });
 
             res.cookie("token", token, { httpOnly: true });
             res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}`);
@@ -97,24 +97,26 @@ app.get('/auth/google/callback',
     }
 );
 
-app.get("/auth/amazon", (req, res) => {
-    passport.authenticate('amazon');
-})
+// app.get("/auth/amazon", (req, res) => {
+//     passport.authenticate('amazon');
+// })
 
-app.get("/auth/amazon/callback",
-    passport.authenticate('amazon', { failureRedirect: '/' }),
-    function (req, res) {
-        res.redirect('/success');
-    })
+// app.get("/auth/amazon/callback",
+//     passport.authenticate('amazon', { failureRedirect: '/' }),
+//     function (req, res) {
+//         res.redirect('/success');
+//     })
 
-app.get("/success", (req, res) => {
-    res.send("AMAZON Success");
-})
+// app.get("/success", (req, res) => {
+//     res.send("AMAZON Success");
+// })
 
 app.post('/register', async (req, res) => {
     try {
         const { username, email, password, mobile_number } = req.body;
-        console.log(username, email, password, mobile_number)
+        console.log("Register request received with:");
+        console.log({ username, email, password, mobile_number });
+
         if (!username || !email || !password || !mobile_number) {
             return res.status(400).json({ message: "All Fields are mandatory" });
         }
@@ -128,22 +130,33 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new userRegisterInfo({
-            username, email, password: hashedPassword, mobile_number
-        })
+            username,
+            email,
+            password: hashedPassword,
+            mobile_number
+        });
 
-        console.log(newUser);
+        console.log("User being saved:", newUser);
         await newUser.save();
 
-        const token = jwt.sign({ email: newUser.email }, "e-commerce", { expiresIn: "0.5h" })
+        const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET || "e-commerce-secret", { expiresIn: "0.5h" });
 
         res.cookie("token", token, { httpOnly: true });
-        console.log("cookie sent : ", token);
-        res.status(201).json({ message: "User registered successfully", token });
+        res.status(201).json({
+            message: "User registered successfully",
+            token,
+            user: {
+                username: newUser.username,
+                email: newUser.email
+            }
+        });
+
     } catch (err) {
         console.error("Error during signup:", err);
         res.status(500).json({ message: "Internal Server Error" });
     }
-})
+});
+
 
 app.post("/login", async (req, res) => {
     try {
@@ -172,6 +185,40 @@ app.post("/login", async (req, res) => {
     }
 })
 
+
+const otpStore = new Map();
+
+app.post('/auth/send-otp', async (req, res) => {
+    const { email } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+
+    try {
+        await sendOtpEmail(email, otp);
+        otpStore.set(email, { otp, expires: Date.now() + 5 * 60 * 1000 }); // 5 minutes
+        res.json({ message: 'OTP sent' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Failed to send OTP' });
+    }
+});
+
+app.post('/auth/verify-otp', (req, res) => {
+    const { email, otp } = req.body;
+    const record = otpStore.get(email);
+
+    if (!record) return res.status(400).json({ message: 'OTP expired or not requested' });
+
+    if (record.otp !== otp) return res.status(400).json({ message: 'Invalid OTP' });
+
+    if (Date.now() > record.expires) {
+        otpStore.delete(email);
+        return res.status(400).json({ message: 'OTP expired' });
+    }
+
+    otpStore.delete(email); // remove after verification
+    res.json({ message: 'OTP verified' });
+});
+
 app.patch('/auth/forgotPassword', async (req, res) => {
     try {
         let { email, confirmNewPassword } = req.body;
@@ -193,6 +240,17 @@ app.patch('/auth/forgotPassword', async (req, res) => {
         res.status(500).json({ message: "Error updating password: " + error.message });
     }
 })
+
+app.post('/contact', async (req, res) => {
+    try {
+        const { name, email, mobile, query } = req.body;
+        const newContact = new contactUsForm({ name, email, mobile, query });
+        await newContact.save();
+        res.status(201).json({ message: 'Contact saved successfully' });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to save contact' });
+    }
+});
 
 const PORT = 5001;
 app.listen(PORT, () => {

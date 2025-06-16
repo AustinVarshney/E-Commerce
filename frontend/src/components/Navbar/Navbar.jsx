@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Avatar } from '@mui/material';
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
 import './Navbar.scss';
@@ -41,7 +41,7 @@ const Navbar = () => {
     const links = [
         { to: "/", icon: <HomeIcon style={{ color: '#d4af37' }} />, label: "Home" },
         { to: "/products", icon: <ShoppingCartIcon style={{ color: '#d4af37' }} />, label: "Shop" },
-        { to: "", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact" },
+        { to: "/contact", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact" },
         { to: "", icon: <FavoriteIcon style={{ color: '#d4af37' }} />, label: "WishList" },
     ];
 
