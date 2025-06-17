@@ -101,13 +101,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
 }
 
-@media (max-width: 429px) {
+@media (max-width: 440px) {
   .product-more-images-container {
     justify-content: space-between;
   }
@@ -265,6 +265,7 @@
 .favourite-product {
   height: 1.75rem;
   width: 1.75rem;
+  cursor: pointer;
 }
 
 @media ((max-width: 1130px) and (min-width: 850px)) {
@@ -310,13 +311,13 @@
 }
 
 .more-info1 {
-  color: #a7c608;
-  font-size: 0.75rem;
+  color: #d3ee4f;
+  font-size: 1rem;
   font-weight: 300;
 }
 
 .more-info2 {
   color: #FFF;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   font-weight: 300;
 }/*# sourceMappingURL=ProductDetails.css.map */

@@ -3,13 +3,15 @@ import Pic1 from "../../assets/Pic1.jpg";
 import Pic2 from "../../assets/Pic2.jpg";
 import Pic3 from "../../assets/Pic3.jpg";
 import Pic4 from "../../assets/Pic4.jpg";
+import Pic8 from "../../assets/Pic8.jpg";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Star from "../../assets/Star.svg";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import FavouriteIcon from "../../assets/Favourite.png";
+import NotFavouriteIcon from "../../assets/Favourite.png";
+import FavoriteIcon from '../../assets/Favourite2.png';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useState, useEffect } from "react";
 
@@ -17,8 +19,9 @@ const ProductDetails = () => {
     let [quantity, setQuantity] = useState(1);
     let [currentIndex, setCurrentIndex] = useState(0);
     let [isZoomed, setIsZoomed] = useState(false);
+    let [isFavourite, setIsFavourite] = useState(false);
 
-    const images = [Pic1, Pic2, Pic3, Pic4];
+    const images = [Pic8, Pic2, Pic3, Pic4];
 
     const incrementQuantity = () => {
         setQuantity(quantity + 1);
@@ -54,6 +57,10 @@ const ProductDetails = () => {
 
     const isMainImg = (index) => {
         return index === currentIndex;
+    }
+
+    const handleFavouriteToggle = () => {
+        setIsFavourite(!isFavourite);
     }
 
     useEffect(() => {
@@ -129,7 +136,7 @@ const ProductDetails = () => {
                     Experience unparalleled comfort with our premium ergonomic office chair. Designed to provide optimal support for your back and neck during long working hours. The breathable mesh material ensures proper ventilation, while the adjustable armrests and height settings allow you to customize the chair to your specific needs.
                 </p>
 
-                {/* <hr /> */}
+                <hr style={{borderColor: "#6f6f6f"}}/>
 
                 <p className="quantity-text">Quantity</p>
                 <div className="product-quantity">
@@ -144,7 +151,7 @@ const ProductDetails = () => {
                     </div>
                     <div className="addCart-favourite">
                         <button className="add-to-cart"><ShoppingCartIcon style={{ marginRight: "0.2rem" }} />Add To Cart</button>
-                        <img src={FavouriteIcon} className="favourite-product" alt="Favourite" />
+                        <img src={isFavourite ? FavoriteIcon : NotFavouriteIcon} className="favourite-product" alt="Favourite" onClick={handleFavouriteToggle} style={{ filter: "grayscale(1)" }} />
                     </div>
                 </div>
 

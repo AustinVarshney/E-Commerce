@@ -2,6 +2,7 @@ import './Product.scss'
 import { NavLink } from 'react-router';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ProductDetails from '../../components/ProductDetails/ProductDetails';
+import ProductMoreInfo from '../../components/ProductMoreInfo/ProductMoreInfo';
 
 const Product = () => {
   return (
@@ -10,6 +11,7 @@ const Product = () => {
             <ArrowBackIosNewIcon/> Back to Products
         </NavLink>
         <ProductDetails/>
+        <ProductMoreInfo/>
     </div>
   )
 }
