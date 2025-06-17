@@ -10,7 +10,7 @@ import OAuthSuccess from './pages/AuthPage/OAuthSuccess/oauthSuccess';
 import Contact from './pages/Contact/contact';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
-import Product from './pages/Product/Product';
+import SingleProduct from './pages/SingleProduct/SingleProduct';
 
 const queryClient = new QueryClient();
 
@@ -24,7 +24,7 @@ function App() {
               <Route index element={<Home />} />
               <Route path='auth' element={<Auth />} />
               <Route path='products' element={<AllProducts />} />
-              <Route path='product' element={<Product />} />
+              <Route path='product' element={<SingleProduct />} />
               <Route path='borderTest' element={<MovingBorder />} />
               <Route path='cardRoute' element={<ProductCard />} />
               <Route path='oauth-success' element={<OAuthSuccess />} />

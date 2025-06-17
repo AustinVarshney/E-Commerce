@@ -87,7 +87,7 @@
   max-width: 95%;
   max-height: 95%;
   -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   border-radius: 0.5rem;
 }
 
@@ -97,6 +97,7 @@
     max-height: 80%;
   }
 }
+
 .product-more-images-container {
   width: 100%;
   height: 6rem;
@@ -104,26 +105,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
 }
 
-@media (max-width: 429px) {
+@media (max-width: 440px) {
   .product-more-images-container {
     justify-content: space-between;
   }
 }
+
 .product-more-images-container::-webkit-scrollbar {
   display: none;
 }
 
-.product-more-images-container > img {
+.product-more-images-container>img {
   height: 95%;
   width: 5rem;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   cursor: pointer;
 }
 
@@ -199,7 +201,7 @@
   display: flex;
 }
 
-.product-quantity > div {
+.product-quantity>div {
   margin-top: 0.5rem;
   border: 1px solid #6C6C6C;
   width: 1.5rem;
@@ -269,6 +271,7 @@
 .favourite-product {
   height: 1.75rem;
   width: 1.75rem;
+  cursor: pointer;
 }
 
 @media ((max-width: 1130px) and (min-width: 850px)) {
@@ -276,37 +279,46 @@
     flex-direction: column;
     align-items: stretch;
   }
+
   .product-buynow {
     width: 100%;
   }
+
   .add-to-cart {
     width: calc(100% - 28px);
   }
 }
+
 @media (max-width: 850px) {
   .product-details {
     flex-direction: column;
   }
+
   .product_image,
   .product-details_info {
     width: 100%;
   }
+
   .product-title {
     margin-top: 1.5rem;
   }
 }
+
 @media (max-width: 600px) {
   .product-purchase {
     flex-direction: column;
     align-items: stretch;
   }
+
   .product-buynow {
     width: 100%;
   }
+
   .add-to-cart {
     width: calc(100% - 28px);
   }
 }
+
 .product-more-info {
   margin-top: 1.5rem;
   display: flex;
@@ -322,6 +334,8 @@
 
 .more-info2 {
   color: #FFF;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   font-weight: 300;
-}/*# sourceMappingURL=ProductDetails.css.map */
+}
+
+/*# sourceMappingURL=ProductDetails.css.map */
