@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import './AllProducts.scss';
-import ProductCard from '../ProductCard/ProductCard';
+import CloseIcon from '@mui/icons-material/Close';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import SwapVertIcon from '@mui/icons-material/SwapVert';
+import { useEffect, useState } from 'react';
 import Pic1 from '../../assets/Pic1.jpg';
 import Pic2 from '../../assets/Pic2.jpg';
 import Pic3 from '../../assets/Pic3.jpg';
@@ -8,10 +10,8 @@ import Pic4 from '../../assets/Pic4.jpg';
 import Pic5 from '../../assets/Pic5.jpg';
 import Pic6 from '../../assets/Pic6.jpg';
 import Pic7 from '../../assets/Pic7.jpg';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import CloseIcon from '@mui/icons-material/Close';
+import ProductCard from '../ProductCard/ProductCard';
+import './AllProducts.scss';
 
 const products = [
     { PicImg: Pic1, discount: 36, heading: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max', rating: 4.7, reviews: 336, price: 5600 },
@@ -29,12 +29,8 @@ const AllProducts = () => {
     const [sortedProducts, setSortedProducts] = useState([...products]);
 
     useEffect(() => {
-        if (isFilterSectionOpen) {
-            document.body.classList.add('blurred');
-        } else {
-            document.body.classList.remove('blurred');
-        }
-    });
+        document.body.style.overflow = isFilterSectionOpen ? 'hidden' : 'auto';
+    }, [isFilterSectionOpen]);
 
     const handleSortSection = () => {
         setisOpenSort(!isOpenSort);
@@ -74,25 +70,46 @@ const AllProducts = () => {
     };
 
     return (
-        <div className={`outer-AllPro-container`}>
-            <div className='filter-items-AllPro' style={isFilterSectionOpen ? {} : { display: 'none' }}>
-                <button onClick={handleFilterSection}><CloseIcon /></button>
-            </div>
-            <div className='heading-AllPro'>
+        <div className="outer-AllPro-container">
+            {/* Background Overlay */}
+            {isFilterSectionOpen && (
+                <div
+                    className="filter-backdrop"
+                    onClick={handleFilterSection} // click outside to close
+                />
+            )}
+            {isFilterSectionOpen && (
+                <div className="filter-panel">
+                    <button className="close-btn" onClick={handleFilterSection}>
+                        <CloseIcon />
+                    </button>
+                </div>
+            )}
+
+            {/* Page Content */}
+            <div className="heading-AllPro">
                 <p>Accessories</p>
             </div>
-            <div className='filter-AllPro'>
-                <button onClick={handleFilterSection}><FilterAltIcon />Filter<KeyboardArrowDownIcon /></button>
-                <button onClick={handleSortSection}><SwapVertIcon />Sort<KeyboardArrowDownIcon /></button>
-                <div className='sorted-list-container-AllPro' style={isOpenSort ? {} : { display: 'none' }}>
-                    <button onClick={() => [handleSort('Most Popular'), handleSortSection()]}>Most Popular</button>
-                    <button onClick={() => handleSort('Increasing Price')}>Increasing Price</button>
-                    <button onClick={() => handleSort('Decreasing Price')}>Decreasing Price</button>
-                    <button onClick={() => handleSort('No. of Reviews')}>No. of reviews</button>
-                    <button onClick={() => handleSort('Discount %')}>Discount %</button>
-                </div>
+            <div className="filter-AllPro">
+                <button onClick={handleFilterSection}>
+                    <FilterAltIcon />Filter<KeyboardArrowDownIcon />
+                </button>
+                <button onClick={handleSortSection}>
+                    <SwapVertIcon />Sort<KeyboardArrowDownIcon />
+                </button>
+
+                {isOpenSort && (
+                    <div className="sorted-list-container-AllPro">
+                        <button onClick={() => handleSort('Most Popular')}>Most Popular</button>
+                        <button onClick={() => handleSort('Increasing Price')}>Increasing Price</button>
+                        <button onClick={() => handleSort('Decreasing Price')}>Decreasing Price</button>
+                        <button onClick={() => handleSort('No. of Reviews')}>No. of reviews</button>
+                        <button onClick={() => handleSort('Discount %')}>Discount %</button>
+                    </div>
+                )}
             </div>
-            <div className='cards-AllPro'>
+
+            <div className="cards-AllPro">
                 {sortedProducts.map((product, index) => (
                     <ProductCard
                         key={index}
@@ -109,6 +126,7 @@ const AllProducts = () => {
             </div>
         </div>
     );
+
 };
 
 export default AllProducts;
