@@ -2,6 +2,7 @@ import React from 'react'
 import './CartComponent.scss';
 import CartProduct from '../CartProduct/CartProduct';
 import CartSummary from '../CartSummary/CartSummary';
+import SmallCartComponent from '../smallCartComponent/smallCartComponent';
 
 const CartComponent = () => {
     return (
@@ -22,6 +23,15 @@ const CartComponent = () => {
                 <CartProduct/>
                 <CartProduct/>
                 <CartProduct/>
+            </div>
+
+            <div className='small-cart-details'>
+                <SmallCartComponent/>
+                <SmallCartComponent/>
+                <SmallCartComponent/>
+                <SmallCartComponent/>
+                <SmallCartComponent/>
+                {/* <SmallCartComponent/> */}
             </div>
 
             <div className='cart-summary'>

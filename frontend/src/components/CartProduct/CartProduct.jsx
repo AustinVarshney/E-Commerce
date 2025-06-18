@@ -31,7 +31,7 @@ const CartProduct = ({stock = 10}) => {
             </div>
 
             <div className='cart-product-quantity'>
-                <input type="number" min="1" max={stock} defaultValue="1" />
+                <input type="number" min="1" max={stock} defaultValue="1" className='no-spinner'/>
             </div>
 
             <div className='cart-product-price'>

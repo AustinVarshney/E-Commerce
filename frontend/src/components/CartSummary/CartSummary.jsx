@@ -15,7 +15,7 @@ const CartSummary = () => {
                 </div>
                 <div className='cart-address'>
                     <p className='cart-summary-titles'>Address:</p>
-                    <p className='cart-summary-desc'>Dholakpur, Uttar Pradesh, India</p>
+                    <p className='cart-summary-desc cart-summary-addr'>Dholakpur, Uttar Pradesh, India Lorem ipsum dolor sit amet consectetur adipisicing</p>
                 </div>
                 <div className='cart-mobile'>
                     <p className='cart-summary-titles'>Mobile No.:</p>
@@ -43,8 +43,8 @@ const CartSummary = () => {
                         <ul>
                             <li>(1) $249.9 x 2</li>
                             <li>(2) $249.9 x 2</li>
-                            {/* <li>(3) $249.9 x 2</li>
-                            <li>(4) $249.9 x 2</li> */}
+                            <li>(3) $249.9 x 2</li>
+                            <li>(4) $249.9 x 2</li>
                         </ul>
                     </p>
                 </div>

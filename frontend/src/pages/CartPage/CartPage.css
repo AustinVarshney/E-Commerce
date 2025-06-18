@@ -6,12 +6,19 @@
   gap: 0.75rem;
 }
 
-.cart-title > svg {
+@media (max-width: 770px) {
+  .cart-title {
+    margin-left: 0;
+    justify-content: center;
+  }
+}
+.cart-title > svg, .cart-title > p {
   color: white;
   font-size: 3rem;
 }
 
-.cart-title > p {
-  color: white;
-  font-size: 3rem;
+@media (max-width: 580px) {
+  .cart-title > svg, .cart-title > p {
+    font-size: 2rem;
+  }
 }/*# sourceMappingURL=CartPage.css.map */

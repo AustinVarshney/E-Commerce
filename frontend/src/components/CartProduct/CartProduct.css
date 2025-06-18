@@ -87,16 +87,17 @@
   color: white;
   font-size: 1.25rem;
   width: 100%;
-  padding-left: 0.5rem;
   min-width: -moz-fit-content;
   min-width: fit-content;
+  text-align: center;
+  font-family: "Winky Sans";
 }
 
 .cart-delete {
   display: flex;
   width: -moz-fit-content;
   width: fit-content;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .cart-delete > svg {
