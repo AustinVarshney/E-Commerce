@@ -1,9 +1,8 @@
-import React from 'react'
-import './CartProduct.scss';
-import Pic1 from '../../assets/Pic8.jpg';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Pic1 from '../../assets/Pic8.jpg';
+import './CartProduct.scss';
 
-const CartProduct = ({stock = 10}) => {
+const CartProduct = ({ stock = 10, quantity = 5, price = 249 }) => {
     // let stock = 10; // Example stock value, can be dynamic
     return (
         <div className='cart-product'>
@@ -31,15 +30,15 @@ const CartProduct = ({stock = 10}) => {
             </div>
 
             <div className='cart-product-quantity'>
-                <input type="number" min="1" max={stock} defaultValue="1" className='no-spinner'/>
+                <input type="number" min="1" max={stock} defaultValue={1} value={quantity} className='no-spinner' />
             </div>
 
             <div className='cart-product-price'>
-                <p>$249.9</p>
+                <p>{price * quantity}</p>
             </div>
 
             <div className='cart-delete'>
-                <DeleteIcon/>
+                <DeleteIcon />
             </div>
         </div>
     )

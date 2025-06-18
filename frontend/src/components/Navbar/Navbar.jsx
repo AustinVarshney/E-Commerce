@@ -7,10 +7,12 @@ import LoginIcon from '@mui/icons-material/Login';
 import MenuIcon from '@mui/icons-material/Menu';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Avatar } from '@mui/material';
-import { useEffect, useState } from 'react';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import { Avatar, Badge } from '@mui/material';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
+import { useCart } from '../../Context/CartContext';
 import './Navbar.scss';
 
 const Navbar = () => {
@@ -18,13 +20,7 @@ const Navbar = () => {
     const [hasInteracted, setHasInteracted] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isSidemenuOpen) {
-            document.body.classList.add('navBarBlurred');
-        } else {
-            document.body.classList.remove('navBarBlurred');
-        }
-    });
+    const { cartItems } = useCart();
 
     const { isLoggedIn, logoutContext, username } = useAuth();
 
@@ -40,31 +36,47 @@ const Navbar = () => {
 
     const links = [
         { to: "/", icon: <HomeIcon style={{ color: '#d4af37' }} />, label: "Home" },
-        { to: "/products", icon: <ShoppingCartIcon style={{ color: '#d4af37' }} />, label: "Shop" },
+        { to: "/products", icon: <StorefrontIcon style={{ color: '#d4af37' }} />, label: "Shop" },
         { to: "/contact", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact" },
-        { to: "", icon: <FavoriteIcon style={{ color: '#d4af37' }} />, label: "WishList" },
+        { to: "/wishlist", icon: <FavoriteIcon style={{ color: '#d4af37' }} /> },
+        {
+            to: "/cart", icon: (
+                <Badge badgeContent={cartItems.length} color="primary" showZero={true}>
+                    <ShoppingCartIcon style={{ color: '#d4af37' }} />
+                </Badge>
+            )
+        },
     ];
 
     return (
         <div id="outer-container">
-            <div className={`innerNavDiv4 ${hasInteracted ? (isSidemenuOpen ? 'openSideBar' : 'closeSideBar') : ''}`} onClick={toggleMenu}>
+            {/* Overlay backdrop only when sidebar is open */}
+            {isSidemenuOpen && <div className="navbar-overlay" onClick={toggleMenu}></div>}
+
+            {/* Sidebar */}
+            <div
+                className={`innerNavDiv4 ${hasInteracted ? (isSidemenuOpen ? 'openSideBar' : 'closeSideBar') : ''}`}
+            >
                 <div className='innerNavDiv5'>
-                    <CloseIcon className='close-icon-Nav' />
+                    <CloseIcon className='close-icon-Nav' onClick={toggleMenu} />
                 </div>
 
                 <div className='innerNavDiv6'>
                     {links.map((link, index) => (
-                        <NavLink key={index} to={link.to}>{link.icon}{link.label}</NavLink>
+                        <NavLink key={index} to={link.to} onClick={toggleMenu}>
+                            {link.icon}{link.label}
+                        </NavLink>
                     ))}
                 </div>
             </div>
 
+            {/* Top Navbar */}
             <div className='outerNavDiv1'>
-
                 <div className='innerNavDiv1'>
                     <p>Logo</p>
                 </div>
-                <div className='sideBar-profile-container' >
+
+                <div className='sideBar-profile-container'>
                     <p className='profile-details-smaller'>
                         {!isLoggedIn ? (
                             <NavLink to="/auth"><span className='login-small'><LoginIcon style={{ color: '#d4af37' }} />Login</span></NavLink>
@@ -85,6 +97,7 @@ const Navbar = () => {
                             </div>
                         )}
                     </p>
+
                     <div className='innerNavDiv2'>
                         {links.map((link, index) => (
                             <NavLink key={index} to={link.to}>{link.icon}{link.label}</NavLink>
@@ -108,7 +121,11 @@ const Navbar = () => {
                             </div>
                         )}
                     </div>
-                    <div className={`innerNavDiv3 ${hasInteracted ? (isSidemenuOpen ? 'openBarIcon' : 'closeBarIcon') : ''}`} onClick={toggleMenu}>
+
+                    <div
+                        className={`innerNavDiv3 ${hasInteracted ? (isSidemenuOpen ? 'openBarIcon' : 'closeBarIcon') : ''}`}
+                        onClick={toggleMenu}
+                    >
                         <MenuIcon />
                     </div>
                 </div>

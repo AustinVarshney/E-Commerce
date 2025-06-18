@@ -90,6 +90,10 @@
     gap: 0.5rem;
 }
 
+.heading-ProCard h3 {
+    margin: 0;
+}
+
 .heading-ProCard>a {
     color: white;
     display: -webkit-box;
@@ -209,5 +213,40 @@
 
     .rate-ProCard {
         font-size: 1rem;
+    }
+}
+
+.outer-ProductCard-containr {
+    position: relative;
+    background-color: #0a0a0a;
+    color: white;
+    border: 1px solid #76ff03;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.01);
+    }
+
+    .add-to-card-ProCard {
+        background-color: #00c853;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        z-index: 5;
+        position: relative;
+    }
+
+    .add-to-card-ProCard:hover {
+        background-color: #00b140;
     }
 }

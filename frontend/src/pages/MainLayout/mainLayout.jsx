@@ -7,9 +7,11 @@ function MainLayout() {
     return (
         <>
             <Navbar />
-            <CursorEffect />
-            <Outlet />
-            <Footer />
+            <div id="main-content">
+                <CursorEffect />
+                <Outlet />
+                <Footer />
+            </div>
         </>
     )
 }

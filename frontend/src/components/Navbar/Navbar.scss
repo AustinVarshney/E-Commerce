@@ -145,7 +145,7 @@ a {
     align-items: center;
     right: 0;
     top: 0;
-    background-color: #2f2e2e;
+    background-color: #121212;
     // padding: 0.5rem 3rem 0 2rem;
     border: 1px solid black;
 }
@@ -397,5 +397,48 @@ a {
 
     &:hover .user-options {
         display: flex;
+    }
+}
+
+.navBarBlurred {
+    filter: brightness(0.4);
+    pointer-events: none;
+}
+
+.blurred {
+    filter: brightness(0.5);
+    pointer-events: none;
+}
+
+.innerNavDiv4 {
+    filter: none !important;
+    pointer-events: auto !important;
+}
+
+.navbar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.innerNavDiv4 {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #121212;
+    transition: transform 0.3s ease-in-out;
+
+    &.openSideBar {
+        transform: translateX(0%);
+    }
+
+    &.closeSideBar {
+        transform: translateX(-100%);
     }
 }
