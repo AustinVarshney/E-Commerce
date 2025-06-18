@@ -1,21 +1,20 @@
-import "./ProductDetails.scss";
-import Pic1 from "../../assets/Pic1.jpg";
+import AddIcon from '@mui/icons-material/Add';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
+import { useEffect, useState } from "react";
+import NotFavouriteIcon from "../../assets/Favourite.png";
+import FavoriteIcon from '../../assets/Favourite2.png';
 import Pic2 from "../../assets/Pic2.jpg";
 import Pic3 from "../../assets/Pic3.jpg";
 import Pic4 from "../../assets/Pic4.jpg";
 import Pic8 from "../../assets/Pic8.jpg";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import Star from "../../assets/Star.svg";
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-import NotFavouriteIcon from "../../assets/Favourite.png";
-import FavoriteIcon from '../../assets/Favourite2.png';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useState, useEffect } from "react";
+import "./ProductDetails.scss";
 
-const ProductDetails = () => {
+const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) => {
     let [quantity, setQuantity] = useState(1);
     let [currentIndex, setCurrentIndex] = useState(0);
     let [isZoomed, setIsZoomed] = useState(false);
@@ -81,7 +80,7 @@ const ProductDetails = () => {
         <div className="product-details">
             <div className="product_image">
                 <div className="product-main-image-container">
-                    <img src={images[currentIndex]} className="product-main-image" onClick={handleZoom}/>
+                    <img src={pImage} className="product-main-image" onClick={handleZoom} />
                     <div className="left-arrow" onClick={goleft}>
                         <ArrowBackIosNewIcon style={{ fontSize: "1rem", marginLeft: "-0.1rem" }} />
                     </div>
@@ -105,15 +104,15 @@ const ProductDetails = () => {
                 <div className="product-more-images-container">
                     {images.map((imageSrc, index) => (
                         <img src={imageSrc} key={index} onClick={() => { setCurrentIndex(index) }}
-                            className="more-image-containers" 
-                            style={isMainImg(index) ? {outline: "3px solid rgba(255,187,51,1)", outlineOffset: "-3px"} : {}}
-                            />
+                            className="more-image-containers"
+                            style={isMainImg(index) ? { outline: "3px solid rgba(255,187,51,1)", outlineOffset: "-3px" } : {}}
+                        />
                     ))}
                 </div>
             </div>
             {/* ---------------------------------------------------------------------------------------- */}
             <div className="product-details_info">
-                <p className="product-title">Premium Comfort Ergonomic Office Chair</p>
+                <p className="product-title">{pName}</p>
 
                 <div className="product-rating">
                     <div className="rating-stars">
@@ -123,20 +122,20 @@ const ProductDetails = () => {
                         <img src={Star} alt="Rating" />
                         <img src={Star} alt="Rating" />
                     </div>
-                    <p className="rating-text">5 (127 reviews)</p>
+                    <p className="rating-text">{pRating} ({pReview} reviews)</p>
                 </div>
 
                 <div className="product-price">
-                    <p className="price-after-discount">$249.99</p>
-                    <p className="price-before-discount">$299.99</p>
-                    <p className="product-discount">Save 17%</p>
+                    <p className="price-after-discount">&#8377; {pPrice - pPrice * pDiscount / 100}</p>
+                    <p className="price-before-discount">&#8377; {pPrice}</p>
+                    <p className="product-discount">Save {pDiscount}%</p>
                 </div>
 
                 <p className="product-desc">
                     Experience unparalleled comfort with our premium ergonomic office chair. Designed to provide optimal support for your back and neck during long working hours. The breathable mesh material ensures proper ventilation, while the adjustable armrests and height settings allow you to customize the chair to your specific needs.
                 </p>
 
-                <hr style={{borderColor: "#6f6f6f"}}/>
+                <hr style={{ borderColor: "#6f6f6f" }} />
 
                 <p className="quantity-text">Quantity</p>
                 <div className="product-quantity">
