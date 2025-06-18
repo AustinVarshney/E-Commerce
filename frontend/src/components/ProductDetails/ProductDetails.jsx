@@ -5,6 +5,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import { useEffect, useState } from "react";
+import { toast } from 'react-toastify';
 import NotFavouriteIcon from "../../assets/Favourite.png";
 import FavoriteIcon from '../../assets/Favourite2.png';
 import Pic2 from "../../assets/Pic2.jpg";
@@ -12,6 +13,7 @@ import Pic3 from "../../assets/Pic3.jpg";
 import Pic4 from "../../assets/Pic4.jpg";
 import Pic8 from "../../assets/Pic8.jpg";
 import Star from "../../assets/Star.svg";
+import { useCart } from '../../Context/CartContext';
 import "./ProductDetails.scss";
 
 const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) => {
@@ -19,7 +21,7 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
     let [currentIndex, setCurrentIndex] = useState(0);
     let [isZoomed, setIsZoomed] = useState(false);
     let [isFavourite, setIsFavourite] = useState(false);
-
+    const { addToCart } = useCart();
     const images = [Pic8, Pic2, Pic3, Pic4];
 
     const incrementQuantity = () => {
@@ -60,6 +62,20 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
 
     const handleFavouriteToggle = () => {
         setIsFavourite(!isFavourite);
+    }
+
+    const handleAddToCart = () => {
+        const productToAdd = {
+            name: pName,
+            price: pPrice - (pPrice * pDiscount) / 100,
+            originalPrice: pPrice,
+            discount: pDiscount,
+            image: pImage,
+            quantity: quantity,
+        };
+
+        addToCart(productToAdd);
+        toast.success('🛒 Product added to cart!', { autoClose: 2000 });
     }
 
     useEffect(() => {
@@ -149,7 +165,7 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
                         <button className="product-buynow">Buy Now</button>
                     </div>
                     <div className="addCart-favourite">
-                        <button className="add-to-cart"><ShoppingCartIcon style={{ marginRight: "0.2rem" }} />Add To Cart</button>
+                        <button className="add-to-cart" onClick={handleAddToCart} ><ShoppingCartIcon style={{ marginRight: "0.2rem" }} />Add To Cart</button>
                         <img src={isFavourite ? FavoriteIcon : NotFavouriteIcon} className="favourite-product" alt="Favourite" onClick={handleFavouriteToggle} style={{ filter: "grayscale(1)" }} />
                     </div>
                 </div>

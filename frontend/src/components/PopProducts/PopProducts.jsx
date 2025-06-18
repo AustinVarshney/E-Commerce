@@ -1,4 +1,3 @@
-import { NavLink } from 'react-router';
 import Pic1 from '../../assets/Pic1.jpg';
 import Pic2 from '../../assets/Pic2.jpg';
 import Pic3 from '../../assets/Pic3.jpg';
@@ -64,23 +63,16 @@ const PopProducts = () => {
       <div className={`outer-AllPro-container`}>
         <div className='cards-AllPro'>
           {productss.map((product, index) => (
-            <NavLink
+            <ProductCard
               key={index}
-              to={`/products/product-details/${index}`}
-              className="product-link"
-            >
-              <ProductCard
-                key={index}
-                PicImg={product.PicImg}
-                discount={product.discount}
-                heading={product.heading}
-                linkToProduct={'/'}
-                rating={product.rating}
-                reviews={product.reviews}
-                price={product.price}
-                linkToCard={'/auth'}
-              />
-            </NavLink>
+              PicImg={product.PicImg}
+              discount={product.discount}
+              heading={product.heading}
+              linkToProduct={`/products/product-details/${index}`}
+              rating={product.rating}
+              reviews={product.reviews}
+              price={product.price}
+            />
           ))}
         </div>
       </div>

@@ -8,16 +8,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
-import { Avatar } from '@mui/material';
+import { Avatar, Badge } from '@mui/material';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../Context/AuthContext';
+import { useCart } from '../../Context/CartContext';
 import './Navbar.scss';
 
 const Navbar = () => {
     const [isSidemenuOpen, setIsSidemenuOpen] = useState(false);
     const [hasInteracted, setHasInteracted] = useState(false);
     const navigate = useNavigate();
+
+    const { cartItems } = useCart();
 
     const { isLoggedIn, logoutContext, username } = useAuth();
 
@@ -36,7 +39,13 @@ const Navbar = () => {
         { to: "/products", icon: <StorefrontIcon style={{ color: '#d4af37' }} />, label: "Shop" },
         { to: "/contact", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact" },
         { to: "/wishlist", icon: <FavoriteIcon style={{ color: '#d4af37' }} /> },
-        { to: "/cart", icon: <ShoppingCartIcon style={{ color: '#d4af37' }} /> },
+        {
+            to: "/cart", icon: (
+                <Badge badgeContent={cartItems.length} color="primary" showZero={true}>
+                    <ShoppingCartIcon style={{ color: '#d4af37' }} />
+                </Badge>
+            )
+        },
     ];
 
     return (

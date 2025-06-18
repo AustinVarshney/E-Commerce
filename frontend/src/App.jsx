@@ -1,5 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import AllProducts from './components/AllProducts/AllProducts';
 import MovingBorder from './components/MovingBorder/MovingBorder';
@@ -22,7 +23,9 @@ function App() {
       <Router>
         <AuthProvider>
           <ScrollToTop />
+          <ToastContainer autoClose={2000} />
           <Routes>
+
             <Route path='/' element={<MainLayout />}>
               <Route index element={<Home />} />
               <Route path='auth' element={<Auth />} />
