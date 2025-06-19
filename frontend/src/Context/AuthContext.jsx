@@ -1,27 +1,23 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [username, setUserName] = useState("");
+    const [user, setUser] = useState(null)
     const [token, setToken] = useState("");
-    const navigate = useNavigate();
 
     useEffect(() => {
         const storedToken = localStorage.getItem("authToken");
         const storedUser = localStorage.getItem("username");
 
         if (storedToken) {
-            // setUsername(storedUser);
             setToken(storedToken);
             setIsLoggedIn(true);
             setUserName(storedUser);
-            console.log("AuthContext Loaded : ", { storedToken });
-            if (window.location.pathname === "/login") {
-                navigate("/");
-            }
+        } else {
+            setIsLoggedIn(false);
         }
     }, []);
 
@@ -32,6 +28,7 @@ export const AuthProvider = ({ children }) => {
         setToken(newToken);
         setIsLoggedIn(true);
         setUserName(user.username);
+        setUser(user)
         console.log("User logged in: ", { token: newToken });
     }
 
@@ -41,11 +38,12 @@ export const AuthProvider = ({ children }) => {
         setToken("");
         setIsLoggedIn(false);
         setUserName("");
+        setUser(null)
     };
 
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, loginContext, logoutContext, token, username }}>
+        <AuthContext.Provider value={{ user, isLoggedIn, loginContext, logoutContext, token, username }}>
             {children}
         </AuthContext.Provider>
     );

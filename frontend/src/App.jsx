@@ -13,8 +13,9 @@ import CartPage from './pages/CartPage/CartPage';
 import Contact from './pages/Contact/contact';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
-import SingleProduct from './pages/SingleProduct/SingleProduct';
 import MyOrders from './pages/MyOrders/MyOrders';
+import SingleProduct from './pages/SingleProduct/SingleProduct';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
@@ -31,13 +32,19 @@ function App() {
               <Route index element={<Home />} />
               <Route path='auth' element={<Auth />} />
               <Route path='products' element={<AllProducts />}>
-                <Route path='product-details/:id' element={<SingleProduct />} />
+                <Route path='product-details/:id' element={
+                  <ProtectedRoute>
+                    <SingleProduct />
+                  </ProtectedRoute>} />
               </Route>
               <Route path='borderTest' element={<MovingBorder />} />
               <Route path='cardRoute' element={<ProductCard />} />
               <Route path='oauth-success' element={<OAuthSuccess />} />
-              <Route path='contact' element={<Contact />} />
-              <Route path='cart' element={<CartPage />} />
+              <Route path='contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+              <Route path='cart' element={
+                <ProtectedRoute>
+                  <CartPage />
+                </ProtectedRoute>} />
               <Route path='myorders' element={<MyOrders />} />
             </Route>
           </Routes>

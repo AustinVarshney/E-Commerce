@@ -34,7 +34,7 @@ a {
     gap: 26px;
 }
 
-.innerNavDiv2>a {
+.innerNavDiv2>div {
     display: flex;
     align-items: center;
     color: #fff;
@@ -44,22 +44,18 @@ a {
     padding: 1rem;
 }
 
-// .innerNavDiv2>a:nth-child(5){
-//     background-color: #d4af37;
-//     border-radius: 2rem;
-//     color: #000;
-// }
+.innerNavDiv2 span {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-.innerNavDiv2>a:hover {
-    background-color: #e0e0e0;
+.innerNavDiv2>div:hover {
     cursor: pointer;
     border-radius: 2rem;
     color: #000;
 }
-
-// .innerNavDiv2>a:nth-child(5):hover{
-//     background-color: #d4af37;
-// }
 
 .innerNavDiv3 {
     display: none;
@@ -94,6 +90,7 @@ a {
 .login-small {
     display: flex;
     gap: 0.4rem;
+    color: #fff;
 }
 
 .login-small:hover {
@@ -207,7 +204,6 @@ a {
 }
 
 .innerNavDiv6 {
-    // margin-top: 1rem;
     display: flex;
     flex-direction: column;
     // gap: 0.5rem;
@@ -218,7 +214,7 @@ a {
     width: 100%;
 }
 
-.innerNavDiv6 a {
+.innerNavDiv6 div {
     display: flex;
     gap: 0.25rem;
     padding: 0.5rem 0.5rem;
@@ -227,7 +223,7 @@ a {
     color: white;
 }
 
-.innerNavDiv6 a:hover {
+.innerNavDiv6 div:hover {
     background-color: #d3d3d3;
     cursor: pointer;
     border-radius: 2rem;
@@ -245,8 +241,9 @@ a {
     }
 
     .innerNavDiv2 {
-        gap: 6px;
-        margin-right: 12rem;
+        gap: 0.4rem;
+        margin-right: 14rem;
+        font-size: 1rem;
     }
 }
 
@@ -257,7 +254,7 @@ a {
 
     .innerNavDiv2 {
         gap: 6px;
-        margin-right: 13rem;
+        margin-right: 16rem;
     }
 }
 
@@ -289,14 +286,47 @@ a {
         display: flex;
     }
 
-    .profile-details-smaller>a {
+    .profile-details-smaller>div {
         color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .innerNavDiv4 {
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        right: 0;
+        width: 250px;
+        height: 100vh;
+        background-color: #121212;
+        transition: transform 0.3s ease-in-out;
+
+        &.openSideBar {
+            transform: translateX(0%);
+        }
+
+        &.closeSideBar {
+            transform: translateX(100%); // Slide out right
+        }
+    }
+
+    .navbar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5); // semi-transparent black
+        z-index: 998;
     }
 }
 
 @media(min-width: 950px) {
     .innerNavDiv2 {
-        margin-right: 18rem;
+        margin-right: 23rem;
         // gap: 59px;
     }
 }
@@ -307,7 +337,7 @@ a {
     }
 
     .innerNavDiv3 {
-        margin-right: 2rem;
+        margin-right: 7rem;
     }
 
     .sideBar-profile-container {
@@ -413,32 +443,4 @@ a {
 .innerNavDiv4 {
     filter: none !important;
     pointer-events: auto !important;
-}
-
-.navbar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.innerNavDiv4 {
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    right: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: #121212;
-    transition: transform 0.3s ease-in-out;
-
-    &.openSideBar {
-        transform: translateX(0%);
-    }
-
-    &.closeSideBar {
-        transform: translateX(-100%);
-    }
 }

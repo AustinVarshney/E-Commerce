@@ -10,7 +10,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { Avatar, Badge } from '@mui/material';
 import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../Context/AuthContext';
 import { useCart } from '../../Context/CartContext';
 import './Navbar.scss';
@@ -21,11 +23,11 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     const { cartItems } = useCart();
-
     const { isLoggedIn, logoutContext, username } = useAuth();
 
     const handleLogout = () => {
         logoutContext();
+        cartItems.length = 0
         navigate("/auth");
     };
 
@@ -34,43 +36,55 @@ const Navbar = () => {
         setHasInteracted(true);
     };
 
+    const handleProtectedRoute = (to, requiresAuth) => {
+        if (requiresAuth && !isLoggedIn) {
+            navigate("/auth");
+            setTimeout(() => {
+                toast.warning("Please login to access this page");
+            }, 1000);
+        } else {
+            navigate(to);
+        }
+        toggleMenu();
+    };
+
     const links = [
-        { to: "/", icon: <HomeIcon style={{ color: '#d4af37' }} />, label: "Home" },
-        { to: "/products", icon: <StorefrontIcon style={{ color: '#d4af37' }} />, label: "Shop" },
-        { to: "/contact", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact" },
-        { to: "/wishlist", icon: <FavoriteIcon style={{ color: '#d4af37' }} /> },
+        { to: "/", icon: <HomeIcon style={{ color: '#d4af37' }} />, label: "Home", requiresAuth: false },
+        { to: "/products", icon: <StorefrontIcon style={{ color: '#d4af37' }} />, label: "Shop", requiresAuth: false },
+        { to: "/contact", icon: <PeopleAltIcon style={{ color: '#d4af37' }} />, label: "Contact", requiresAuth: false },
+        { to: "/wishlist", icon: <FavoriteIcon style={{ color: '#d4af37' }} />, label: "Wishlist", requiresAuth: true },
         {
-            to: "/cart", icon: (
+            to: "/cart",
+            icon: (
                 <Badge badgeContent={cartItems.length} color="primary" showZero={true}>
                     <ShoppingCartIcon style={{ color: '#d4af37' }} />
                 </Badge>
-            )
+            ),
+            label: "Cart",
+            requiresAuth: true
         },
     ];
 
     return (
         <div id="outer-container">
-            {/* Overlay backdrop only when sidebar is open */}
             {isSidemenuOpen && <div className="navbar-overlay" onClick={toggleMenu}></div>}
 
-            {/* Sidebar */}
-            <div
-                className={`innerNavDiv4 ${hasInteracted ? (isSidemenuOpen ? 'openSideBar' : 'closeSideBar') : ''}`}
-            >
+            <div className={`innerNavDiv4 ${hasInteracted ? (isSidemenuOpen ? 'openSideBar' : 'closeSideBar') : ''}`}>
                 <div className='innerNavDiv5'>
                     <CloseIcon className='close-icon-Nav' onClick={toggleMenu} />
                 </div>
-
                 <div className='innerNavDiv6'>
                     {links.map((link, index) => (
-                        <NavLink key={index} to={link.to} onClick={toggleMenu}>
+                        <div
+                            key={index}
+                            onClick={() => handleProtectedRoute(link.to, link.requiresAuth)}
+                        >
                             {link.icon}{link.label}
-                        </NavLink>
+                        </div>
                     ))}
                 </div>
             </div>
 
-            {/* Top Navbar */}
             <div className='outerNavDiv1'>
                 <div className='innerNavDiv1'>
                     <p>Logo</p>
@@ -79,7 +93,16 @@ const Navbar = () => {
                 <div className='sideBar-profile-container'>
                     <p className='profile-details-smaller'>
                         {!isLoggedIn ? (
-                            <NavLink to="/auth"><span className='login-small'><LoginIcon style={{ color: '#d4af37' }} />Login</span></NavLink>
+                            <div>
+                                <span><FavoriteIcon style={{ color: '#d4af37' }} /></span>
+                                <span><Badge badgeContent={cartItems.length} color="primary" showZero={true}>
+                                    <ShoppingCartIcon style={{ color: '#d4af37' }} />
+                                </Badge>
+                                </span>
+                                <span className='login-small' onClick={() => navigate("/auth")}>
+                                    <LoginIcon style={{ color: '#d4af37' }} />Login
+                                </span>
+                            </div>
                         ) : (
                             <div className='user-details'>
                                 <div id='user-Logo'>{username?.charAt(0)?.toUpperCase()}</div>
@@ -100,10 +123,15 @@ const Navbar = () => {
 
                     <div className='innerNavDiv2'>
                         {links.map((link, index) => (
-                            <NavLink key={index} to={link.to}>{link.icon}{link.label}</NavLink>
+                            <div
+                                key={index}
+                                onClick={() => handleProtectedRoute(link.to, link.requiresAuth)}
+                            >
+                                {link.icon}{link.label}
+                            </div>
                         ))}
                         {!isLoggedIn ? (
-                            <NavLink to="/auth"><LoginIcon style={{ color: '#d4af37' }} />Login</NavLink>
+                            <span onClick={() => navigate("/auth")}><LoginIcon style={{ color: '#d4af37' }} />Login</span>
                         ) : (
                             <div className='user-details'>
                                 <div id='user-Logo'>{username?.charAt(0)?.toUpperCase()}</div>

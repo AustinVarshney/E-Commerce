@@ -6,12 +6,14 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../Context/AuthContext';
 import { useCart } from '../../Context/CartContext';
 import './ProductCard.scss';
 
 const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews, price }) => {
     const { addToCart } = useCart();
     const navigate = useNavigate();
+    const { isLoggedIn } = useAuth();
 
     const product = {
         image: PicImg,
@@ -26,6 +28,13 @@ const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews
     const handleAddToCart = (e) => {
         e.stopPropagation(); // ✅ Prevent navigation
         e.preventDefault();  // ✅ Prevent link from firing
+        if (!isLoggedIn) {
+            setTimeout(() => {
+                toast.error("Please log in to add items to your cart.");
+            }, 1000);
+            navigate("/auth")
+            return;
+        }
         addToCart(product);
         toast.success('🛒 Product added to cart!', { autoClose: 2000 });
     };
@@ -79,7 +88,11 @@ const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews
                 </div>
 
                 <div className='content-ProCard-3'>
-                    <p className='price-ProCard'>$ {price}</p>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', }}>
+                        <p className='price-ProCard'>&#8377;  {price - discount * price / 100}</p>
+                        <p style={{ textDecoration: 'line-through' }} >{price}</p>
+                    </div>
+
                     <button
                         className='add-to-card-ProCard'
                         onClick={handleAddToCart}
