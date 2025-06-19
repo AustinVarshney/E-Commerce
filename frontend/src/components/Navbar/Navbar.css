@@ -50,7 +50,6 @@ a {
 }
 
 .innerNavDiv2 > div:hover {
-  background-color: #e0e0e0;
   cursor: pointer;
   border-radius: 2rem;
   color: #000;

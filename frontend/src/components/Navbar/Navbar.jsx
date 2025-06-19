@@ -27,6 +27,7 @@ const Navbar = () => {
 
     const handleLogout = () => {
         logoutContext();
+        cartItems.length = 0
         navigate("/auth");
     };
 

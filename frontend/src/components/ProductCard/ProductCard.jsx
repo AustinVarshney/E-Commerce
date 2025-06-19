@@ -88,7 +88,11 @@ const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews
                 </div>
 
                 <div className='content-ProCard-3'>
-                    <p className='price-ProCard'>$ {price}</p>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', }}>
+                        <p className='price-ProCard'>&#8377;  {price - discount * price / 100}</p>
+                        <p style={{ textDecoration: 'line-through' }} >{price}</p>
+                    </div>
+
                     <button
                         className='add-to-card-ProCard'
                         onClick={handleAddToCart}
