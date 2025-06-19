@@ -14,6 +14,7 @@ import Contact from './pages/Contact/contact';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
+import MyOrders from './pages/MyOrders/MyOrders';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ function App() {
               <Route path='oauth-success' element={<OAuthSuccess />} />
               <Route path='contact' element={<Contact />} />
               <Route path='cart' element={<CartPage />} />
+              <Route path='myorders' element={<MyOrders />} />
             </Route>
           </Routes>
         </AuthProvider>
