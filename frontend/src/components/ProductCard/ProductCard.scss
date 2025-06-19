@@ -25,12 +25,9 @@
 }
 
 .image-ProCard>img {
-    height: 12.5rem;
-    width: 18rem;
-
     height: 13rem;
     width: 120%;
-    border-radius: 2.1rem;
+    // border-radius: 2.1rem;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
@@ -90,8 +87,13 @@
     gap: 0.5rem;
 }
 
-.heading-ProCard h3 {
+.heading-ProCard>h3 {
     margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;   /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .heading-ProCard>a {

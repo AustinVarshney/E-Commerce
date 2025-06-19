@@ -13,6 +13,7 @@ import CartPage from './pages/CartPage/CartPage';
 import Contact from './pages/Contact/contact';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
+import MyOrders from './pages/MyOrders/MyOrders';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 import ProtectedRoute from './utils/ProtectedRoute';
 
@@ -44,6 +45,7 @@ function App() {
                 <ProtectedRoute>
                   <CartPage />
                 </ProtectedRoute>} />
+              <Route path='myorders' element={<MyOrders />} />
             </Route>
           </Routes>
         </AuthProvider>
