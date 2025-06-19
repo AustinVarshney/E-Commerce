@@ -5,7 +5,9 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ZoomOutMapIcon from '@mui/icons-material/ZoomOutMap';
 import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import NotFavouriteIcon from "../../assets/Favourite.png";
 import FavoriteIcon from '../../assets/Favourite2.png';
 import Pic2 from "../../assets/Pic2.jpg";
@@ -13,6 +15,7 @@ import Pic3 from "../../assets/Pic3.jpg";
 import Pic4 from "../../assets/Pic4.jpg";
 import Pic8 from "../../assets/Pic8.jpg";
 import Star from "../../assets/Star.svg";
+import { useAuth } from '../../Context/AuthContext';
 import { useCart } from '../../Context/CartContext';
 import "./ProductDetails.scss";
 
@@ -23,6 +26,8 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
     let [isFavourite, setIsFavourite] = useState(false);
     const { addToCart } = useCart();
     const images = [Pic8, Pic2, Pic3, Pic4];
+    const { isLoggedIn } = useAuth();
+    const navigate = useNavigate()
 
     const incrementQuantity = () => {
         setQuantity(quantity + 1);
@@ -65,6 +70,13 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
     }
 
     const handleAddToCart = () => {
+        if (!isLoggedIn) {
+            setTimeout(() => {
+                toast.error("Please log in to add items to your cart.");
+            }, 1000);
+            navigate("/auth")
+            return;
+        }
         const productToAdd = {
             name: pName,
             price: pPrice - (pPrice * pDiscount) / 100,
@@ -78,6 +90,15 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
         toast.success('🛒 Product added to cart!', { autoClose: 2000 });
     }
 
+    const handleBuyNow = () => {
+        if (!isLoggedIn) {
+            setTimeout(() => {
+                toast.error("Please log in to add items to your cart.");
+            }, 1000);
+            navigate("/auth")
+            return;
+        }
+    }
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") {
@@ -162,7 +183,7 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
 
                 <div className="product-purchase">
                     <div className="product-buy">
-                        <button className="product-buynow">Buy Now</button>
+                        <button className="product-buynow" onClick={handleBuyNow}>Buy Now</button>
                     </div>
                     <div className="addCart-favourite">
                         <button className="add-to-cart" onClick={handleAddToCart} ><ShoppingCartIcon style={{ marginRight: "0.2rem" }} />Add To Cart</button>
