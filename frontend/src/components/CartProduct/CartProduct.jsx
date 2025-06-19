@@ -26,7 +26,7 @@ const CartProduct = ({ stock = 10, quantity = 5, price = 249 }) => {
             </div>
 
             <div className='cart-product-price'>
-                <p>$249.9</p>
+                <p>{price}</p>
             </div>
 
             <div className='cart-product-quantity'>

@@ -58,6 +58,7 @@
   padding: 0.5rem;
   width: 9rem;
   border-radius: 0.5rem;
+  z-index: 5;
 }
 
 .sorted-list-container-AllPro > button {
@@ -83,6 +84,11 @@
   padding: 1rem;
 }
 
+@media (max-width: 370px) {
+  .cards-AllPro {
+    padding: 0.2rem;
+  }
+}
 .filter-items-AllPro {
   position: fixed;
   top: 0;

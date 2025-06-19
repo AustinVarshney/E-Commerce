@@ -11,6 +11,7 @@ import Pic4 from '../../assets/Pic4.jpg';
 import Pic5 from '../../assets/Pic5.jpg';
 import Pic6 from '../../assets/Pic6.jpg';
 import Pic7 from '../../assets/Pic7.jpg';
+import Pic8 from '../../assets/Pic8.jpg';
 import ProductCard from '../ProductCard/ProductCard';
 import './AllProducts.scss';
 
@@ -21,7 +22,8 @@ export const products = [
     { PicImg: Pic4, discount: 19, heading: '4K Ultra HD Smart TV, 55-inch, Dolby Vision & HDR10+', rating: 3.8, reviews: 2, price: 500, index: '4' },
     { PicImg: Pic5, discount: 18, heading: 'Mechanical Keyboard, RGB Backlit, Hot-Swappable Switches', rating: 3.6, reviews: 542, price: 6600, index: '5' },
     { PicImg: Pic6, discount: 10, heading: 'Drone with 4K Camera, GPS, 40-Minute Flight Time', rating: 5.0, reviews: 1024, price: 9000, index: '6' },
-    { PicImg: Pic7, discount: 2, heading: 'Portable Power Bank, 20000mAh, Fast Charging USB-C PD', rating: 2.2, reviews: 556, price: 10000, index: '7' }
+    { PicImg: Pic7, discount: 2, heading: 'Portable Power Bank, 20000mAh, Fast Charging USB-C PD', rating: 2.2, reviews: 556, price: 10000, index: '7' },
+    { PicImg: Pic8, discount: 5, heading: 'Lorem ipsum dolor sit amet consectetur adipisicing elit', rating: 4.2, reviews: 53, price: 15000, index: '8' },
 ];
 
 const AllProducts = () => {
