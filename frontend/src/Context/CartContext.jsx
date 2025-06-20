@@ -3,40 +3,34 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = useState([]);
-
-    // Load from localStorage on first render
-    useEffect(() => {
-        const storedCart = localStorage.getItem('cart');
-        if (storedCart) {
-            setCartItems(JSON.parse(storedCart));
+    const [cartItems, setCartItems] = useState(() => {
+        try {
+            const stored = localStorage.getItem('cartItems');
+            return stored ? JSON.parse(stored) : [];
+        } catch (err) {
+            console.error("Failed to parse cart from localStorage:", err);
+            return [];
         }
-    }, []);
+    });
 
     // Save to localStorage whenever cartItems change
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItems));
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
 
     const addToCart = (product) => {
-        setCartItems(prevItems => {
-            const existingItemIndex = prevItems.findIndex(
-                item => item.name === product.name
-            );
+        setCartItems(prev => {
+            const alreadyInCart = prev.find(item => item._id === product._id);
 
-            if (existingItemIndex !== -1) {
-                // If already in cart, update quantity
-                const updatedItems = [...prevItems];
-                updatedItems[existingItemIndex].quantity += product.quantity;
-                return updatedItems;
+            if (alreadyInCart) {
+                return prev.map(item => item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item);
             }
-
-            return [...prevItems, product];
+            return [...prev, { ...product, quantity: 1 }];
         });
     };
 
-    const removeFromCart = (productName) => {
-        setCartItems(prevItems => prevItems.filter(item => item.name !== productName));
+    const removeFromCart = (productId) => {
+        setCartItems(prev => prev.filter(item => item._id !== productId));
     };
 
     const clearCart = () => {

@@ -16,6 +16,7 @@ const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews
     const { isLoggedIn } = useAuth();
 
     const product = {
+        _id: heading + "-" + price,
         image: PicImg,
         name: heading,
         price: price,
@@ -26,8 +27,8 @@ const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews
     };
 
     const handleAddToCart = (e) => {
-        e.stopPropagation(); // ✅ Prevent navigation
-        e.preventDefault();  // ✅ Prevent link from firing
+        e.stopPropagation();
+        e.preventDefault();
         if (!isLoggedIn) {
             setTimeout(() => {
                 toast.error("Please log in to add items to your cart.");
@@ -36,6 +37,7 @@ const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews
             return;
         }
         addToCart(product);
+        // console.log("Product card toast")
         toast.success('🛒 Product added to cart!', { autoClose: 2000 });
     };
 

@@ -24,10 +24,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <AuthProvider>
-          <ScrollToTop />
           <ToastContainer autoClose={2000} />
+          <ScrollToTop />
           <Routes>
-
             <Route path='/' element={<MainLayout />}>
               <Route index element={<Home />} />
               <Route path='auth' element={<Auth />} />
