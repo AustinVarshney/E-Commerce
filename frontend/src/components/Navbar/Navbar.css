@@ -53,6 +53,7 @@ a {
   cursor: pointer;
   border-radius: 2rem;
   color: #000;
+  background-color: #d3d3d3;
 }
 
 .innerNavDiv3 {
@@ -264,8 +265,7 @@ a {
     color: #fff;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 1rem;
+    gap: 0.4rem;
   }
   .innerNavDiv4 {
     position: fixed;

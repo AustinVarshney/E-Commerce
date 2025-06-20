@@ -120,13 +120,21 @@
 }
 
 .product-more-images-container > img {
-  height: 95%;
   width: 5rem;
   -o-object-fit: cover;
      object-fit: cover;
   cursor: pointer;
 }
 
+@media (max-width: 500px) {
+  .product-more-images-container {
+    width: 95%;
+    margin: auto;
+  }
+  .product-more-images-container > img {
+    width: 4rem;
+  }
+}
 .product-details_info {
   width: 45%;
 }
@@ -138,6 +146,17 @@
   font-weight: 500;
 }
 
+@media (max-width: 1000px) {
+  .product-title {
+    font-size: 1.8rem;
+    font-weight: 400;
+  }
+}
+@media (max-width: 550px) {
+  .product-title {
+    font-size: 1.4rem;
+  }
+}
 .product-rating {
   display: flex;
   align-items: center;
@@ -163,6 +182,20 @@
   font-weight: 500;
 }
 
+@media (max-width: 1000px) {
+  .price-after-discount {
+    font-size: 1.7rem;
+    font-weight: 400;
+  }
+}
+@media (max-width: 550px) {
+  .price-after-discount {
+    font-size: 1.2rem;
+  }
+  .product-price {
+    gap: 0.7rem;
+  }
+}
 .price-before-discount {
   color: rgba(255, 255, 255, 0.65);
   font-size: 1.5rem;
@@ -170,6 +203,17 @@
   text-decoration: line-through;
 }
 
+@media (max-width: 1000px) {
+  .price-before-discount {
+    font-size: 1.3rem;
+    font-weight: 400;
+  }
+}
+@media (max-width: 550px) {
+  .price-before-discount {
+    font-size: 1rem;
+  }
+}
 .product-discount {
   color: #FFF;
   text-align: center;
@@ -188,6 +232,11 @@
   font-weight: 500;
 }
 
+@media (max-width: 550px) {
+  .product-desc {
+    font-size: 1rem;
+  }
+}
 .quantity-text {
   color: #FFF;
   font-size: 1.5rem;
@@ -195,6 +244,11 @@
   margin-top: 0.75rem;
 }
 
+@media (max-width: 550px) {
+  .quantity-text {
+    font-size: 1.2rem;
+  }
+}
 .product-quantity {
   display: flex;
 }
@@ -292,9 +346,6 @@
   .product-details_info {
     width: 100%;
   }
-  .product-title {
-    margin-top: 1.5rem;
-  }
 }
 @media (max-width: 600px) {
   .product-purchase {
@@ -315,6 +366,14 @@
   align-items: center;
 }
 
+@media (max-width: 400px) {
+  .product-more-info {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+  }
+}
 .more-info1 {
   color: rgb(63, 243, 120);
   font-size: 1rem;

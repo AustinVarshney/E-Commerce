@@ -1,6 +1,6 @@
 import { Outlet } from "react-router";
 import Footer from "../../components/Footer/Footer";
-import CursorEffect from "../../components/GSAP/cursroEffect";
+import CursorEffect from "../../components/GSAP/cursorEffect";
 import Navbar from "../../components/Navbar/Navbar";
 
 function MainLayout() {
@@ -8,7 +8,7 @@ function MainLayout() {
         <>
             <Navbar />
             <div id="main-content">
-                <CursorEffect />
+                {/* <CursorEffect /> */}
                 <Outlet />
                 <Footer />
             </div>

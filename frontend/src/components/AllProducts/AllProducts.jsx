@@ -32,6 +32,8 @@ const AllProducts = () => {
     const [sortedProducts, setSortedProducts] = useState([...products]);
     const location = useLocation();
 
+    const isProductDetailsPage = location.pathname.includes('/product-details');
+
     useEffect(() => {
         document.body.style.overflow = isFilterSectionOpen ? 'hidden' : 'auto';
     }, [isFilterSectionOpen]);
@@ -91,30 +93,36 @@ const AllProducts = () => {
                     </div>
                 )}
 
-                {/* Page Content */}
-                <div className="heading-AllPro">
-                    <p>Accessories</p>
-                </div>
-                <div className="filter-AllPro">
-                    <button onClick={handleFilterSection}>
-                        <FilterAltIcon />Filter<KeyboardArrowDownIcon />
-                    </button>
-                    <button onClick={handleSortSection}>
-                        <SwapVertIcon />Sort<KeyboardArrowDownIcon />
-                    </button>
+                {!isProductDetailsPage && (
+                    <>
+                        <div className="filter-AllPro">
+                            <button onClick={handleFilterSection}>
+                                <FilterAltIcon />Filter<KeyboardArrowDownIcon />
+                            </button>
+                            <button onClick={handleSortSection}>
+                                <SwapVertIcon />Sort<KeyboardArrowDownIcon />
+                            </button>
 
-                    {isOpenSort && (
-                        <div className="sorted-list-container-AllPro">
-                            <button onClick={() => handleSort('Most Popular')}>Most Popular</button>
-                            <button onClick={() => handleSort('Increasing Price')}>Increasing Price</button>
-                            <button onClick={() => handleSort('Decreasing Price')}>Decreasing Price</button>
-                            <button onClick={() => handleSort('No. of Reviews')}>No. of reviews</button>
-                            <button onClick={() => handleSort('Discount %')}>Discount %</button>
+                            {isOpenSort && (
+                                <div className="sorted-list-container-AllPro">
+                                    <button onClick={() => handleSort('Most Popular')}>Most Popular</button>
+                                    <button onClick={() => handleSort('Increasing Price')}>Increasing Price</button>
+                                    <button onClick={() => handleSort('Decreasing Price')}>Decreasing Price</button>
+                                    <button onClick={() => handleSort('No. of Reviews')}>No. of reviews</button>
+                                    <button onClick={() => handleSort('Discount %')}>Discount %</button>
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
 
-                {location.pathname === '/products' && (
+                        {/* Page Content */}
+                        <div className="heading-AllPro">
+                            <p>Accessories</p>
+                        </div>
+                    </>
+                )}
+
+
+                {!isProductDetailsPage && (
                     <div className="cards-AllPro">
                         {sortedProducts.map((product, index) => (
                             <NavLink

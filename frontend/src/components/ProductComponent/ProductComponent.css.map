@@ -1,1 +1,1 @@
-{"version":3,"sources":["ProductComponent.scss","ProductComponent.css"],"names":[],"mappings":"AAAA;EACI,iBAAA;ACCJ;;ADEA;EACI,oBAAA;EACA,eAAA;EACA,YAAA;EACA,mBAAA;EACA,SAAA;ACCJ","file":"ProductComponent.css"}
+{"version":3,"sources":["ProductComponent.scss","ProductComponent.css"],"names":[],"mappings":"AAAA;EACI,mBAAA;ACCJ;;ADEA;EACI,aAAA;EACA,iBAAA;EACA,YAAA;EACA,mBAAA;EACA,WAAA;ACCJ;;ADEA;EACI;IACI,eAAA;IACA,oBAAA;IACA,WAAA;ECCN;EDEE;IACI,eAAA;ECAN;AACF","file":"ProductComponent.css"}
