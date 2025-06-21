@@ -1,10 +1,29 @@
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useCart } from '../../Context/CartContext';
+import { useState } from 'react';
 import './CartProduct.scss';
 
 const CartProduct = ({ product }) => {
-    const { removeFromCart } = useCart();
-    const { id, image, name, brand, size, color, price, quantity, stock } = product;
+    const [quantity, setQuantity] = useState(1);
+    const { id, image, name, brand, size, color, price, stock } = product;
+    const handleUp = () => {
+        setQuantity((prevQuantity) => {
+            if (prevQuantity == stock) {
+                return prevQuantity;
+            }
+            return prevQuantity + 1;
+        })
+    }
+
+    const handleDown = () => {
+        setQuantity((prevQuantity) => {
+            if (prevQuantity == 1) {
+                return prevQuantity;
+            }
+            return prevQuantity - 1;
+        })
+    }
     return (
         <div className='cart-product'>
             <div className='cart-id'>
@@ -30,8 +49,14 @@ const CartProduct = ({ product }) => {
                 <p>{price}</p>
             </div>
 
-            <div className='cart-product-quantity'>
+            {/* <div className='cart-product-quantity'>
                 <input type="number" min="1" max={stock} defaultValue={1} value={quantity} className='no-spinner' />
+            </div> */}
+
+            <div className='cart-product-quantity'>
+                <p className='cart-item-quantity-text'>{quantity}</p>
+                <p className='quantity-up-arrow' onClick={handleUp}><ArrowDropUpIcon /></p>
+                <p className='quantity-down-arrow' onClick={handleDown}><ArrowDropDownIcon /></p>
             </div>
 
             <div className='cart-product-price'>
