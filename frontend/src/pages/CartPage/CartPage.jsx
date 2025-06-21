@@ -4,7 +4,7 @@ import { useCart } from '../../Context/CartContext';
 import './CartPage.scss';
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
-const CartPage = ({ isCartEmpty = false }) => {
+const CartPage = ({ isCartEmpty = true }) => {
     // const { cartItems } = useCart();
     // if (cartItems.length === 0) return <p>Your cart is empty.</p>;
     return (
