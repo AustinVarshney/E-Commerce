@@ -8,8 +8,6 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
     const { user, isLoggedIn, authLoading } = useAuth();
     const userEmail = user?.email
-    // console.log("User from AuthContext:", user);
-    // console.log("User email:", user.email);
 
     const [cartItems, setCartItems] = useState([]);
 
@@ -35,9 +33,7 @@ export const CartProvider = ({ children }) => {
         setCartItems([]);
     };
 
-    // Load cart from localStorage for guest, or from DB for logged-in user
     useEffect(() => {
-        // Fetch cart only after auth finishes loading and user is available
         if (!authLoading && user && user.email) {
             console.log("Fetching cart for user:", user.email);
 
@@ -52,8 +48,6 @@ export const CartProvider = ({ children }) => {
         }
     }, [authLoading, user]);
 
-
-    // Save cart: DB for logged-in user, localStorage for guest
     useEffect(() => {
         if (isLoggedIn) {
             saveUserCart(user.email, cartItems)
@@ -63,7 +57,6 @@ export const CartProvider = ({ children }) => {
         }
     }, [cartItems, isLoggedIn, user?.email]);
 
-    // Remove guest cart on login
     useEffect(() => {
         if (isLoggedIn) {
             localStorage.removeItem('cartItems_guest');
