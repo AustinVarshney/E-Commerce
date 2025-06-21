@@ -79,9 +79,20 @@ export const saveUserCart = async (email, items) => {
 export const getUserCart = async (email) => {
     try {
         const response = await api.get(`/cart/${email}`);
+        console.log("Fetch Succccesss")
         return response.data;
     } catch (error) {
         console.error("Error fetching cart:", error.response?.data || error.message);
         throw error.response?.data || { message: "Failed to fetch cart" };
+    }
+};
+
+export const deleteCartItem = async (email, productId) => {
+    try {
+        const response = await api.delete(`/cart/${email}/${productId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error removing item from cart:', error.response?.data || error.message);
+        throw error.response?.data || { message: "Failed to delete item" };
     }
 };
