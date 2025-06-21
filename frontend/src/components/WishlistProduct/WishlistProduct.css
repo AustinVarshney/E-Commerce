@@ -1,0 +1,18 @@
+.Favorite-WishCard {
+  color: rgba(255, 255, 255, 0.783);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.favourite-3-ProCard {
+  cursor: pointer;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  color: red;
+}
+
+.favourite-3-ProCard:hover {
+  background-color: #9a9a9a;
+}/*# sourceMappingURL=WishlistProduct.css.map */

@@ -1,17 +1,19 @@
+import React from 'react'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useAuth } from '../../Context/AuthContext';
+import { useCart } from '../../Context/CartContext';
+import "./WishlistProduct.scss"
+import Pic1 from "../../assets/Pic1.jpg"
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useAuth } from '../../Context/AuthContext';
-import { useCart } from '../../Context/CartContext';
-import './ProductCard.scss';
-import Pic1 from "../../assets/Pic1.jpg"
+import DeleteIcon from '@mui/icons-material/Delete';
 
-const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lorem ipsumlorem ipsum", linkToProduct = "/", rating = 2, reviews = 25, price = 230 }) => {
+const WishlistProduct = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lorem ipsumlorem ipsum", linkToProduct = "/", rating = 2, reviews = 25, price = 230 }) => {
     const { addToCart } = useCart();
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth();
@@ -45,7 +47,7 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
     const handleCardClick = () => {
         navigate(linkToProduct);
     };
-
+    
     return (
         <div className='outer-ProductCard-containr' onClick={handleCardClick} style={{ cursor: 'pointer' }}>
             <div className='image-ProCard'>
@@ -55,11 +57,13 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
             <div className='content-ProCard'>
                 <div className='content-ProCard-1'>
                     <div className='discount-ProCard'>
-                        <p style={discount == 0 ? {display: "none"} : {}}>Up to {discount}% off</p>
+                        <p style={discount == 0 ? { display: "none" } : {}}>Up to {discount}% off</p>
                     </div>
-                    <div className='Favourite-ProCard'>
+                    <div className='Favorite-WishCard'>
                         <VisibilityIcon className='favourite-1-ProCard' />
                         <FavoriteBorderIcon className='favourite-2-ProCard' />
+                        <DeleteIcon className='favourite-3-ProCard' />
+                        
                     </div>
                 </div>
 
@@ -106,7 +110,7 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ProductCard;
+export default WishlistProduct

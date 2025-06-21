@@ -1,0 +1,27 @@
+.no-wishlist-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: rgb(221, 221, 221);
+  height: 20rem;
+  width: 90%;
+  border: 1px solid rgba(93, 92, 92, 0.429);
+  margin: auto;
+  padding: 1rem;
+  background-color: rgb(38, 38, 38);
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.no-wishlist-item > svg {
+  font-size: 2rem;
+  margin-left: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .no-wishlist-item > svg {
+    display: none;
+  }
+}/*# sourceMappingURL=WishlistProducts.css.map */
