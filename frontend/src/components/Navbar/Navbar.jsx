@@ -91,7 +91,7 @@ const Navbar = () => {
                 </div>
 
                 <div className='sideBar-profile-container'>
-                    <p className='profile-details-smaller'>
+                    <div className='profile-details-smaller'>
                         {!isLoggedIn ? (
                             <div>
                                 <span><FavoriteIcon style={{ color: '#d4af37' }} /></span>
@@ -119,7 +119,7 @@ const Navbar = () => {
                                 </div>
                             </div>
                         )}
-                    </p>
+                    </div>
 
                     <div className='innerNavDiv2'>
                         {links.map((link, index) => (

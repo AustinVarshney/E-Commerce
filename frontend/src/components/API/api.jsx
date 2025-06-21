@@ -63,3 +63,25 @@ export const contact = async (formData) => {
         alert('Something went wrong!');
     }
 }
+
+// Save or update user's cart
+export const saveUserCart = async (email, items) => {
+    try {
+        const response = await api.post('/cart', { email, items });
+        return response.data;
+    } catch (error) {
+        console.error("Error saving cart:", error.response?.data || error.message);
+        throw error.response?.data || { message: "Failed to save cart" };
+    }
+};
+
+// Get user's cart
+export const getUserCart = async (email) => {
+    try {
+        const response = await api.get(`/cart/${email}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching cart:", error.response?.data || error.message);
+        throw error.response?.data || { message: "Failed to fetch cart" };
+    }
+};

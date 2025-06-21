@@ -11,21 +11,24 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedToken = localStorage.getItem("authToken");
-        const storedUser = localStorage.getItem("username");
+        const storedUser = localStorage.getItem("user");
 
-        if (storedToken) {
+        if (storedToken && storedUser) {
             setToken(storedToken);
+            const parsedUser = JSON.parse(storedUser);
             setIsLoggedIn(true);
-            setUserName(storedUser);
-            setAuthLoading(false);
-        } else {
-            setIsLoggedIn(false);
+            setUserName(parsedUser.username);
+            setUser(parsedUser); // ✅ this sets both username and email
         }
+
+        setAuthLoading(false);
     }, []);
+
 
     const loginContext = (newToken, user) => {
         localStorage.setItem("authToken", newToken);
-        localStorage.setItem("username", user.username);
+        // localStorage.setItem("username", user.username);
+        localStorage.setItem("user", JSON.stringify(user));
 
         setToken(newToken);
         setIsLoggedIn(true);
@@ -41,6 +44,7 @@ export const AuthProvider = ({ children }) => {
         setIsLoggedIn(false);
         setUserName("");
         setUser(null)
+        localStorage.removeItem("user");
     };
 
 

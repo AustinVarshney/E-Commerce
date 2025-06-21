@@ -7,6 +7,7 @@ import MovingBorder from './components/MovingBorder/MovingBorder';
 import ProductCard from './components/ProductCard/ProductCard';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import { AuthProvider } from './Context/AuthContext';
+import { CartProvider } from './Context/CartContext';
 import Auth from './pages/AuthPage/Auth';
 import OAuthSuccess from './pages/AuthPage/OAuthSuccess/oauthSuccess';
 import CartPage from './pages/CartPage/CartPage';
@@ -24,29 +25,31 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <AuthProvider>
-          <ToastContainer autoClose={2000} />
-          <ScrollToTop />
-          <Routes>
-            <Route path='/' element={<MainLayout />}>
-              <Route index element={<Home />} />
-              <Route path='auth' element={<Auth />} />
-              <Route path='products' element={<AllProducts />}>
-                <Route path='product-details/:id' element={
+          <CartProvider>
+            <ToastContainer autoClose={2000} />
+            <ScrollToTop />
+            <Routes>
+              <Route path='/' element={<MainLayout />}>
+                <Route index element={<Home />} />
+                <Route path='auth' element={<Auth />} />
+                <Route path='products' element={<AllProducts />}>
+                  <Route path='product-details/:id' element={
+                    <ProtectedRoute>
+                      <SingleProduct />
+                    </ProtectedRoute>} />
+                </Route>
+                <Route path='borderTest' element={<MovingBorder />} />
+                <Route path='cardRoute' element={<ProductCard />} />
+                <Route path='oauth-success' element={<OAuthSuccess />} />
+                <Route path='contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+                <Route path='cart' element={
                   <ProtectedRoute>
-                    <SingleProduct />
+                    <CartPage />
                   </ProtectedRoute>} />
+                <Route path='myorders' element={<MyOrders />} />
               </Route>
-              <Route path='borderTest' element={<MovingBorder />} />
-              <Route path='cardRoute' element={<ProductCard />} />
-              <Route path='oauth-success' element={<OAuthSuccess />} />
-              <Route path='contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-              <Route path='cart' element={
-                <ProtectedRoute>
-                  <CartPage />
-                </ProtectedRoute>} />
-              <Route path='myorders' element={<MyOrders />} />
-            </Route>
-          </Routes>
+            </Routes>
+          </CartProvider>
         </AuthProvider>
       </Router>
     </QueryClientProvider>

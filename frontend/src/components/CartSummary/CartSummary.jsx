@@ -1,13 +1,12 @@
-import React from 'react'
-import './CartSummary.scss';
-import EditIcon from '@mui/icons-material/Edit';
 import CallMadeIcon from '@mui/icons-material/CallMade';
+import EditIcon from '@mui/icons-material/Edit';
+import './CartSummary.scss';
 
 const CartSummary = () => {
     return (
         <div className='cart-summary-component'>
             <p className='cart-user-title'>Customer Details</p>
-            <hr className='cart-line'/>
+            <hr className='cart-line' />
             <div className="cart-user-info">
                 <div className='cart-username'>
                     <p className='cart-summary-titles'>Name:</p>
@@ -28,30 +27,30 @@ const CartSummary = () => {
             </div>
 
             <div className='cart-edit-info'>
-                EDIT INFO<EditIcon/>
+                EDIT INFO<EditIcon />
             </div>
 
-            <hr className='cart-line' style={{marginTop: "2rem", marginBottom: "2rem"}}/>
+            <hr className='cart-line' style={{ marginTop: "2rem", marginBottom: "2rem" }} />
 
             <div className='cart-summary-totals'>
                 <p className='cart-user-title'>Order Summary</p>
-                <hr className='cart-line' style={{width: '90%'}}/>
+                <hr className='cart-line' style={{ width: '90%' }} />
 
                 <div className='cart-calculations'>
                     <p className='cart-calc-title'>Subtotal:</p>
-                    <p className='cart-calc'>
+                    <div className='cart-calc'>
                         <ul>
                             <li>(1) $249.9 x 2</li>
                             <li>(2) $249.9 x 2</li>
                             <li>(3) $249.9 x 2</li>
                             <li>(4) $249.9 x 2</li>
                         </ul>
-                    </p>
+                    </div>
                 </div>
 
-                <hr className='cart-line'/>
+                <hr className='cart-line' />
                 <p className='cart-total'>$755</p>
-                <hr className='cart-line'/>
+                <hr className='cart-line' />
 
                 <div className='cart-more-totals'>
                     <p className='more-totals-title'>Shipping :</p>
@@ -62,15 +61,15 @@ const CartSummary = () => {
                     <p className='more-totals-desc'>$ 0.00</p>
                 </div>
 
-                <hr className='cart-line'/>
+                <hr className='cart-line' />
 
                 <div className='cart-more-totals'>
-                    <p className='more-totals-title' style={{fontWeight: "700"}}>Total :</p>
-                    <p className='more-totals-desc' style={{fontWeight: "600"}}>$259.99</p>
+                    <p className='more-totals-title' style={{ fontWeight: "700" }}>Total :</p>
+                    <p className='more-totals-desc' style={{ fontWeight: "600" }}>$259.99</p>
                 </div>
             </div>
 
-            <button className='cart-proceed'>Proceed<CallMadeIcon/></button>
+            <button className='cart-proceed'>Proceed<CallMadeIcon /></button>
         </div>
     )
 }
