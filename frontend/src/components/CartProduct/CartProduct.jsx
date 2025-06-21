@@ -1,9 +1,31 @@
+import React, {useState} from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import Pic1 from '../../assets/Pic8.jpg';
 import './CartProduct.scss';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-const CartProduct = ({ stock = 10, quantity = 5, price = 249 }) => {
-    // let stock = 10; // Example stock value, can be dynamic
+const CartProduct = ({ stock = 10, price = 249 }) => {
+    const [quantity, setQuantity] = useState(1);
+
+    const handleUp = () => {
+        setQuantity((prevQuantity) => {
+            if (prevQuantity == stock) {
+                return prevQuantity;
+            }
+            return prevQuantity + 1;
+        })
+    }
+
+    const handleDown = () => {
+        setQuantity((prevQuantity) => {
+            if (prevQuantity == 1) {
+                return prevQuantity;
+            }
+            return prevQuantity - 1;
+        })
+    }
+
     return (
         <div className='cart-product'>
             <div className='cart-id'>
@@ -29,8 +51,14 @@ const CartProduct = ({ stock = 10, quantity = 5, price = 249 }) => {
                 <p>{price}</p>
             </div>
 
-            <div className='cart-product-quantity'>
+            {/* <div className='cart-product-quantity'>
                 <input type="number" min="1" max={stock} defaultValue={1} value={quantity} className='no-spinner' />
+            </div> */}
+
+            <div className='cart-product-quantity'>
+                <p className='cart-item-quantity-text'>{quantity}</p>
+                <p className='quantity-up-arrow' onClick={handleUp}><ArrowDropUpIcon /></p>
+                <p className='quantity-down-arrow' onClick={handleDown}><ArrowDropDownIcon /></p>
             </div>
 
             <div className='cart-product-price'>
