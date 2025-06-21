@@ -76,17 +76,35 @@
   font-family: "Winky Sans";
   font-size: 1.25rem;
   border-radius: 0.75rem;
-  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.no-spinner::-webkit-inner-spin-button,
-.no-spinner::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.cart-item-quantity-text {
+  margin-left: 0.4rem;
 }
 
-.no-spinner {
-  -moz-appearance: textfield;
+.quantity-up-arrow, .quantity-down-arrow {
+  position: absolute;
+  height: 50%;
+  right: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.quantity-up-arrow:hover, .quantity-down-arrow:hover {
+  background-color: rgba(49, 49, 49, 0.345);
+}
+
+.quantity-up-arrow {
+  top: 0rem;
+}
+
+.quantity-down-arrow {
+  bottom: 0rem;
 }
 
 .small-cart-delete-button {

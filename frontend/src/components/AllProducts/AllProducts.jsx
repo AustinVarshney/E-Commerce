@@ -17,13 +17,13 @@ import './AllProducts.scss';
 
 export const products = [
     { PicImg: Pic1, discount: 36, heading: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max', rating: 4.7, reviews: 336, price: 5600, index: '1' },
-    { PicImg: Pic2, discount: 54, heading: 'Gaming Laptop 15.6", Intel i9, RTX 4080, 32GB RAM, 1TB SSD', rating: 4.0, reviews: 456, price: 4000, index: '2' },
+    { PicImg: Pic2, discount: 0, heading: 'Gaming Laptop 15.6", Intel i9, RTX 4080, 32GB RAM, 1TB SSD', rating: 4.0, reviews: 456, price: 4000, index: '2' },
     { PicImg: Pic3, discount: 90, heading: 'Smartwatch with AMOLED Display, Heart Rate & Sleep Tracking', rating: 4.5, reviews: 30, price: 100, index: '3' },
     { PicImg: Pic4, discount: 19, heading: '4K Ultra HD Smart TV, 55-inch, Dolby Vision & HDR10+', rating: 3.8, reviews: 2, price: 500, index: '4' },
     { PicImg: Pic5, discount: 18, heading: 'Mechanical Keyboard, RGB Backlit, Hot-Swappable Switches', rating: 3.6, reviews: 542, price: 6600, index: '5' },
     { PicImg: Pic6, discount: 10, heading: 'Drone with 4K Camera, GPS, 40-Minute Flight Time', rating: 5.0, reviews: 1024, price: 9000, index: '6' },
     { PicImg: Pic7, discount: 2, heading: 'Portable Power Bank, 20000mAh, Fast Charging USB-C PD', rating: 2.2, reviews: 556, price: 10000, index: '7' },
-    { PicImg: Pic8, discount: 5, heading: 'Lorem ipsum dolor sit amet consectetur adipisicing elit', rating: 4.2, reviews: 53, price: 15000, index: '8' },
+    { PicImg: Pic8, discount: 5, heading: 'Lorem ipsum dolor sit Lorem ipsum dolor sit', rating: 4.2, reviews: 53, price: 15000, index: '8' },
 ];
 
 const AllProducts = () => {

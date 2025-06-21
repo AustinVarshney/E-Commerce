@@ -54,7 +54,7 @@ const ProductCard = ({ PicImg, discount, heading, linkToProduct, rating, reviews
             <div className='content-ProCard'>
                 <div className='content-ProCard-1'>
                     <div className='discount-ProCard'>
-                        <p>Up to {discount}% off</p>
+                        <p style={discount == 0 ? {display: "none"} : {}}>Up to {discount}% off</p>
                     </div>
                     <div className='Favourite-ProCard'>
                         <VisibilityIcon className='favourite-1-ProCard' />
