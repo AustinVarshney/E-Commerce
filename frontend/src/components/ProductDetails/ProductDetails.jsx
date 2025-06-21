@@ -86,8 +86,8 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
             quantity: quantity,
         };
 
-        addToCart(productToAdd);
         toast.success('🛒 Product added to cart!', { autoClose: 2000 });
+        addToCart(productToAdd);
     }
 
     const handleBuyNow = () => {

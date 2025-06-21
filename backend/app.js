@@ -17,6 +17,7 @@ const { sendOtpEmail } = require('./utils/mailer');
 //models
 const userRegisterInfo = require("./models/auth");
 const contactUsForm = require("./models/contact")
+const Cart = require("./models/cart")
 
 const MONGO_URL = "mongodb://localhost:27017/e-commerce";
 mongoose.connect(MONGO_URL)
@@ -88,7 +89,7 @@ app.get('/auth/google/callback',
             const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "0.5h" });
 
             res.cookie("token", token, { httpOnly: true });
-            res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}`);
+            res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
 
         } catch (error) {
             console.error("Error during Google OAuth:", error);
@@ -139,7 +140,7 @@ app.post('/register', async (req, res) => {
         console.log("User being saved:", newUser);
         await newUser.save();
 
-        const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET || "e-commerce-secret", { expiresIn: "0.5h" });
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '0.5h' });
 
         res.cookie("token", token, { httpOnly: true });
         res.status(201).json({
@@ -173,8 +174,7 @@ app.post("/login", async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ email: user.email }, "rupesh", { expiresIn: '0.5h' });
-
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '0.5h' });
         console.log("Login Successful for user : ", email);
 
         res.status(200).json({ message: "Login successful", token, user: { username: user.username, email: user.email } });
@@ -240,6 +240,55 @@ app.patch('/auth/forgotPassword', async (req, res) => {
         res.status(500).json({ message: "Error updating password: " + error.message });
     }
 })
+
+const verifyToken = (req, res, next) => {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "No token provided" });
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (err) {
+        res.status(403).json({ message: "Invalid token" });
+    }
+};
+
+app.get('/cart/:email', verifyToken, async (req, res) => {
+    console.log("GET /cart hit with:", req.params.email);
+    try {
+        const cart = await Cart.findOne({ email: req.params.email });
+        console.log("Cart found:", cart);
+        res.json(cart ? cart.items : []);
+    } catch (err) {
+        console.log("Error fetching cart:", err);
+        res.status(500).json({ error: 'Failed to fetch cart' });
+    }
+});
+
+app.post('/cart', async (req, res) => {
+    const { email, items } = req.body;
+    console.log("POST /cart hit with:", req.body);
+    try {
+        const existingCart = await Cart.findOne({ email });
+
+        if (existingCart) {
+            existingCart.items = items;
+            await existingCart.save();
+        } else {
+            const newCart = new Cart({ email, items });
+            await newCart.save();
+        }
+
+        res.json({ message: 'Cart saved' });
+    } catch (error) {
+        console.error("Error saving cart:", error);
+        res.status(500).json({ error: 'Failed to save cart' });
+    }
+});
+
+
+
 
 app.post('/contact', async (req, res) => {
     try {
