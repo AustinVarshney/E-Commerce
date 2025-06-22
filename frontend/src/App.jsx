@@ -8,6 +8,7 @@ import ProductCard from './components/ProductCard/ProductCard';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import { AuthProvider } from './Context/AuthContext';
 import { CartProvider } from './Context/CartContext';
+import { WishlistProvider } from './Context/WishListContext';
 import Auth from './pages/AuthPage/Auth';
 import OAuthSuccess from './pages/AuthPage/OAuthSuccess/oauthSuccess';
 import CartPage from './pages/CartPage/CartPage';
@@ -16,8 +17,8 @@ import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
 import MyOrders from './pages/MyOrders/MyOrders';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
-import ProtectedRoute from './utils/ProtectedRoute';
 import Wishlist from './pages/Wishlist/Wishlist';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
@@ -26,32 +27,34 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <AuthProvider>
-          <CartProvider>
-            <ToastContainer autoClose={2000} />
-            <ScrollToTop />
-            <Routes>
-              <Route path='/' element={<MainLayout />}>
-                <Route index element={<Home />} />
-                <Route path='auth' element={<Auth />} />
-                <Route path='products' element={<AllProducts />}>
-                  <Route path='product-details/:id' element={
+          <WishlistProvider>
+            <CartProvider>
+              <ToastContainer autoClose={2000} />
+              <ScrollToTop />
+              <Routes>
+                <Route path='/' element={<MainLayout />}>
+                  <Route index element={<Home />} />
+                  <Route path='auth' element={<Auth />} />
+                  <Route path='products' element={<AllProducts />}>
+                    <Route path='product-details/:id' element={
+                      <ProtectedRoute>
+                        <SingleProduct />
+                      </ProtectedRoute>} />
+                  </Route>
+                  <Route path='borderTest' element={<MovingBorder />} />
+                  <Route path='cardRoute' element={<ProductCard />} />
+                  <Route path='oauth-success' element={<OAuthSuccess />} />
+                  <Route path='contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+                  <Route path='wishlist' element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+                  <Route path='cart' element={
                     <ProtectedRoute>
-                      <SingleProduct />
+                      <CartPage />
                     </ProtectedRoute>} />
+                  <Route path='myorders' element={<MyOrders />} />
                 </Route>
-                <Route path='borderTest' element={<MovingBorder />} />
-                <Route path='cardRoute' element={<ProductCard />} />
-                <Route path='oauth-success' element={<OAuthSuccess />} />
-                <Route path='contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-                <Route path='wishlist' element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
-                <Route path='cart' element={
-                  <ProtectedRoute>
-                    <CartPage />
-                  </ProtectedRoute>} />
-                <Route path='myorders' element={<MyOrders />} />
-              </Route>
-            </Routes>
-          </CartProvider>
+              </Routes>
+            </CartProvider>
+          </WishlistProvider>
         </AuthProvider>
       </Router>
     </QueryClientProvider>

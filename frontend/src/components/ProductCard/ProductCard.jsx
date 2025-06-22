@@ -1,28 +1,36 @@
-import { useState } from 'react'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Pic1 from "../../assets/Pic1.jpg";
 import { useAuth } from '../../Context/AuthContext';
 import { useCart } from '../../Context/CartContext';
+import { useWishlist } from '../../Context/WishListContext';
 import './ProductCard.scss';
-import Pic1 from "../../assets/Pic1.jpg"
 
 const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lorem ipsumlorem ipsum", linkToProduct = "/", rating = 2, reviews = 25, price = 230 }) => {
     let [isLiked, setIsLiked] = useState(false);
     const { addToCart } = useCart();
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth();
+    const { addToWishlist, removeFromWishlist } = useWishlist();
 
     const handleLike = (e) => {
         e.stopPropagation();
         e.preventDefault();
-        setIsLiked(!isLiked);
+
+        if (!isLiked) {
+            setIsLiked(true)
+            toast.success("Product added to Wishlist")
+            addToWishlist(product)
+        }
+        else removeFromWishlist(product._id);
     }
 
     const product = {
@@ -69,7 +77,7 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
                     <div className='Favourite-ProCard'>
                         <VisibilityIcon className='favourite-1-ProCard' />
                         {isLiked ?
-                            <FavoriteIcon className='favourite-2-ProCard' onClick={handleLike} style={{color: '#f1284c'}}/>
+                            <FavoriteIcon className='favourite-2-ProCard' onClick={handleLike} style={{ color: '#f1284c' }} />
                             :
                             <FavoriteBorderIcon className='favourite-2-ProCard' onClick={handleLike} />
                         }

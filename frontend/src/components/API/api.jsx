@@ -96,3 +96,34 @@ export const deleteCartItem = async (email, productId) => {
         throw error.response?.data || { message: "Failed to delete item" };
     }
 };
+
+export const getWishlist = async (email) => {
+    try {
+        const response = await api.get(`/wishlist/${email}`);
+        console.log(response.data)
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching wishlist:", error.response?.data || error.message);
+        throw error.response?.data || { message: "Failed to fetch wishlist" };
+    }
+};
+
+export const addToWishlistAPI = async (email, product) => {
+    try {
+        const response = await api.post('/wishlist/add', { email, product });
+        return response.data;
+    } catch (error) {
+        console.error("Error adding to wishlist:", error.response?.data || error.message);
+        throw error.response?.data || { message: "Failed to add to wishlist" };
+    }
+};
+
+export const removeFromWishlistAPI = async (email, productId) => {
+    try {
+        const response = await api.delete(`/wishlist/${email}/${productId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error removing from wishlist:", error.response?.data || error.message);
+        throw error.response?.data || { message: "Failed to remove from wishlist" };
+    }
+};
