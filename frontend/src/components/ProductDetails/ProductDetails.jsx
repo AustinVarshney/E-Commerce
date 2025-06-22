@@ -8,8 +8,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import NotFavouriteIcon from "../../assets/Favourite.png";
-import FavoriteIcon from '../../assets/Favourite2.png';
+// import NotFavouriteIcon from "../../assets/Favourite.png";
+// import FavoriteIcon from '../../assets/Favourite2.png';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Pic2 from "../../assets/Pic2.jpg";
 import Pic3 from "../../assets/Pic3.jpg";
 import Pic4 from "../../assets/Pic4.jpg";
@@ -187,7 +189,12 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
                     </div>
                     <div className="addCart-favourite">
                         <button className="add-to-cart" onClick={handleAddToCart} ><ShoppingCartIcon style={{ marginRight: "0.2rem" }} />Add To Cart</button>
-                        <img src={isFavourite ? FavoriteIcon : NotFavouriteIcon} className="favourite-product" alt="Favourite" onClick={handleFavouriteToggle} style={{ filter: "grayscale(1)" }} />
+                        {/* <img src={isFavourite ? FavoriteIcon : NotFavouriteIcon} className="favourite-product" alt="Favourite" onClick={handleFavouriteToggle} style={{ filter: "grayscale(1)" }} /> */}
+                        {isFavourite ?
+                            <FavoriteIcon className='favourite-product' onClick={handleFavouriteToggle} style={{color: '#f1284c'}}/>
+                            :
+                            <FavoriteBorderIcon className='favourite-product' onClick={handleFavouriteToggle} />
+                        }
                     </div>
                 </div>
 

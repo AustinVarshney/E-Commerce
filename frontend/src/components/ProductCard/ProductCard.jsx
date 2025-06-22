@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../Context/AuthContext';
@@ -12,9 +14,16 @@ import './ProductCard.scss';
 import Pic1 from "../../assets/Pic1.jpg"
 
 const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lorem ipsumlorem ipsum", linkToProduct = "/", rating = 2, reviews = 25, price = 230 }) => {
+    let [isLiked, setIsLiked] = useState(false);
     const { addToCart } = useCart();
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth();
+
+    const handleLike = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setIsLiked(!isLiked);
+    }
 
     const product = {
         _id: heading + "-" + price,
@@ -55,11 +64,15 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
             <div className='content-ProCard'>
                 <div className='content-ProCard-1'>
                     <div className='discount-ProCard'>
-                        <p style={discount == 0 ? {display: "none"} : {}}>Up to {discount}% off</p>
+                        <p style={discount == 0 ? { display: "none" } : {}}>Up to {discount}% off</p>
                     </div>
                     <div className='Favourite-ProCard'>
                         <VisibilityIcon className='favourite-1-ProCard' />
-                        <FavoriteBorderIcon className='favourite-2-ProCard' />
+                        {isLiked ?
+                            <FavoriteIcon className='favourite-2-ProCard' onClick={handleLike} style={{color: '#f1284c'}}/>
+                            :
+                            <FavoriteBorderIcon className='favourite-2-ProCard' onClick={handleLike} />
+                        }
                     </div>
                 </div>
 
@@ -93,7 +106,7 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
                 <div className='content-ProCard-3'>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', }}>
                         <p className='price-ProCard'>&#8377;  {price - discount * price / 100}</p>
-                        <p style={discount == 0 ? {display: "none"} : { textDecoration: 'line-through' }} >{price}</p>
+                        <p style={discount == 0 ? { display: "none" } : { textDecoration: 'line-through' }} >{price}</p>
                     </div>
 
                     <button

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../Context/AuthContext';
@@ -8,15 +8,23 @@ import Pic1 from "../../assets/Pic1.jpg"
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const WishlistProduct = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lorem ipsumlorem ipsum", linkToProduct = "/", rating = 2, reviews = 25, price = 230 }) => {
+    let [isLiked, setIsLiked] = useState(false);
     const { addToCart } = useCart();
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth();
+
+    const handleLike = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        setIsLiked(!isLiked);
+    }
 
     const product = {
         _id: heading + "-" + price,
@@ -61,7 +69,11 @@ const WishlistProduct = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum 
                     </div>
                     <div className='Favorite-WishCard'>
                         <VisibilityIcon className='favourite-1-ProCard' />
-                        <FavoriteBorderIcon className='favourite-2-ProCard' />
+                        {isLiked ?
+                            <FavoriteIcon className='favourite-2-ProCard' onClick={handleLike} style={{color: '#f1284c'}}/>
+                            :
+                            <FavoriteBorderIcon className='favourite-2-ProCard' onClick={handleLike} />
+                        }
                         <DeleteIcon className='favourite-3-ProCard' />
                         
                     </div>
