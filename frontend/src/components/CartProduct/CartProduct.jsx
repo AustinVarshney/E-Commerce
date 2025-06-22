@@ -4,9 +4,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import './CartProduct.scss';
 
-const CartProduct = ({ product }) => {
+const CartProduct = ({ product, id }) => {
     const [quantity, setQuantity] = useState(1);
-    const { id, image, name, brand, size, color, price, stock } = product;
+    const { image, name, brand, size, color, price, stock } = product;
     const handleUp = () => {
         setQuantity((prevQuantity) => {
             if (prevQuantity == stock) {
@@ -27,7 +27,7 @@ const CartProduct = ({ product }) => {
     return (
         <div className='cart-product'>
             <div className='cart-id'>
-                <p>{id}</p>
+                <p>{id}.</p>
             </div>
 
             <div className='cart-product-img'>
