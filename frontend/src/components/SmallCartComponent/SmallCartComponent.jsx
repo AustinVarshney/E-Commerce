@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
-const SmallCartComponent = ({stock = 10}) => {
+const SmallCartComponent = ({stock = 10, id}) => {
     const [quantity, setQuantity] = useState(1);
 
     const handleUp = () => {
@@ -31,7 +31,7 @@ const SmallCartComponent = ({stock = 10}) => {
             <img src={Pic1} alt="" />
 
             <div className='small-cart-title-price'>
-                <p className='small-cart-title'>1. Premium Comfort Ergonomic Office Char</p>
+                <p className='small-cart-title'>{id}. Premium Comfort Ergonomic Office Char</p>
                 <p className='small-cart-price'>$249.9</p>
             </div>
 

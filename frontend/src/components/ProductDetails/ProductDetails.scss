@@ -302,6 +302,10 @@
     align-items: center;
 }
 
+.addCart-favourite>svg{
+    font-size: 2rem;
+}
+
 .product-buynow {
     font-family: inherit;
     display: flex;
@@ -337,8 +341,7 @@
 }
 
 .favourite-product {
-    height: 1.75rem;
-    width: 1.75rem;
+    color: rgb(222, 222, 222);
     cursor: pointer;
 }
 

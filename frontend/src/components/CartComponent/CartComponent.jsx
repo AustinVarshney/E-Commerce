@@ -30,7 +30,7 @@ const CartComponent = () => {
             <div className='small-cart-details'>
                 {/* Optional for mobile - keep or customize as needed */}
                 {cartItems.map((item, index) => (
-                    <SmallCartComponent key={index} item={item} />
+                    <SmallCartComponent key={index} item={item} id={index+1} />
                 ))}
             </div>
 

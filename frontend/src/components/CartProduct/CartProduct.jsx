@@ -8,9 +8,9 @@ import { useCart } from '../../Context/CartContext';
 import { deleteCartItem } from '../API/api';
 import './CartProduct.scss';
 
-const CartProduct = ({ product }) => {
+const CartProduct = ({ product, id }) => {
     const [quantity, setQuantity] = useState(1);
-    const { _id, id, image, name, brand, size, color, price, stock } = product;
+    const { _id, image, name, brand, size, color, price, stock } = product;
     const { removeFromCart } = useCart();
     const { user } = useAuth()
 
@@ -51,7 +51,7 @@ const CartProduct = ({ product }) => {
     return (
         <div className='cart-product'>
             <div className='cart-id'>
-                <p>{id}</p>
+                <p>{id}.</p>
             </div>
 
             <div className='cart-product-img'>
