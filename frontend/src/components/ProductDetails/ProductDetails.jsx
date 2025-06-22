@@ -10,8 +10,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import NotFavouriteIcon from "../../assets/Favourite.png";
 // import FavoriteIcon from '../../assets/Favourite2.png';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import Pic2 from "../../assets/Pic2.jpg";
 import Pic3 from "../../assets/Pic3.jpg";
 import Pic4 from "../../assets/Pic4.jpg";
@@ -19,6 +19,7 @@ import Pic8 from "../../assets/Pic8.jpg";
 import Star from "../../assets/Star.svg";
 import { useAuth } from '../../Context/AuthContext';
 import { useCart } from '../../Context/CartContext';
+import { useWishlist } from '../../Context/WishListContext';
 import "./ProductDetails.scss";
 
 const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) => {
@@ -30,6 +31,18 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
     const images = [Pic8, Pic2, Pic3, Pic4];
     const { isLoggedIn } = useAuth();
     const navigate = useNavigate()
+    const { addToWishlist, removeFromWishlist } = useWishlist();
+
+
+    const product = {
+        _id: pName + "-" + pPrice,
+        name: pName,
+        price: pPrice - (pPrice * pDiscount) / 100,
+        originalPrice: pPrice,
+        discount: pDiscount,
+        image: pImage,
+        quantity,
+    };
 
     const incrementQuantity = () => {
         setQuantity(quantity + 1);
@@ -67,10 +80,6 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
         return index === currentIndex;
     }
 
-    const handleFavouriteToggle = () => {
-        setIsFavourite(!isFavourite);
-    }
-
     const handleAddToCart = () => {
         if (!isLoggedIn) {
             setTimeout(() => {
@@ -101,6 +110,27 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
             return;
         }
     }
+
+    const handleFavouriteToggle = () => {
+        if (!isLoggedIn) {
+            setTimeout(() => {
+                toast.error("Please log in to add items to your wishlist.");
+            }, 1000);
+            navigate("/auth");
+            return;
+        }
+
+        if (!isFavourite) {
+            setIsFavourite(true);
+            addToWishlist(product);
+            toast.success("Product added to Wishlist!");
+        } else {
+            setIsFavourite(false);
+            removeFromWishlist(product._id);
+            toast.info("Product removed from Wishlist.");
+        }
+    };
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") {
@@ -191,7 +221,7 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
                         <button className="add-to-cart" onClick={handleAddToCart} ><ShoppingCartIcon style={{ marginRight: "0.2rem" }} />Add To Cart</button>
                         {/* <img src={isFavourite ? FavoriteIcon : NotFavouriteIcon} className="favourite-product" alt="Favourite" onClick={handleFavouriteToggle} style={{ filter: "grayscale(1)" }} /> */}
                         {isFavourite ?
-                            <FavoriteIcon className='favourite-product' onClick={handleFavouriteToggle} style={{color: '#f1284c'}}/>
+                            <FavoriteIcon className='favourite-product' onClick={handleFavouriteToggle} style={{ color: '#f1284c' }} />
                             :
                             <FavoriteBorderIcon className='favourite-product' onClick={handleFavouriteToggle} />
                         }

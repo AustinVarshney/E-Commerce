@@ -5,7 +5,6 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Pic1 from "../../assets/Pic1.jpg";
@@ -15,24 +14,10 @@ import { useWishlist } from '../../Context/WishListContext';
 import './ProductCard.scss';
 
 const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lorem ipsumlorem ipsum", linkToProduct = "/", rating = 2, reviews = 25, price = 230 }) => {
-    let [isLiked, setIsLiked] = useState(false);
     const { addToCart } = useCart();
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth();
-    const { addToWishlist, removeFromWishlist } = useWishlist();
-
-    const handleLike = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        if (!isLiked) {
-            setIsLiked(true)
-            toast.success("Product added to Wishlist")
-            addToWishlist(product)
-        }
-        else removeFromWishlist(product._id);
-    }
-
+    const { wishlist, addToWishlist, removeFromWishlist } = useWishlist();
     const product = {
         _id: heading + "-" + price,
         image: PicImg,
@@ -43,6 +28,28 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
         rating,
         reviews,
     };
+    const isInWishlist = wishlist.some(item => item._id === product._id);
+
+    const handleLike = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        if (!isLoggedIn) {
+            toast.error("Please log in to use wishlist.");
+            navigate("/auth");
+            return;
+        }
+
+        if (isInWishlist) {
+            removeFromWishlist(product._id);
+            toast.info("Removed from wishlist");
+        } else {
+            addToWishlist(product);
+            toast.success("Added to wishlist");
+        }
+    };
+
+
 
     const handleAddToCart = (e) => {
         e.stopPropagation();
@@ -76,11 +83,12 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
                     </div>
                     <div className='Favourite-ProCard'>
                         <VisibilityIcon className='favourite-1-ProCard' />
-                        {isLiked ?
+                        {isInWishlist ? (
                             <FavoriteIcon className='favourite-2-ProCard' onClick={handleLike} style={{ color: '#f1284c' }} />
-                            :
+                        ) : (
                             <FavoriteBorderIcon className='favourite-2-ProCard' onClick={handleLike} />
-                        }
+                        )}
+
                     </div>
                 </div>
 

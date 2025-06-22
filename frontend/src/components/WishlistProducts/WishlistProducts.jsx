@@ -2,13 +2,14 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import { NavLink } from 'react-router-dom';
 import { useWishlist } from '../../Context/WishListContext';
 import WishlistProduct from '../WishlistProduct/WishlistProduct';
+import './WishlistProducts.css';
 
 const WishlistProducts = () => {
     const { wishlist } = useWishlist();
     const wishlistArray = Array.isArray(wishlist) ? wishlist : [];
-    console.log(wishlistArray)
+    console.log(wishlistArray.length)
 
-    return wishlist.length ? (
+    return wishlistArray.length ? (
         <div className="cards-AllPro">
             {wishlistArray.map((product, index) => (
                 <NavLink key={index} to={`/products/product-details/${index}`} className="product-link">

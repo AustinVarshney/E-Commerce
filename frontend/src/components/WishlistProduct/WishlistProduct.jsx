@@ -78,6 +78,7 @@ const WishlistProduct = ({ PicImg, discount, heading, linkToProduct, rating, rev
                         }
                         <DeleteIcon className='favourite-3-ProCard' onClick={(e) => {
                             e.stopPropagation();
+                            e.preventDefault()
                             removeFromWishlist(product._id);
                             toast.info("Removed from wishlist")
                         }} />
