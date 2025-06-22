@@ -18,6 +18,7 @@ const { sendOtpEmail } = require('./utils/mailer');
 const userRegisterInfo = require("./models/auth");
 const contactUsForm = require("./models/contact")
 const Cart = require("./models/cart")
+const WishList = require('./models/wishlist');
 
 const MONGO_URL = "mongodb://localhost:27017/e-commerce";
 mongoose.connect(MONGO_URL)
@@ -86,7 +87,7 @@ app.get('/auth/google/callback',
                 await user.save();
                 console.log("New Google User Saved:", user);
             }
-            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "0.5h" });
+            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "5h" });
 
             res.cookie("token", token, { httpOnly: true });
             res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
@@ -140,7 +141,7 @@ app.post('/register', async (req, res) => {
         console.log("User being saved:", newUser);
         await newUser.save();
 
-        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '0.5h' });
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
 
         res.cookie("token", token, { httpOnly: true });
         res.status(201).json({
@@ -310,6 +311,66 @@ app.delete('/cart/:email/:productId', verifyToken, async (req, res) => {
     }
 });
 
+app.post('/wishlist/add', async (req, res) => {
+    const { email, product } = req.body;
+
+    if (!email || !product) {
+        return res.status(400).json({ error: "Missing email or product" });
+    }
+
+    try {
+        let wishlist = await WishList.findOne({ email });
+
+        if (!wishlist) {
+            // create new wishlist if not found
+            wishlist = new WishList({
+                email,
+                items: [product],
+            });
+        } else {
+            // check if product already exists (optional)
+            const alreadyExists = wishlist.items.some(item => item._id === product._id);
+            if (!alreadyExists) {
+                wishlist.items.push(product);
+            }
+        }
+
+        await wishlist.save();
+        res.status(200).json(wishlist);
+    } catch (err) {
+        console.error("Wishlist saving error:", err);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+app.get('/wishlist/:email', async (req, res) => {
+    try {
+        const wishlist = await WishList.findOne({ email: req.params.email });
+        if (!wishlist) return res.status(200).json([]);
+        res.status(200).json(wishlist.items);
+    } catch (err) {
+        console.error("Get wishlist error:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+
+app.delete('/wishlist/:email/:productId', async (req, res) => {
+    const { email, productId } = req.params;
+
+    try {
+        const wishlist = await WishList.findOneAndUpdate(
+            { email },
+            { $pull: { items: { _id: productId } } },
+            { new: true }
+        );
+
+        res.status(200).json(wishlist);
+    } catch (err) {
+        console.error('Error removing from wishlist:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 
 app.post('/contact', async (req, res) => {
     try {
