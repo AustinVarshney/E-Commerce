@@ -12,7 +12,7 @@ import { WishlistProvider } from './Context/WishListContext';
 import Auth from './pages/AuthPage/Auth';
 import OAuthSuccess from './pages/AuthPage/OAuthSuccess/OAuthSuccess';
 import CartPage from './pages/CartPage/CartPage';
-import Contact from './pages/Contact/contact';
+import Contact from './pages/Contact/Contact';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
 import MyOrders from './pages/MyOrders/MyOrders';
