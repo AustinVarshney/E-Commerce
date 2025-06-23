@@ -10,7 +10,7 @@ import { AuthProvider } from './Context/AuthContext';
 import { CartProvider } from './Context/CartContext';
 import { WishlistProvider } from './Context/WishListContext';
 import Auth from './pages/AuthPage/Auth';
-import OAuthSuccess from './pages/AuthPage/OAuthSuccess/oauthSuccess';
+import OAuthSuccess from './pages/AuthPage/OAuthSuccess/OAuthSuccess';
 import CartPage from './pages/CartPage/CartPage';
 import Contact from './pages/Contact/contact';
 import Home from './pages/Home/Home';
