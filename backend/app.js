@@ -20,7 +20,7 @@ const contactUsForm = require("./models/contact")
 const Cart = require("./models/cart")
 const WishList = require('./models/wishlist');
 
-const MONGO_URL = "mongodb://localhost:27017/e-commerce";
+const MONGO_URL = process.env.MONGO_URL;
 mongoose.connect(MONGO_URL)
     .then(() => {
         console.log("E-commerce db connected");
