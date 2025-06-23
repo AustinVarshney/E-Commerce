@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import googleIcon from '../../../src/assets/icons8-google.svg';
 import { forgotPassword, login, register, sendOtp, verifyOtp } from '../../components/API/api';
+import { BACKEND_URL } from '../../config';
 import { useAuth } from '../../Context/AuthContext';
 import './Auth.css';
 
@@ -438,8 +439,10 @@ function Auth() {
                 </Stack>
               </form>
             </div>
-
-            <NavLink to="http://localhost:5001/auth/google" className='google-container'><span><img src={googleIcon} className='google-icon' /></span>Login with google</NavLink>
+            <NavLink to={`${BACKEND_URL}/auth/google`} className='google-container'>
+              <span><img src={googleIcon} className='google-icon' alt="Google" /></span>
+              Login with Google
+            </NavLink>
             {/* <NavLink to="http://localhost:5001/auth/amazon" className='amazon-container'><span><img src={amazonIcon} className='amazon-icon' /></span>Login with amazon</NavLink> */}
           </div>
         </div>

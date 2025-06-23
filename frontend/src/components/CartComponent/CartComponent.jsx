@@ -2,7 +2,7 @@
 import { useCart } from '../../Context/CartContext';
 import CartProduct from '../CartProduct/CartProduct';
 import CartSummary from '../CartSummary/CartSummary';
-import SmallCartComponent from '../smallCartComponent/smallCartComponent';
+import SmallCartComponent from '../SmallCartComponent/SmallCartComponent';
 import './CartComponent.scss';
 
 const CartComponent = () => {
@@ -30,7 +30,7 @@ const CartComponent = () => {
             <div className='small-cart-details'>
                 {/* Optional for mobile - keep or customize as needed */}
                 {cartItems.map((item, index) => (
-                    <SmallCartComponent key={index} item={item} id={index+1} />
+                    <SmallCartComponent key={index} item={item} id={index + 1} />
                 ))}
             </div>
 
