@@ -36,6 +36,7 @@ export const register = async (userData) => {
 export const login = async (loginData) => {
     try {
         const response = await api.post("/login", loginData);
+        localStorage.setItem("token", response.token);
         console.log("Login successful");
         return response.data;
     } catch (error) {

@@ -119,16 +119,7 @@ app.get('/auth/google/callback',
             }
             const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "5h" });
 
-            res.cookie("token", token, { httpOnly: true, sameSite: isProd ? 'None' : 'Lax' });
-
-            // for production
-
-            // res.cookie("token", token, {
-            //     httpOnly: true,
-            //     secure: isProd,              // Only secure in production
-            //     sameSite: isProd ? 'None' : 'Lax'
-            // });
-
+            res.cookie("token", token, { httpOnly: true });
             res.redirect(`${frontendURL}/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
 
         } catch (error) {
@@ -137,20 +128,6 @@ app.get('/auth/google/callback',
         }
     }
 );
-
-// app.get("/auth/amazon", (req, res) => {
-//     passport.authenticate('amazon');
-// })
-
-// app.get("/auth/amazon/callback",
-//     passport.authenticate('amazon', { failureRedirect: '/' }),
-//     function (req, res) {
-//         res.redirect('/success');
-//     })
-
-// app.get("/success", (req, res) => {
-//     res.send("AMAZON Success");
-// })
 
 app.post('/register', async (req, res) => {
     try {
@@ -181,9 +158,7 @@ app.post('/register', async (req, res) => {
         await newUser.save();
 
         const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
-
-        res.cookie("token", token, { httpOnly: true });
-        res.status(201).json({
+        res.status(200).json({
             message: "User registered successfully",
             token,
             user: {
@@ -215,6 +190,8 @@ app.post("/login", async (req, res) => {
         }
 
         const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '0.5h' });
+        // const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
         console.log("Login Successful for user : ", email);
 
         res.status(200).json({ message: "Login successful", token, user: { username: user.username, email: user.email } });
@@ -283,6 +260,7 @@ app.patch('/auth/forgotPassword', async (req, res) => {
 // Middleware for token verification
 const verifyToken = (req, res, next) => {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    console.log("Token received:", token); // <== Debug log
     if (!token) return res.status(401).json({ message: "No token provided" });
 
     try {
