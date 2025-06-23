@@ -15,5 +15,9 @@
     "passport": "^0.7.0",
     "passport-amazon": "^1.0.0",
     "passport-google-oauth20": "^2.0.0"
+  },
+  "scripts": {
+    "start:dev": "NODE_ENV=development node app.js",
+    "start:prod": "NODE_ENV=production node app.js"
   }
 }

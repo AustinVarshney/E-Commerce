@@ -1,6 +1,5 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useState } from 'react';
-import { saveUserCart } from '../components/API/api';
+import { fetchUserCartIfReady, saveUserCart } from '../components/API/api';
 import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
@@ -34,18 +33,7 @@ export const CartProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (!authLoading && user && user.email) {
-            console.log("Fetching cart for user:", user.email);
-
-            axios.get(`http://localhost:5001/cart/${user.email}`, { withCredentials: true })
-                .then((res) => {
-                    console.log("Fetched cart data:", res.data);
-                    setCartItems(res.data);
-                })
-                .catch((err) => {
-                    console.error("Error fetching cart:", err);
-                });
-        }
+        fetchUserCartIfReady({ authLoading, user, setCartItems });
     }, [authLoading, user]);
 
     useEffect(() => {

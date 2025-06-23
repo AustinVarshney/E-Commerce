@@ -1,4 +1,8 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({
+    path: path.resolve(__dirname, process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development')
+});
+
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
@@ -13,6 +17,12 @@ const googleOAuth = require("./authentications/google");
 const GoogleUser = require("./models/googleOAuth")
 const { sendOtpEmail } = require('./utils/mailer');
 
+console.log("ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("Secret:", process.env.GOOGLE_CLIENT_SECRET);
+console.log("Callback:", process.env.GOOGLE_CALLBACK_URL);
+
+const isProd = process.env.NODE_ENV === 'production';
+const frontendURL = isProd ? process.env.PROD_FRONTEND_URL : process.env.DEV_FRONTEND_URL;
 
 //models
 const userRegisterInfo = require("./models/auth");
@@ -20,7 +30,13 @@ const contactUsForm = require("./models/contact")
 const Cart = require("./models/cart")
 const WishList = require('./models/wishlist');
 
-const MONGO_URL = process.env.MONGO_URL;
+console.log("Running in", isProd ? "production" : "development", "mode");
+console.log("Frontend URL:", frontendURL);
+
+const MONGO_URL = process.env.NODE_ENV === 'development'
+    ? "mongodb://localhost:27017/e-commerce"
+    : process.env.MONGO_URL;
+
 mongoose.connect(MONGO_URL)
     .then(() => {
         console.log("E-commerce db connected");
@@ -30,14 +46,27 @@ mongoose.connect(MONGO_URL)
         console.log("Err in connecting : ", err);
     })
 
+const allowedOrigins = [
+    process.env.DEV_FRONTEND_URL,
+    process.env.PROD_FRONTEND_URL,
+];
+
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
-}
-// console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
-// console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
+};
+console.log("Using Google OAuth callback:", isProd
+    ? process.env.GOOGLE_CALLBACK_URL_PROD
+    : process.env.GOOGLE_CALLBACK_URL_DEV);
+
 
 app.use(session({
     secret: process.env.GOOGLE_CLIENT_SECRET || 'secret',
@@ -55,7 +84,8 @@ app.use(passport.session());
 app.get('/auth/google',
     passport.authenticate('google', {
         scope:
-            ['profile', 'email']
+            ['profile', 'email'],
+        prompt: "select_account" // optional, useful for dev
     }
     ));
 
@@ -89,8 +119,17 @@ app.get('/auth/google/callback',
             }
             const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "5h" });
 
-            res.cookie("token", token, { httpOnly: true });
-            res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
+            res.cookie("token", token, { httpOnly: true, sameSite: isProd ? 'None' : 'Lax' });
+
+            // for production
+
+            // res.cookie("token", token, {
+            //     httpOnly: true,
+            //     secure: isProd,              // Only secure in production
+            //     sameSite: isProd ? 'None' : 'Lax'
+            // });
+
+            res.redirect(`${frontendURL}/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
 
         } catch (error) {
             console.error("Error during Google OAuth:", error);
@@ -141,7 +180,7 @@ app.post('/register', async (req, res) => {
         console.log("User being saved:", newUser);
         await newUser.save();
 
-        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
+        const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
 
         res.cookie("token", token, { httpOnly: true });
         res.status(201).json({
@@ -185,7 +224,6 @@ app.post("/login", async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 })
-
 
 const otpStore = new Map();
 
@@ -268,8 +306,9 @@ app.get('/cart/:email', verifyToken, async (req, res) => {
     }
 });
 
-app.post('/cart', async (req, res) => {
+app.post('/cart', verifyToken, async (req, res) => {
     const { email, items } = req.body;
+    if (email !== req.user.email) return res.status(403).json({ message: "Forbidden" });
     console.log("POST /cart hit with:", req.body);
     try {
         const existingCart = await Cart.findOne({ email });
@@ -295,8 +334,8 @@ app.delete('/cart/:email/:productId', verifyToken, async (req, res) => {
 
     try {
         const updatedCart = await Cart.findOneAndUpdate(
-            { userId },
-            { $pull: { products: { id: productId } } },
+            { email: req.user.email },
+            { $pull: { items: { _id: productId } } },
             { new: true }
         );
 
@@ -329,7 +368,8 @@ app.post('/wishlist/add', async (req, res) => {
             });
         } else {
             // check if product already exists (optional)
-            const alreadyExists = wishlist.items.some(item => item._id === product._id);
+            const alreadyExists = wishlist.items.some(item => item._id.toString() === product._id);
+
             if (!alreadyExists) {
                 wishlist.items.push(product);
             }
