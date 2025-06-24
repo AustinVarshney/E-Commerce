@@ -50,7 +50,7 @@ function App() {
                     <ProtectedRoute>
                       <CartPage />
                     </ProtectedRoute>} />
-                  <Route path='myorders' element={<MyOrders />} />
+                  <Route path='orders' element={<MyOrders />} />
                 </Route>
               </Routes>
             </CartProvider>
