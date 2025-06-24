@@ -16,6 +16,8 @@ const session = require('express-session');
 const googleOAuth = require("./authentications/google");
 const GoogleUser = require("./models/googleOAuth")
 const { sendOtpEmail } = require('./utils/mailer');
+const razorpay = require('./authentications/razorpay')
+
 
 console.log("ID:", process.env.GOOGLE_CLIENT_ID);
 console.log("Secret:", process.env.GOOGLE_CLIENT_SECRET);
@@ -158,6 +160,8 @@ app.post('/register', async (req, res) => {
         await newUser.save();
 
         const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
+        res.cookie("token", token, { httpOnly: true });
+
         res.status(200).json({
             message: "User registered successfully",
             token,
@@ -189,8 +193,9 @@ app.post("/login", async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '0.5h' });
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
         // const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+        res.cookie("token", token, { httpOnly: true });
 
         console.log("Login Successful for user : ", email);
 
@@ -327,6 +332,41 @@ app.delete('/cart/:email/:productId', verifyToken, async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 });
+
+app.post("/cart/order", async (req, res) => {
+    try {
+        const { amount } = req.body;
+        console.log("Creating order with amount:", amount);
+
+        const order = await razorpay.orders.create({
+            amount: amount, // e.g. 1121000
+            currency: "INR",
+            receipt: `receipt_order_${Date.now()}`
+        });
+
+        console.log(typeof razorpay, razorpay?.orders)
+        res.status(200).json(order);
+    } catch (error) {
+        console.error("Razorpay order creation failed:", error);
+        res.status(500).json({ message: "Failed to create Razorpay order" });
+    }
+});
+
+
+app.post("/verify-signature", (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    const generated_signature = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+        .digest("hex");
+
+    if (generated_signature === razorpay_signature) {
+        res.json({ success: true, message: "Payment verified" });
+    } else {
+        res.status(400).json({ success: false, message: "Invalid signature" });
+    }
+});
+
 
 app.post('/wishlist/add', async (req, res) => {
     const { email, product } = req.body;

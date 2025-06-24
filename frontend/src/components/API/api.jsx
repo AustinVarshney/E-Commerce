@@ -163,3 +163,26 @@ export const fetchUserCartIfReady = async ({ authLoading, user, setCartItems }) 
         }
     }
 };
+
+export const createRazorpayOrder = async (amountInPaise) => {
+    try {
+        const response = await fetch(`${BASE_URL}/cart/order`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ amount: amountInPaise })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "Failed to create order");
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("API Error - createRazorpayOrder:", error);
+        throw error;
+    }
+};
