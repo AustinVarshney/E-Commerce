@@ -1,78 +1,75 @@
-import React from 'react'
-import './SingleOrder.scss'
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import RestoreIcon from '@mui/icons-material/Restore';
-import Pic1 from "../../assets/Pic1.jpg"
-import Pic2 from "../../assets/Pic8.jpg"
-import Pic3 from "../../assets/Pic2.jpg"
 import ShareIcon from '@mui/icons-material/Share';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import './SingleOrder.scss';
 
-const SingleOrder = ({status}) => {
+const SingleOrder = ({ order }) => {
+    const { _id, items, totalAmount, status, date } = order;
+
+    const formatDate = (dateString) => {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    };
+
     return (
         <div className='singleorder-container'>
             <div className='singleorder-info'>
                 <div className='singleorder-id-date'>
-                    <p className='singleorder-id'>Order ORD-2024-001</p>
-                    <p className='singleorder-date'>Placed on 1/15/2024</p>
+                    <p className='singleorder-id'>Order #{_id.slice(-6)}</p>
+                    <p className='singleorder-date'>Placed on {formatDate(date)}</p>
                 </div>
                 <div className='singleorder-status-price'>
-                    {status === 'delivery' && (
-                        <p className='singleorder-status status-delivery'><TaskAltIcon/> Delivered</p>
+                    {status === 'delivered' && (
+                        <p className='singleorder-status status-delivery'><TaskAltIcon /> Delivered</p>
                     )}
                     {status === 'shipped' && (
-                        <p className='singleorder-status status-shipped'><LocalShippingIcon/> Shipped</p>
+                        <p className='singleorder-status status-shipped'><LocalShippingIcon /> Shipped</p>
                     )}
                     {status === 'processing' && (
-                        <p className='singleorder-status status-processing'><RestoreIcon/> Procesing</p>
+                        <p className='singleorder-status status-processing'><RestoreIcon /> Processing</p>
                     )}
-
-                    <p className='singleorder-price'>$299.99</p>
+                    <p className='singleorder-price'>₹{totalAmount}</p>
                 </div>
             </div>
 
-            <hr className='myorder-hr-line'/>
+            <hr className='myorder-hr-line' />
 
-            <div className='singleorder-product-detail'>
-                <div className='singleorder-detail'>
-                    <img src={Pic2} alt="" />
-                    <div className='singleorder-title-quantity'>
-                        <p className='singleorder-title'>Wireless Mouse</p>
-                        <p className='singleorder-quantity'>Qty: 1</p>
-                        <p className='singleorder-quantity-price singleorder-quantity'>Price: $299.99</p>
+            {items.map((item, idx) => (
+                <div className='singleorder-product-detail' key={idx}>
+                    <div className='singleorder-detail'>
+                        {/* Optional: Use item.image if available, else a fallback */}
+                        <img src={`/default-product.png`} alt="" />
+                        <div className='singleorder-title-quantity'>
+                            <p className='singleorder-title'>{item.name}</p>
+                            <p className='singleorder-quantity'>Qty: {item.quantity}</p>
+                            <p className='singleorder-quantity-price singleorder-quantity'>
+                                Price: ₹{item.price}
+                            </p>
+                        </div>
                     </div>
+                    <p className='singleorder-price2'>₹{item.price * item.quantity}</p>
                 </div>
-                <p className='singleorder-price2'>$299.99</p>
-            </div>
+            ))}
 
-            <div className='singleorder-product-detail'>
-                <div className='singleorder-detail'>
-                    <img src={Pic3} alt="" />
-                    <div className='singleorder-title-quantity'>
-                        <p className='singleorder-title'>Premium Comfort Ergonomic Office Chair</p>
-                        <p className='singleorder-quantity'>Qty: 1</p>
-                        <p className='singleorder-quantity-price singleorder-quantity'>Price: $49.99</p>
-                    </div>
-                </div>
-                <p className='singleorder-price2'>$49.99</p>
-            </div>
-
-            <hr className='myorder-hr-line'/>
+            <hr className='myorder-hr-line' />
 
             <div className='myorder-final-detail-container'>
                 <div className='myorder-final-details'>
-                    <p className='myorder-tracking-delivery'><span>Tracking: </span>TRK123456789</p>
-                    <p className='myorder-tracking-delivery'><span>Estimated Delivery: </span>1/18/2024</p>
+                    <p className='myorder-tracking-delivery'><span>Tracking:</span> TRK{_id.slice(0, 6).toUpperCase()}</p>
+                    <p className='myorder-tracking-delivery'>
+                        <span>Estimated Delivery:</span> {formatDate(new Date(new Date(date).getTime() + 3 * 24 * 60 * 60 * 1000))}
+                    </p>
                 </div>
-                {status === 'delivery' && (
-                    <button className='myorder-share-btn'><ShareIcon/><span>Share Item</span></button>
-                )}
-                {((status === 'shipped') || (status === 'processing')) && (
-                    <button className='myorder-share-btn'><LocalShippingIcon/><span>Track Order</span></button>
+
+                {status === 'delivered' ? (
+                    <button className='myorder-share-btn'><ShareIcon /><span>Share Item</span></button>
+                ) : (
+                    <button className='myorder-share-btn'><LocalShippingIcon /><span>Track Order</span></button>
                 )}
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SingleOrder
+export default SingleOrder;

@@ -32,13 +32,16 @@ export const register = async (userData) => {
         throw error.response?.data || { message: "Registration failed" };
     }
 };
+const userId = localStorage.getItem("userId");
 
 export const login = async (loginData) => {
     try {
         const response = await api.post("/login", loginData);
-        localStorage.setItem("token", response.token);
+        const user = response.data;
+        localStorage.setItem("token", user.token);
+        console.log(userId)
         console.log("Login successful");
-        return response.data;
+        return user;
     } catch (error) {
         console.error("Login error:", error.response?.data || error.message);
         handleApiError(error, "Fetch failed");
@@ -184,5 +187,33 @@ export const createRazorpayOrder = async (amountInPaise) => {
     } catch (error) {
         console.error("API Error - createRazorpayOrder:", error);
         throw error;
+    }
+};
+
+export const saveOrder = async (orderData) => {
+    try {
+        const response = await fetch(`${BASE_URL}/orders`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(orderData)
+        });
+
+        if (!response.ok) throw new Error("Order save failed");
+        return await response.json();
+    } catch (error) {
+        console.error("Error in saveOrder:", error);
+        throw error;
+    }
+};
+
+export const getOrdersByUser = async (userId) => {
+    try {
+        const res = await api.get(`/orders/user/${userId}`);
+        console.log("userId : ", userId)
+        return res.data;
+    } catch (err) {
+        throw err.response?.data || { message: "Failed to fetch orders" };
     }
 };

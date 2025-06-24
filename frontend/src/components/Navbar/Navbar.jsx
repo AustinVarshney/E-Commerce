@@ -145,7 +145,7 @@ const Navbar = () => {
                                         <Avatar src="/broken-image.jpg" />
                                         <p>Profile</p>
                                     </span>
-                                    <Link to={'/myOrders'} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
+                                    <Link to={'/orders'} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                                         <Avatar src="/broken-image.jpg" />
                                         <p>My Orders</p>
                                     </Link>

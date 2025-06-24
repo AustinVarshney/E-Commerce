@@ -17,6 +17,7 @@ const googleOAuth = require("./authentications/google");
 const GoogleUser = require("./models/googleOAuth")
 const { sendOtpEmail } = require('./utils/mailer');
 const razorpay = require('./authentications/razorpay')
+const Order = require("./models/orders")
 
 
 console.log("ID:", process.env.GOOGLE_CLIENT_ID);
@@ -167,7 +168,7 @@ app.post('/register', async (req, res) => {
             token,
             user: {
                 username: newUser.username,
-                email: newUser.email
+                email: newUser.email,
             }
         });
 
@@ -199,7 +200,7 @@ app.post("/login", async (req, res) => {
 
         console.log("Login Successful for user : ", email);
 
-        res.status(200).json({ message: "Login successful", token, user: { username: user.username, email: user.email } });
+        res.status(200).json({ message: "Login successful", token, user: { _id: user._id, username: user.username, email: user.email } });
 
     } catch (err) {
         console.error("Login error:", err);
@@ -427,6 +428,30 @@ app.delete('/wishlist/:email/:productId', async (req, res) => {
     } catch (err) {
         console.error('Error removing from wishlist:', err);
         res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// POST /orders - Save a new order
+app.post('/orders', async (req, res) => {
+    try {
+        const newOrder = new Order(req.body);
+        const savedOrder = await newOrder.save();
+        res.status(201).json(savedOrder);
+    } catch (error) {
+        console.error("Order Save Error:", error);
+        res.status(500).json({ message: "Failed to save order" });
+    }
+});
+
+// GET /orders/user/:userId - Get orders for a user
+app.get('/orders/user/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const orders = await Order.find({ userId: userId }).sort({ createdAt: -1 });
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error("Fetch Orders Error:", error);
+        res.status(500).json({ message: "Failed to fetch orders", error });
     }
 });
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../Context/AuthContext';
 import { useCart } from '../../Context/CartContext';
-import { createRazorpayOrder } from '../API/api';
+import { createRazorpayOrder, saveOrder } from '../API/api';
 import './CartSummary.scss';
 
 const CartSummary = () => {
@@ -32,11 +32,34 @@ const CartSummary = () => {
                 name: "Your Store",
                 description: "Order Payment",
                 order_id: order.id,
-                handler: function (response) {
+                handler: async function (response) {
                     toast.success("Payment successful!");
                     console.log("Payment success:", response);
-                    navigate("/myOrders")
-                },
+
+                    // Build the order payload
+                    const orderDetails = {
+                        userId: user._id,
+                        items: cartItems.map(item => ({
+                            productId: item._id,        // ✅ Send this as productId (string)
+                            name: item.name,
+                            price: item.price,
+                            quantity: item.quantity
+                        })),
+                        totalAmount: total,
+                        paymentId: response.razorpay_payment_id,
+                        razorpayOrderId: response.razorpay_order_id,
+                        status: "processing",
+                        date: new Date().toISOString()
+                    };
+
+                    try {
+                        await saveOrder(orderDetails);  // API to save order in DB
+                        navigate("/orders");
+                    } catch (err) {
+                        console.error("Error saving order:", err);
+                    }
+                }
+                ,
                 prefill: {
                     name: user?.username,
                     email: user?.email,
