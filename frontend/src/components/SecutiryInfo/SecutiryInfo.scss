@@ -1,0 +1,107 @@
+.security-info {
+    margin-top: 2rem;
+}
+
+.current-password{
+    display: flex;
+    flex-direction: column;
+    margin: 0 4rem;
+}
+
+.current-pass-title {
+    font-size: 1.3rem;
+    color: white;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+}
+
+.current-pass-input{
+    height: 2rem;
+    width: -webkit-fill-available;
+    padding: 0 1rem;
+    color: rgb(225, 225, 225);
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    background: none;
+    font-family: inherit;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.new-confirm-password{
+    margin: 0 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.new-password{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 48%;
+}
+
+.new-pass-input{
+    height: 2rem;
+    width: -webkit-fill-available;
+    padding: 0 1rem;
+    color: rgb(225, 225, 225);
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    background: none;
+    font-family: inherit;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-update-btn{
+    border-radius: 0.5rem;
+    background-color: white;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: black;
+    font-weight: 300;
+    margin-left: 4rem;
+    font-family: inherit;
+    padding: 0.2rem 1rem;
+    cursor: pointer;
+}
+
+@media(max-width: 600px){
+    .current-password, .new-confirm-password{
+        margin: 0 20px; 
+    }
+
+    .new-confirm-password{
+        margin-bottom: 1rem;
+    }
+
+    .password-update-btn{
+        margin-left: 20px;
+        font-size: 1.2rem;
+    }
+}
+
+@media(max-width: 500px){
+    .new-confirm-password{
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .new-password{
+        width: 100%;
+    }
+}

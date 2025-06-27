@@ -1,0 +1,25 @@
+.profile-heading {
+  color: white;
+  font-size: 2rem;
+  margin-top: 1rem;
+  margin-left: 3rem;
+  display: flex;
+  align-items: center;
+}
+
+.profile-heading > svg {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
+
+.profile-description {
+  font-size: 1.2rem;
+  color: rgb(200, 200, 200);
+  margin-left: 3rem;
+}
+
+@media (max-width: 600px) {
+  .profile-heading, .profile-description {
+    margin-left: 10px;
+  }
+}/*# sourceMappingURL=Profile.css.map */

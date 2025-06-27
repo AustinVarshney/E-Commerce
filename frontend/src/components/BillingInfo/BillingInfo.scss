@@ -1,0 +1,144 @@
+.billing-info{
+    margin-top: 2rem;
+}
+
+.payment-option{
+    margin: 0 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.167);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-card{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.payment-card-icon>svg{
+    font-size: 1.5rem;
+    color: white;
+}
+
+.payment-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.payment-card-no{
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: white;
+}
+
+.payment-card-expiry{
+    font-weight: 300;
+    font-size: 1rem;
+    color: silver;
+}
+
+.payment-card-edit{ 
+    background-color: #0B6C1E;
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.add-payment-card{
+    margin: 0 4rem;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid gray;
+    border-radius: 0.5rem;
+    background-color: #2a2a2aba;
+    color: white;
+    font-family: inherit;
+    height: 2.5rem;
+    width: -webkit-fill-available;
+    font-size: 1.5rem;
+}
+
+.payment-addresses{
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+}
+
+.payment-addresses::-webkit-scrollbar {
+    display: none;
+}
+
+.payment-address-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border: 1px solid gray;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: fit-content;
+    margin: 0 4rem;
+    margin-bottom: 1.5rem;
+    min-width: 270px;
+}
+
+.payment-owner{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: white;
+}
+
+.payment-address, .payment-phone{
+    font-size: 1.5rem;
+    color: rgb(197, 196, 196);
+    font-weight: 300;
+}
+
+.payment-phone{
+    margin-bottom: 1rem;
+}
+
+.payment-phone>span{
+    font-weight: 400;
+    color: white;
+}
+
+@media(max-width: 600px){
+    .payment-option, .add-payment-card, .payment-address-info{
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .add-payment-card{
+        font-size: 1.3rem;
+    }
+}
+
+@media(max-width: 400px){
+    .payment-option{
+        padding: 0.5rem;
+    }   
+
+    .payment-card-edit{
+        padding: 0.2rem 1rem; 
+    }
+}
+
+@media(max-width: 350px){
+    .payment-option{
+        padding: 0.5rem 0.2rem;
+    }
+}

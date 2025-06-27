@@ -18,6 +18,7 @@ import MyOrders from './pages/MyOrders/MyOrders';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 import ProtectedRoute from './utils/ProtectedRoute';
 import Wishlist from './pages/Wishlist/Wishlist';
+import Profile from './pages/Profile/Profile';
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function App() {
                 <Route path='oauth-success' element={<OAuthSuccess />} />
                 <Route path='contact' element={<ProtectedRoute><Contact /></ProtectedRoute>} />
                 <Route path='wishlist' element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+                <Route path='profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                 <Route path='cart' element={
                   <ProtectedRoute>
                     <CartPage />

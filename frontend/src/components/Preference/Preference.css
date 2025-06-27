@@ -1,0 +1,41 @@
+.preference-section {
+  margin-top: 2rem;
+}
+
+.preference-notify {
+  margin: 0 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.preference-option {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.preference-heading {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.preference-description {
+  font-size: 1.2rem;
+  color: gray;
+}
+
+@media (max-width: 600px) {
+  .preference-notify {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .preference-heading {
+    font-size: 1.2rem;
+  }
+  .preference-description {
+    font-size: 1rem;
+  }
+}/*# sourceMappingURL=Preference.css.map */

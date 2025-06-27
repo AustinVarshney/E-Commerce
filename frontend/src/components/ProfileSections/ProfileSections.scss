@@ -1,0 +1,162 @@
+.profile-sections {
+    margin-top: 1.5rem;
+}
+
+.profile-options {
+    width: 95%;
+    // height: 2.5rem;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.profile-options>div {
+    width: 24%;
+    height: 2rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 300;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    margin: 0.3rem 0;
+}
+
+.active-profile-option {
+    background-color: white;
+}
+
+.profile-section-1 {
+    margin-top: 2rem;
+}
+
+.profile-info-title1 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: white;
+    margin-left: 4rem;
+}
+
+.profile-info-title2 {
+    font-size: 1.2rem;
+    color: rgb(212, 212, 212);
+    font-weight: 300;
+    margin-left: 4rem;
+}
+
+.profile-username,
+.profile-contact,
+.profile-address,
+.profile-location {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.profile-first-name,
+.profile-last-name,
+.profile-city,
+.profile-state,
+.profile-pincode {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 40%;
+}
+
+.username-text {
+    font-size: 1.3rem;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.username-input,
+.address-input {
+    height: 2rem;
+    width: -webkit-fill-available;
+    padding: 0 1rem;
+    color: rgb(225, 225, 225);
+    border: 1px solid white;
+    border-radius: 0.5rem;
+    background: none;
+    font-family: inherit;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-hr-line {
+    color: rgb(213, 213, 213);
+    margin: 0 4rem;
+    margin-top: 2rem;
+}
+
+.profile-additional-title {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: white;
+    margin-left: 4rem;
+    margin-top: 1.5rem;
+}
+
+.profile-address {
+    display: flex;
+    flex-direction: column;
+    width: 88%;
+    margin: auto;
+    margin-top: 1rem;
+}
+
+.profile-location {
+    width: -webkit-fill-available;
+    gap: 2rem;
+    margin: 1rem 2rem;
+}
+
+@media(max-width: 700px) {
+
+    .profile-username,
+    .profile-contact,
+    .profile-location {
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .profile-location{
+        width: 100%;
+        margin: auto;
+        margin-top: 1rem;
+    }
+
+    .profile-first-name,
+    .profile-last-name,
+    .profile-city,
+    .profile-state,
+    .profile-pincode {
+        width: 90%;
+    }
+
+    .profile-address {
+        width: 90%;
+    }
+}
+
+@media(max-width: 470px){
+    // .profile-options{
+    //     hei
+    // }
+
+    .profile-options>div{
+        width: 48%;
+    }
+}
