@@ -10,7 +10,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { Avatar, Badge } from '@mui/material';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../../Context/AuthContext';
@@ -112,6 +112,10 @@ const Navbar = () => {
                                         <Avatar src="/broken-image.jpg" />
                                         <p>Profile</p>
                                     </span>
+                                    <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
+                                        <Avatar src="/broken-image.jpg" />
+                                        <p>My Orders</p>
+                                    </span>
                                     <span id='logout-button-details'>
                                         <LockOpenIcon style={{ color: "#ff4d4d" }} />
                                         <p onClick={handleLogout} className="logout-btn">Logout</p>
@@ -141,6 +145,10 @@ const Navbar = () => {
                                         <Avatar src="/broken-image.jpg" />
                                         <p>Profile</p>
                                     </span>
+                                    <Link to={'/orders'} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
+                                        <Avatar src="/broken-image.jpg" />
+                                        <p>My Orders</p>
+                                    </Link>
                                     <span id='logout-button-details'>
                                         <LockOpenIcon style={{ color: "#ff4d4d" }} />
                                         <p onClick={handleLogout} className="logout-btn">Logout</p>

@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
 
     const loginContext = (newToken, user) => {
         localStorage.setItem("authToken", newToken);
-        // localStorage.setItem("username", user.username);
+        localStorage.setItem("userId", user._id);
         localStorage.setItem("user", JSON.stringify(user));
 
         setToken(newToken);
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
     const logoutContext = () => {
         localStorage.removeItem("authToken");
-        localStorage.removeItem("username");
+        // localStorage.removeItem("username");
         setToken("");
         setIsLoggedIn(false);
         setUserName("");

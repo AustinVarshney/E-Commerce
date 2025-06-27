@@ -1,4 +1,8 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({
+    path: path.resolve(__dirname, process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development')
+});
+
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
@@ -12,14 +16,30 @@ const session = require('express-session');
 const googleOAuth = require("./authentications/google");
 const GoogleUser = require("./models/googleOAuth")
 const { sendOtpEmail } = require('./utils/mailer');
+const razorpay = require('./authentications/razorpay')
+const Order = require("./models/orders")
 
+
+console.log("ID:", process.env.GOOGLE_CLIENT_ID);
+console.log("Secret:", process.env.GOOGLE_CLIENT_SECRET);
+console.log("Callback:", process.env.GOOGLE_CALLBACK_URL);
+
+const isProd = process.env.NODE_ENV === 'production';
+const frontendURL = isProd ? process.env.PROD_FRONTEND_URL : process.env.DEV_FRONTEND_URL;
 
 //models
 const userRegisterInfo = require("./models/auth");
 const contactUsForm = require("./models/contact")
 const Cart = require("./models/cart")
+const WishList = require('./models/wishlist');
 
-const MONGO_URL = "mongodb://localhost:27017/e-commerce";
+console.log("Running in", isProd ? "production" : "development", "mode");
+console.log("Frontend URL:", frontendURL);
+
+const MONGO_URL = process.env.NODE_ENV === 'development'
+    ? "mongodb://localhost:27017/e-commerce"
+    : process.env.MONGO_URL;
+
 mongoose.connect(MONGO_URL)
     .then(() => {
         console.log("E-commerce db connected");
@@ -29,14 +49,27 @@ mongoose.connect(MONGO_URL)
         console.log("Err in connecting : ", err);
     })
 
+const allowedOrigins = [
+    process.env.DEV_FRONTEND_URL,
+    process.env.PROD_FRONTEND_URL,
+];
+
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
-}
-// console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
-// console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
+};
+console.log("Using Google OAuth callback:", isProd
+    ? process.env.GOOGLE_CALLBACK_URL_PROD
+    : process.env.GOOGLE_CALLBACK_URL_DEV);
+
 
 app.use(session({
     secret: process.env.GOOGLE_CLIENT_SECRET || 'secret',
@@ -54,7 +87,8 @@ app.use(passport.session());
 app.get('/auth/google',
     passport.authenticate('google', {
         scope:
-            ['profile', 'email']
+            ['profile', 'email'],
+        prompt: "select_account" // optional, useful for dev
     }
     ));
 
@@ -86,10 +120,10 @@ app.get('/auth/google/callback',
                 await user.save();
                 console.log("New Google User Saved:", user);
             }
-            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "0.5h" });
+            const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "5h" });
 
             res.cookie("token", token, { httpOnly: true });
-            res.redirect(`http://localhost:5173/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
+            res.redirect(`${frontendURL}/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
 
         } catch (error) {
             console.error("Error during Google OAuth:", error);
@@ -97,20 +131,6 @@ app.get('/auth/google/callback',
         }
     }
 );
-
-// app.get("/auth/amazon", (req, res) => {
-//     passport.authenticate('amazon');
-// })
-
-// app.get("/auth/amazon/callback",
-//     passport.authenticate('amazon', { failureRedirect: '/' }),
-//     function (req, res) {
-//         res.redirect('/success');
-//     })
-
-// app.get("/success", (req, res) => {
-//     res.send("AMAZON Success");
-// })
 
 app.post('/register', async (req, res) => {
     try {
@@ -140,15 +160,15 @@ app.post('/register', async (req, res) => {
         console.log("User being saved:", newUser);
         await newUser.save();
 
-        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '0.5h' });
-
+        const token = jwt.sign({ email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
         res.cookie("token", token, { httpOnly: true });
-        res.status(201).json({
+
+        res.status(200).json({
             message: "User registered successfully",
             token,
             user: {
                 username: newUser.username,
-                email: newUser.email
+                email: newUser.email,
             }
         });
 
@@ -174,17 +194,19 @@ app.post("/login", async (req, res) => {
             return res.status(401).json({ message: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '0.5h' });
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: '5h' });
+        // const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+        res.cookie("token", token, { httpOnly: true });
+
         console.log("Login Successful for user : ", email);
 
-        res.status(200).json({ message: "Login successful", token, user: { username: user.username, email: user.email } });
+        res.status(200).json({ message: "Login successful", token, user: { _id: user._id, username: user.username, email: user.email } });
 
     } catch (err) {
         console.error("Login error:", err);
         res.status(500).json({ message: "Server error" });
     }
 })
-
 
 const otpStore = new Map();
 
@@ -244,6 +266,7 @@ app.patch('/auth/forgotPassword', async (req, res) => {
 // Middleware for token verification
 const verifyToken = (req, res, next) => {
     const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    console.log("Token received:", token); // <== Debug log
     if (!token) return res.status(401).json({ message: "No token provided" });
 
     try {
@@ -267,8 +290,9 @@ app.get('/cart/:email', verifyToken, async (req, res) => {
     }
 });
 
-app.post('/cart', async (req, res) => {
+app.post('/cart', verifyToken, async (req, res) => {
     const { email, items } = req.body;
+    if (email !== req.user.email) return res.status(403).json({ message: "Forbidden" });
     console.log("POST /cart hit with:", req.body);
     try {
         const existingCart = await Cart.findOne({ email });
@@ -294,8 +318,8 @@ app.delete('/cart/:email/:productId', verifyToken, async (req, res) => {
 
     try {
         const updatedCart = await Cart.findOneAndUpdate(
-            { userId },
-            { $pull: { products: { id: productId } } },
+            { email: req.user.email },
+            { $pull: { items: { _id: productId } } },
             { new: true }
         );
 
@@ -310,6 +334,126 @@ app.delete('/cart/:email/:productId', verifyToken, async (req, res) => {
     }
 });
 
+app.post("/cart/order", async (req, res) => {
+    try {
+        const { amount } = req.body;
+        console.log("Creating order with amount:", amount);
+
+        const order = await razorpay.orders.create({
+            amount: amount, // e.g. 1121000
+            currency: "INR",
+            receipt: `receipt_order_${Date.now()}`
+        });
+
+        console.log(typeof razorpay, razorpay?.orders)
+        res.status(200).json(order);
+    } catch (error) {
+        console.error("Razorpay order creation failed:", error);
+        res.status(500).json({ message: "Failed to create Razorpay order" });
+    }
+});
+
+
+app.post("/verify-signature", (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    const generated_signature = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+        .digest("hex");
+
+    if (generated_signature === razorpay_signature) {
+        res.json({ success: true, message: "Payment verified" });
+    } else {
+        res.status(400).json({ success: false, message: "Invalid signature" });
+    }
+});
+
+
+app.post('/wishlist/add', async (req, res) => {
+    const { email, product } = req.body;
+
+    if (!email || !product) {
+        return res.status(400).json({ error: "Missing email or product" });
+    }
+
+    try {
+        let wishlist = await WishList.findOne({ email });
+
+        if (!wishlist) {
+            // create new wishlist if not found
+            wishlist = new WishList({
+                email,
+                items: [product],
+            });
+        } else {
+            // check if product already exists (optional)
+            const alreadyExists = wishlist.items.some(item => item._id.toString() === product._id);
+
+            if (!alreadyExists) {
+                wishlist.items.push(product);
+            }
+        }
+
+        await wishlist.save();
+        res.status(200).json(wishlist);
+    } catch (err) {
+        console.error("Wishlist saving error:", err);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+app.get('/wishlist/:email', async (req, res) => {
+    try {
+        const wishlist = await WishList.findOne({ email: req.params.email });
+        if (!wishlist) return res.status(200).json([]);
+        res.status(200).json(wishlist.items);
+    } catch (err) {
+        console.error("Get wishlist error:", err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+
+app.delete('/wishlist/:email/:productId', async (req, res) => {
+    const { email, productId } = req.params;
+
+    try {
+        const wishlist = await WishList.findOneAndUpdate(
+            { email },
+            { $pull: { items: { _id: productId } } },
+            { new: true }
+        );
+
+        res.status(200).json(wishlist);
+    } catch (err) {
+        console.error('Error removing from wishlist:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// POST /orders - Save a new order
+app.post('/orders', async (req, res) => {
+    try {
+        const newOrder = new Order(req.body);
+        const savedOrder = await newOrder.save();
+        res.status(201).json(savedOrder);
+    } catch (error) {
+        console.error("Order Save Error:", error);
+        res.status(500).json({ message: "Failed to save order" });
+    }
+});
+
+// GET /orders/user/:userId - Get orders for a user
+app.get('/orders/user/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const orders = await Order.find({ userId: userId }).sort({ createdAt: -1 });
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error("Fetch Orders Error:", error);
+        res.status(500).json({ message: "Failed to fetch orders", error });
+    }
+});
 
 app.post('/contact', async (req, res) => {
     try {

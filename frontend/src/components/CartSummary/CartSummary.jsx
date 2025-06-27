@@ -1,12 +1,16 @@
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import EditIcon from '@mui/icons-material/Edit';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useAuth } from '../../Context/AuthContext';
 import { useCart } from '../../Context/CartContext';
+import { createRazorpayOrder, saveOrder } from '../API/api';
 import './CartSummary.scss';
 
 const CartSummary = () => {
     const { cartItems } = useCart();
     const { user } = useAuth();
+    const navigate = useNavigate()
 
     if (!cartItems) return <p>Loading...</p>;
 
@@ -15,6 +19,63 @@ const CartSummary = () => {
     const shipping = 10.00;
     const estimatedTax = 0.00;
     const total = subtotal + shipping + estimatedTax;
+
+    const handlePayment = async () => {
+        try {
+            const order = await createRazorpayOrder(total * 100); // in paise
+            console.log("Order:", order);
+
+            const options = {
+                key: "rzp_test_u2WZfDPUaNTN1X",
+                amount: order.amount,
+                currency: "INR",
+                name: "Your Store",
+                description: "Order Payment",
+                order_id: order.id,
+                handler: async function (response) {
+                    toast.success("Payment successful!");
+                    console.log("Payment success:", response);
+
+                    // Build the order payload
+                    const orderDetails = {
+                        userId: user._id,
+                        items: cartItems.map(item => ({
+                            productId: item._id,        // ✅ Send this as productId (string)
+                            name: item.name,
+                            price: item.price,
+                            quantity: item.quantity
+                        })),
+                        totalAmount: total,
+                        paymentId: response.razorpay_payment_id,
+                        razorpayOrderId: response.razorpay_order_id,
+                        status: "processing",
+                        date: new Date().toISOString()
+                    };
+
+                    try {
+                        await saveOrder(orderDetails);  // API to save order in DB
+                        navigate("/orders");
+                    } catch (err) {
+                        console.error("Error saving order:", err);
+                    }
+                }
+                ,
+                prefill: {
+                    name: user?.username,
+                    email: user?.email,
+                    contact: "9999999999"
+                },
+                theme: {
+                    color: "#3399cc"
+                }
+            };
+
+            const razor = new window.Razorpay(options);
+            razor.open();
+        } catch (err) {
+            console.error("Payment Error:", err);
+        }
+    };
 
     return (
         <div className='cart-summary-component'>
@@ -84,7 +145,9 @@ const CartSummary = () => {
                 </div>
             </div>
 
-            <button className='cart-proceed'>Proceed<CallMadeIcon /></button>
+            <button className='cart-proceed' onClick={handlePayment}>
+                Proceed to Pay <CallMadeIcon />
+            </button>
         </div>
     );
 };
