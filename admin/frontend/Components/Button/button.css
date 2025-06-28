@@ -1,0 +1,14 @@
+.button {
+  border-radius: 6px;
+  border: 1px solid rgba(131, 125, 125, 0.17);
+  background: #000;
+  display: flex;
+  width: 10rem;
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+}/*# sourceMappingURL=Button.css.map */
