@@ -1,0 +1,79 @@
+.navbar-container {
+  height: 100vh;
+  display: inline-flex;
+  gap: 3rem;
+  flex-direction: column;
+  border-right: 0.5px solid rgba(0, 0, 0, 0.1);
+  background: rgba(227, 227, 227, 0.2);
+  padding: 1rem 2rem 1rem 0.5rem;
+}
+
+.head-logo img {
+  height: 2rem;
+  width: 2rem;
+}
+
+.navbar-head-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.e-com-heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.e-com-dashboard-heading {
+  color: rgba(131, 125, 125, 0.76);
+  font-weight: 500;
+  line-height: normal;
+}
+
+.nav-links ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.nav-links ul li {
+  list-style: none;
+}
+
+.nav-links ul li div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links ul li div:hover {
+  background-color: rgba(131, 125, 125, 0.1);
+  width: 100%;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: padding ease-in-out 0.3s;
+}
+
+.nav-links ul li div p {
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.navbar-user-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  position: absolute;
+  text-align: start;
+  align-content: baseline;
+  bottom: 8px;
+  left: 1%;
+}
+
+.navbar-user-info img {
+  width: 2rem;
+  height: 2rem;
+}/*# sourceMappingURL=Navbar.css.map */

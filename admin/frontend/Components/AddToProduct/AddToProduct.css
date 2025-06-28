@@ -1,0 +1,96 @@
+.addtoProduct-container {
+  display: flex;
+  flex-direction: column;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 50%;
+  height: -moz-fit-content;
+  height: fit-content;
+  border: 1px solid rgb(0, 0, 0);
+  padding: 1rem 2rem;
+  gap: 1.5rem;
+  margin: auto;
+  position: absolute;
+  left: 30%;
+  top: 5%;
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.addtoProduct-container > div:nth-child(1) {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.addtoProduct-container > div > p:nth-child(1) {
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.addtoProduct-container > div > p:nth-child(2) {
+  color: rgba(30, 30, 30, 0.8);
+}
+
+.product-image-name-container,
+.product-price-discount-container,
+.product-stock-category-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-image-container > div:nth-child(1),
+.product-price-container > div:nth-child(1),
+.product-stock-container > div:nth-child(1),
+.product-Discount-container > div:nth-child(1),
+.product-Category-container > div:nth-child(1),
+.product-name-container,
+.product-description-container {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.product-image-container > div:nth-child(2) {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.product-image-container > div:nth-child(2) > img {
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+}
+
+.product-name-container > input,
+.product-price-container > input,
+.product-Discount-container > input,
+.product-stock-container > input,
+.product-Category-container > select {
+  margin-top: 0.3rem;
+  width: 20rem;
+  padding: 0.5rem 0.5rem;
+}
+
+.dropdown-options {
+  margin-top: 0.3rem;
+  width: 20rem;
+  padding: 0.5rem 0.5rem;
+}
+
+.product-description-container > div {
+  margin-bottom: 0.5rem;
+}
+
+.product-description-container > textarea {
+  padding: 0.5rem 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}/*# sourceMappingURL=AddToProduct.css.map */

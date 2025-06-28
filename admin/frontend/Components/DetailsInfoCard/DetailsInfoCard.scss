@@ -1,0 +1,18 @@
+.info-card {
+    min-width: 12rem;
+    border-radius: 10px;
+    border: 1px solid rgba(131, 125, 125, 0.76);
+    padding: 1rem 0.5rem 1rem 1rem;
+}
+
+.info-card p {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.info-card>div {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: center;
+}
