@@ -1,19 +1,23 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { addProduct, uploadProductImage } from '../../API/api.jsx';
 import imageIcon from '../../assets/productImage.png';
 import Button from '../Button/button';
 import OutlineButton from '../OutlineButton/OutlineButton';
 import './AddToProduct.css';
-
-function AddToProduct() {
+function AddToProduct({ onProductAdded, onCancel }) {
     const [product, setProduct] = useState({
         productName: '',
-        productImage: 'https://example.com/image.jpg',
+        productImage: '',
         productPrice: '',
         productDiscount: '',
         productInitialStock: '',
         productCategory: '',
         productDescription: ''
     });
+
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -25,40 +29,54 @@ function AddToProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            const res = await fetch('http://localhost:5002/addProduct', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(product)
-            });
-
-            const data = await res.json();
-
-            if (res.ok) {
-                alert("✅ Product added successfully!");
-                setProduct({
-                    productName: '',
-                    productImage: '',
-                    productPrice: '',
-                    productDiscount: '',
-                    productInitialStock: '',
-                    productCategory: '',
-                    productDescription: ''
-                });
-            } else {
-                alert(`❌ Error: ${data.error}`);
+            if (!product.productName || !product.productPrice || !product.productCategory) {
+                alert("Please fill in all required fields.");
+                return;
             }
 
+            const savedProduct = await addProduct(product);
+            console.log("Saved product from server:", savedProduct);
+            toast.success("Product Added Successfully");
+
+            if (onProductAdded) {
+                onProductAdded(savedProduct);
+            }
+
+            // Clear form
+            setProduct({
+                productName: '',
+                productImage: '',
+                productPrice: '',
+                productDiscount: '',
+                productInitialStock: '',
+                productCategory: '',
+                productDescription: ''
+            });
+            setSelectedImage(null);
+            setImageUrl('');
         } catch (err) {
-            console.error("Error submitting product:", err);
-            alert("❌ Failed to add product.");
+            toast.error("Failed to add product. Please try again.");
+            console.error(err);
         }
     };
 
-    return (
-        <form className="addtoProduct-container" onSubmit={handleSubmit}>
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        setSelectedImage(URL.createObjectURL(file)); // Preview
+
+        try {
+            const pImageUrl = await uploadProductImage(file);
+            setProduct(prev => ({ ...prev, productImage: pImageUrl }));
+            setImageUrl(pImageUrl);
+        } catch (err) {
+            console.error("Image upload failed", err);
+        }
+    };
+
+    return (<>
+        <form className="addtoProduct-container" onSubmit={handleSubmit} noValidate>
             <div>
                 <p>Add New Product</p>
                 <p>Create a new product in your catalog</p>
@@ -67,19 +85,29 @@ function AddToProduct() {
             <div className='product-image-name-container'>
                 <div className='product-image-container'>
                     <div>Product Image</div>
-                    <div>
-                        <img src={imageIcon} alt="preview" />
-                        <img src={imageIcon} alt="preview" />
-                        <img src={imageIcon} alt="preview" />
-                        <img src={imageIcon} alt="preview" />
+
+                    <div className="preview-and-upload">
+                        {selectedImage ? (
+                            <img src={selectedImage} alt="Preview" className='preview-img' />
+                        ) : (
+                            <img src={imageIcon} alt="placeholder" className='preview-img' />
+                        )}
+                        <input type="file" accept="image/*" onChange={handleImageUpload} />
                     </div>
                 </div>
 
                 <div className='product-name-container'>
                     <div>Product Name</div>
-                    <input type="text" placeholder='enter product name' name="productName" value={product.productName} onChange={handleChange} />
+                    <input
+                        type="text"
+                        placeholder='enter product name'
+                        name="productName"
+                        value={product.productName}
+                        onChange={handleChange}
+                    />
                 </div>
             </div>
+
 
             <div className='product-price-discount-container'>
                 <div className='product-price-container'>
@@ -124,10 +152,31 @@ function AddToProduct() {
             </div>
 
             <div className='buttons'>
-                <OutlineButton ObName={"Cancel"} />
+                <OutlineButton
+                    ObName={"Cancel"}
+                    type="button"
+                    onClick={() => {
+                        setSelectedImage(null);
+                        setImageUrl('');
+                        setProduct({
+                            productName: '',
+                            productImage: '',
+                            productPrice: '',
+                            productDiscount: '',
+                            productInitialStock: '',
+                            productCategory: '',
+                            productDescription: ''
+                        });
+
+                        // Close the popup
+                        if (onCancel) onCancel();
+                    }}
+                />
+
                 <Button bName={"Add to product"} type="submit" />
             </div>
         </form>
+    </>
     );
 }
 

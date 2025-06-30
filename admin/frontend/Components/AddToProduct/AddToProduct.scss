@@ -13,6 +13,7 @@
     top: 5%;
     background-color: #fff;
     border-radius: 1rem;
+    z-index: 100;
 }
 
 .addtoProduct-container>div:nth-child(1) {
@@ -92,4 +93,16 @@
     justify-content: flex-end;
     align-items: center;
     gap: 1rem;
+}
+
+.preview-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.preview-and-upload {
+    display: flex;
+    flex-direction: column;
 }
