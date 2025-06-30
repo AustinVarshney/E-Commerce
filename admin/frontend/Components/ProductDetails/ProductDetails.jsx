@@ -1,18 +1,36 @@
 import { useEffect, useRef, useState } from 'react'
-import deleteProduct from '../../src/assets/Product/DeleteProduct.png'
+import { toast, ToastContainer } from 'react-toastify'
+import { deleteProduct } from '../../API/api'
+import deleteProductIcon from '../../src/assets/Product/DeleteProduct.png'
 import editProduct from '../../src/assets/Product/editProduct.png'
 import viewDetails from '../../src/assets/Product/Eye.png'
-import productImage from '../../src/assets/Product/productImage.png'
 import updateStock from '../../src/assets/Product/updateStock.png'
 import viewReviews from '../../src/assets/Product/viewReview.png'
 import './ProductDetails.css'
 
-function ProductDetails({ pName, pPrice, pQuantity, pSold, pId, pRating, pStatus, pCategory, numberOfRating }) {
+function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating, pStatus = "Active", pCategory, numberOfRating, onProductDeleted }) {
     const [showActions, setShowActions] = useState(false);
     const actionRef = useRef(null);
 
     const toggleActions = () => {
         setShowActions(prev => !prev);
+    };
+
+    const handleDelete = async () => {
+        const confirmed = window.confirm("Are you sure you want to delete this product?");
+        if (!confirmed) return;
+
+        const res = await deleteProduct(pId);
+        if (res?.message) {
+            toast.success("Product deleted successfully!");
+            setTimeout(() => {
+                if (onProductDeleted) {
+                    onProductDeleted(pId);
+                }
+            }, 300);
+        } else {
+            toast.error("Failed to delete product.");
+        }
     };
 
     useEffect(() => {
@@ -29,19 +47,20 @@ function ProductDetails({ pName, pPrice, pQuantity, pSold, pId, pRating, pStatus
 
     return (
         <>
-            <div>
-                <img src={productImage} alt="" />
+            <div className='product-image-name'>
+                <ToastContainer />
+                <img src={pImage} alt='image' />
                 <div className='product-name'>
                     <p>{pName}</p>
                     <p>{pSold}</p>
                 </div>
             </div >
-            <p>{pId}</p>
+            <p>{pId ? pId.slice(0, 8) : 'N/A'}</p>
             <p>{pCategory}</p>
             <p>&#8377; {pPrice}</p>
             <p>{pQuantity}</p>
             <p className='show-product-status'>{pStatus}</p>
-            <p>{pRating} <sub> ({numberOfRating})</sub></p>
+            <p>{pRating ? pRating : 0} <sub> ({numberOfRating ? numberOfRating : 0})</sub></p>
             <div className='product-action-container' ref={actionRef}>
                 <p onClick={toggleActions} className='action-button'>...</p>
                 {showActions && (
@@ -51,14 +70,14 @@ function ProductDetails({ pName, pPrice, pQuantity, pSold, pId, pRating, pStatus
                             <img src={editProduct} alt="" />
                             <img src={updateStock} alt="" />
                             <img src={viewReviews} alt="" />
-                            <img src={deleteProduct} alt="" />
+                            <img src={deleteProductIcon} alt="" onClick={handleDelete} />
                         </li>
                         <li>
                             <p>View Details</p>
                             <p>Edit Product</p>
                             <p>Update Stock</p>
                             <p>View Reviews</p>
-                            <p>Delete Product</p>
+                            <p onClick={handleDelete}>Delete Product</p>
                         </li>
 
                     </ul>
