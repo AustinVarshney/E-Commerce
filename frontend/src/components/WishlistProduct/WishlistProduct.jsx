@@ -6,7 +6,6 @@ import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../Context/AuthContext';
@@ -15,18 +14,10 @@ import { useWishlist } from '../../Context/WishListContext';
 import "./WishlistProduct.scss";
 
 const WishlistProduct = ({ PicImg, discount, heading, linkToProduct, rating, reviews, price }) => {
-
-    let [isLiked, setIsLiked] = useState(false);
     const { addToCart } = useCart();
     const navigate = useNavigate();
     const { isLoggedIn } = useAuth();
     const { removeFromWishlist } = useWishlist();
-
-    const handleLike = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        setIsLiked(!isLiked);
-    }
 
     const product = {
         _id: heading + "-" + price,
@@ -71,11 +62,6 @@ const WishlistProduct = ({ PicImg, discount, heading, linkToProduct, rating, rev
                     </div>
                     <div className='Favorite-WishCard'>
                         <VisibilityIcon className='favourite-1-ProCard' />
-                        {isLiked ?
-                            <FavoriteIcon className='favourite-2-ProCard' onClick={handleLike} style={{ color: '#f1284c' }} />
-                            :
-                            <FavoriteBorderIcon className='favourite-2-ProCard' onClick={handleLike} />
-                        }
                         <DeleteIcon className='favourite-3-ProCard' onClick={(e) => {
                             e.stopPropagation();
                             e.preventDefault()

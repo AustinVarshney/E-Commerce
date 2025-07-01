@@ -14,6 +14,7 @@ import Pic7 from '../../assets/Pic7.jpg';
 import Pic8 from '../../assets/Pic8.jpg';
 import ProductCard from '../ProductCard/ProductCard';
 import './AllProducts.scss';
+import FilterSection from '../FilterSection/FilterSection';
 
 export const products = [
     { PicImg: Pic1, discount: 36, heading: 'Apple iMac 27", 1TB HDD, Retina 5K Display, M3 Max', rating: 4.7, reviews: 336, price: 5600, index: '1' },
@@ -87,9 +88,7 @@ const AllProducts = () => {
                 )}
                 {isFilterSectionOpen && (
                     <div className="filter-panel">
-                        <button className="close-btn" onClick={handleFilterSection}>
-                            <CloseIcon />
-                        </button>
+                        <FilterSection min={0} max={1000} checkFilterSection={false} handleFilterSection={handleFilterSection}/>
                     </div>
                 )}
 
