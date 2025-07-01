@@ -2,37 +2,65 @@ import { useEffect, useRef, useState } from 'react';
 import AddToProduct from '../../../Components/AddToProduct/AddToProduct';
 import DetailsInfoCard from '../../../Components/DetailsInfoCard/DetailsInfoCard';
 import ProductDetails from '../../../Components/ProductDetails/ProductDetails';
+
 import notificationIcon from '../../assets/Product/Notification.png';
 import plusIcon from '../../assets/Product/Plus.png';
 import ProductIcon from '../../assets/Product/Product.svg';
 import settingIcon from '../../assets/Product/Settings.png';
 import sideBar from '../../assets/Product/Sidebar.png';
+
+import { fetchProducts } from '../../../API/api';
 import './Product.css';
+
 function Product() {
-    const products = [{ pName: "Wireless Bluetooth Headphones", pSold: "1250 sold", pId: "Product-1", pCategory: "Electronics", pPrice: 21.21, pQuantity: 21, pStatus: "Active", pRating: "4.5", numberOfRating: 21 },
-    { pName: "Wireless Bluetooth Headphones", pSold: "1250 sold", pId: "Product-1", pCategory: "Electronics", pPrice: 21.21, pQuantity: 21, pStatus: "Active", pRating: "4.5", numberOfRating: 21 },
-    ]
+    const [products, setProducts] = useState([]);
 
     const [addToProduct, setAddtoProduct] = useState(false);
+    const popupRef = useRef(null);
+
+    const removeProductFromState = (deletedProductId) => {
+        setProducts(prev => prev.filter(product => product._id !== deletedProductId));
+    };
+
+    const getAllProducts = async () => {
+        const data = await fetchProducts();
+        console.log("Updated product list:", data);
+        setProducts(data);
+    };
+
+
+    const addProductToState = (newProduct) => {
+        setProducts(prev => [...prev, newProduct]);
+        setAddtoProduct(false);
+    };
+
     const showAddtoProductPopUp = () => {
         setAddtoProduct(prev => !prev);
-    }
-    const actionRef = useRef(null);
+    };
+
+    useEffect(() => {
+        getAllProducts();
+    }, []);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (actionRef.current && !actionRef.current.contains(event.target)) {
+            if (popupRef.current && !popupRef.current.contains(event.target)) {
                 setAddtoProduct(false);
             }
         };
-        document.addEventListener("mousedown", handleClickOutside);
+        if (addToProduct) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, []);
+    }, [addToProduct]);
+
     return (
-        <>
-            <div className="product-outer-container" >
+        <div className="product-outer-container">
+            <div className={`overlay-background ${addToProduct ? 'active' : ''}`} />
+
+            <div className={`product-main-content ${addToProduct ? 'blurred' : ''}`}>
                 <div className="product-intro">
                     <div>
                         <img src={sideBar} alt="" />
@@ -63,33 +91,30 @@ function Product() {
                             <p>Manage your product catalog and inventory</p>
                         </div>
 
-                        <div className='product-buttons' ref={actionRef}>
+                        <div className='product-buttons'>
                             <button>Export</button>
                             <button onClick={showAddtoProductPopUp}>
                                 <img src={plusIcon} alt="" />
-                                <p >Add Products</p>
-
+                                <p>Add Products</p>
                             </button>
-                            {addToProduct && <AddToProduct />}
                         </div>
                     </div>
 
                     <div className='product-status'>
                         <input type="text" placeholder='search' />
 
-                        <select name="">
-                            <option value=""> All Categories</option>
+                        <select>
+                            <option value="">All Categories</option>
                             <option value="option1">Electronics</option>
                             <option value="option2">Clothes</option>
                             <option value="option2">Medicine</option>
                             <option value="option3">Footwear</option>
                         </select>
 
-                        <select name="">
+                        <select>
                             <option value="">All Status</option>
                             <option value="option1">In Stock</option>
                             <option value="option2">Out of Stock</option>
-
                         </select>
                     </div>
 
@@ -106,16 +131,40 @@ function Product() {
                         </div>
 
                         <div className='product-details'>
-                            {products.map((product, index) => (
-                                <ProductDetails pName={product.pName} pCategory={product.pCategory} pId={product.pId} pPrice={product.pPrice} pQuantity={product.pQuantity} pRating={product.pRating} pSold={product.pSold} pStatus={product.pStatus} key={index + 1} numberOfRating={product.numberOfRating} />
-                            ))}
+                            {products
+                                .filter(product => product && product.productName)
+                                .map((product) => (
+                                    <ProductDetails
+                                        key={product._id}
+                                        pName={product.productName}
+                                        pCategory={product.productCategory}
+                                        pId={product._id}
+                                        pPrice={product.productPrice}
+                                        pQuantity={product.productInitialStock}
+                                        pRating={product.productRating}
+                                        pSold={product.productSold}
+                                        pStatus={product.productStatus}
+                                        numberOfRating={product.numberOfRating}
+                                        pImage={product.productImage}
+                                        onProductDeleted={removeProductFromState}
+                                    />
+                                ))}
                         </div>
                     </div>
                 </div>
-
             </div>
-        </>
-    )
+
+            {addToProduct && (
+                <div className="popup-wrapper" >
+                    <div className="overlay-background active" />
+                    <div className="add-product-popup" ref={popupRef}>
+                        <AddToProduct onProductAdded={addProductToState}
+                            onCancel={() => setAddtoProduct(false)} />
+                    </div>
+                </div>
+            )}
+        </div>
+    );
 }
 
-export default Product
+export default Product;
