@@ -123,7 +123,8 @@ app.get('/auth/google/callback',
             const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, { expiresIn: "5h" });
 
             res.cookie("token", token, { httpOnly: true });
-            res.redirect(`${frontendURL}/oauth-success?token=${token}&username=${user.username}&email=${user.email}`);
+            res.redirect(`${frontendURL}/oauth-success?token=${token}&username=${user.username}&email=${user.email}&id=${user._id}`);
+
 
         } catch (error) {
             console.error("Error during Google OAuth:", error);
@@ -434,6 +435,7 @@ app.delete('/wishlist/:email/:productId', async (req, res) => {
 // POST /orders - Save a new order
 app.post('/orders', async (req, res) => {
     try {
+        console.log("Saving order:", req.body);
         const newOrder = new Order(req.body);
         const savedOrder = await newOrder.save();
         res.status(201).json(savedOrder);

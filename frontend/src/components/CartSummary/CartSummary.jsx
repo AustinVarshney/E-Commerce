@@ -39,6 +39,7 @@ const CartSummary = () => {
                     // Build the order payload
                     const orderDetails = {
                         userId: user._id,
+                        userEmail: user.email,
                         items: cartItems.map(item => ({
                             productId: item._id,        // ✅ Send this as productId (string)
                             name: item.name,
@@ -51,7 +52,7 @@ const CartSummary = () => {
                         status: "processing",
                         date: new Date().toISOString()
                     };
-
+                    console.log("Order payload being sent:", orderDetails);
                     try {
                         await saveOrder(orderDetails);  // API to save order in DB
                         navigate("/orders");
