@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
+import Shimmer from "../../../components/Shimmer/Shimmer";
 
 function OAuthSuccess() {
     const navigate = useNavigate();
@@ -26,7 +27,7 @@ function OAuthSuccess() {
         navigate("/", { replace: true });
     }, [navigate]);
 
-    return <h3 style={{ color: "#fff" }}>Redirecting...</h3>;
+    return <Shimmer />;
 }
 
 export default OAuthSuccess;
