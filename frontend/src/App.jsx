@@ -12,14 +12,14 @@ import { WishlistProvider } from './Context/WishListContext';
 import Auth from './pages/AuthPage/Auth';
 import OAuthSuccess from './pages/AuthPage/OAuthSuccess/OAuthSuccess';
 import CartPage from './pages/CartPage/CartPage';
+import ContactPage from './pages/ContactPage/ContactPage';
 import Home from './pages/Home/Home';
 import MainLayout from './pages/MainLayout/mainLayout';
 import MyOrders from './pages/MyOrders/MyOrders';
+import Profile from './pages/Profile/Profile';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 import Wishlist from './pages/Wishlist/Wishlist';
 import ProtectedRoute from './utils/ProtectedRoute';
-import Profile from './pages/Profile/Profile';
-import ContactPage from './pages/ContactPage/ContactPage';
 
 const queryClient = new QueryClient();
 
@@ -45,7 +45,7 @@ function App() {
                   <Route path='borderTest' element={<MovingBorder />} />
                   <Route path='cardRoute' element={<ProductCard />} />
                   <Route path='oauth-success' element={<OAuthSuccess />} />
-                  <Route path='contact' element={<ProtectedRoute>< ContactPage/></ProtectedRoute>} />
+                  <Route path='contact' element={<ProtectedRoute>< ContactPage /></ProtectedRoute>} />
                   <Route path='wishlist' element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
                   <Route path='profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                   <Route path='cart' element={
