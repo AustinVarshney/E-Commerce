@@ -459,14 +459,31 @@ app.get('/orders/user/:userId', async (req, res) => {
 
 app.post('/contact', async (req, res) => {
     try {
-        const { name, email, mobile, query } = req.body;
-        const newContact = new contactUsForm({ name, email, mobile, query });
+        const { name, email, category, subject, message } = req.body;
+
+        if (!name || !email || !message) {
+            return res.status(400).json({ error: 'Name, email, and message are required' });
+        }
+
+        const newContact = new contactUsForm({
+            name,
+            email,
+            // mobile,
+            category,
+            subject,
+            message,
+            createdAt: new Date()
+        });
+
         await newContact.save();
+
         res.status(201).json({ message: 'Contact saved successfully' });
     } catch (err) {
-        res.status(500).json({ error: 'Failed to save contact' });
+        console.error('Error saving contact:', err);
+        res.status(500).json({ error: 'Failed to save contact', details: err.message });
     }
 });
+
 
 const PORT = 5001;
 app.listen(PORT, () => {
