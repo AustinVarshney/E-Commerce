@@ -217,3 +217,13 @@ export const getOrdersByUser = async (userId) => {
         throw err.response?.data || { message: "Failed to fetch orders" };
     }
 };
+
+export const contactForm = async (formData) => {
+    try {
+        const res = await api.post(`${BASE_URL}/contact`, formData);
+        return res.data;
+    } catch (error) {
+        console.error("Error submitting contact form", error);
+        throw error;
+    }
+};

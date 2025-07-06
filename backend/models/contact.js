@@ -1,34 +1,53 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
 const contactFormSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true,
+            required: [true, "Name is required"],
+            trim: true,
         },
 
         email: {
             type: String,
-            required: true,
+            required: [true, "Email is required"],
             lowercase: true,
-            match: [/^\S+@\S+\.\S+$/, "Please use a valid email address"],
+            trim: true,
+            match: [
+                /^\S+@\S+\.\S+$/,
+                "Please use a valid email address",
+            ],
         },
 
-        mob_no: {
-            type: Number,
-            required: true,
-            match: [/^\d{10}$/, "Please enter a valid 10-digit phone number"],
-        },
+        // mobile: {
+        //     type: String,
+        //     required: [true, "Mobile number is required"],
+        //     match: [
+        //         /^\d{10}$/,
+        //         "Please enter a valid 10-digit phone number",
+        //     ],
+        // },
 
-        query: {
+        category: {
             type: String,
-            required: true
-        }
+            default: "General",
+        },
+
+        subject: {
+            type: String,
+            default: "",
+        },
+
+        message: {
+            type: String,
+            required: [true, "Message is required"],
+        },
     },
     {
-        timestamps: true
+        timestamps: true,
     }
-)
+);
 
-const contactForm = mongoose.model("ContactForm", contactFormSchema);
-module.exports = contactForm;
+const ContactForm = mongoose.model("ContactForm", contactFormSchema);
+
+module.exports = ContactForm;

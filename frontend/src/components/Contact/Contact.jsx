@@ -1,18 +1,22 @@
-import TextField from '@mui/material/TextField';
-import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { contact } from '../API/api';
-import './Contact.scss';
-import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import CallIcon from '@mui/icons-material/Call';
-import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import QueryBuilderIcon from '@mui/icons-material/QueryBuilder';
 import TelegramIcon from '@mui/icons-material/Telegram';
+import { useState } from 'react';
+import { contactForm } from '../API/api';
+import './Contact.scss';
 
 function Contact() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        category: '',
+        subject: '',
+        message: ''
+    });
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [defaultText, setDefaultText] = useState("Select Category");
 
@@ -20,12 +24,34 @@ function Contact() {
         setIsCategoryOpen(!isCategoryOpen);
     }
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
     const handleOption = (option) => {
-        setDefaultText((prevText) => {
-            handleCategoryOption();
-            return option;
-        })
+        setDefaultText(option);
+        setFormData(prev => ({
+            ...prev,
+            category: option
+        }));
+        setIsCategoryOpen(false);
     }
+
+    const handleSubmit = async () => {
+        try {
+            await contactForm(formData);
+            alert("Message sent successfully");
+            setFormData({ name: '', email: '', category: '', subject: '', message: '' });
+            setDefaultText("Select Category");
+        } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+        }
+    };
+
     // const [formData, setFormData] = useState({
     //     name: '', email: '', mob_no: '', query: ''
     // })
@@ -145,18 +171,20 @@ function Contact() {
                     <div className='contact-fields'>
                         <div className='contact-name'>
                             <label htmlFor="contact-name" className='contact-name-title'>Full Name</label>
-                            <input type="text" to='contact-name' className='contact-name-input' />
+                            <input type="text" to='contact-name' className='contact-name-input' name='name' value={formData.name}
+                                onChange={handleChange} />
                         </div>
                         <div className='contact-name'>
                             <label htmlFor="contact-email" className='contact-name-title'>Email Address</label>
-                            <input type="text" to='contact-email' className='contact-name-input' />
+                            <input type="text" to='contact-email' className='contact-name-input' name='email' value={formData.email}
+                                onChange={handleChange} />
                         </div>
                     </div>
 
                     <div className='contact-fields'>
                         <div className='contact-name contact-category-option'>
                             <label htmlFor="contact-email" className='contact-name-title'>Category</label>
-                            <div className='contact-name-input contact-category' onClick={handleCategoryOption}>{defaultText} {isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon/>}</div>
+                            <div className='contact-name-input contact-category' onClick={handleCategoryOption}>{defaultText} {isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</div>
                             {isCategoryOpen &&
                                 <div className='category-options'>
                                     <p onClick={() => { handleOption("Option 1") }}>Option 1</p>
@@ -167,18 +195,20 @@ function Contact() {
                         </div>
                         <div className='contact-name'>
                             <label htmlFor="contact-subject" className='contact-name-title'>Subject</label>
-                            <input type="text" to='contact-subject' className='contact-name-input' />
+                            <input type="text" to='contact-subject' className='contact-name-input' name='subject' value={formData.subject}
+                                onChange={handleChange} />
                         </div>
                     </div>
 
                     <div className='contact-fields'>
                         <div className='contact-name contact-message'>
                             <label htmlFor="contact-email" className='contact-name-title'>Message</label>
-                            <textarea type="text" to='contact-email' className='contact-name-input contact-message-input' placeholder='Please describe your inquiry in detail..' />
+                            <textarea type="text" to='contact-email' className='contact-name-input contact-message-input' placeholder='Please describe your inquiry in detail..' name="message" value={formData.message}
+                                onChange={handleChange} />
                         </div>
                     </div>
 
-                    <button className='send-message-btn'><TelegramIcon/> Send Message</button>
+                    <button className='send-message-btn' onClick={handleSubmit}><TelegramIcon /> Send Message</button>
                 </div>
             </div>
         </div>
