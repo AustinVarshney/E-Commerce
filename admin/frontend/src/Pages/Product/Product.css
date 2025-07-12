@@ -1,6 +1,9 @@
 .product-outer-container {
   margin-top: 0.5rem;
-  margin-right: 2rem;
+  width: 78vw;
+  display: flex;
+  position: relative;
+  right: -105%;
 }
 
 .product-intro {
@@ -215,4 +218,8 @@
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+}
+
+.product-main-content {
+  width: 100%;
 }/*# sourceMappingURL=Product.css.map */
