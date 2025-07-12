@@ -110,7 +110,7 @@ const Navbar = () => {
                                 <div className='user-options'>
                                     <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                                         <Avatar src="/broken-image.jpg" />
-                                        <p>Profile</p>
+                                        <Link to={'/profile'} style={{ color: "#fff" }}>Profile</Link>
                                     </span>
                                     <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                                         <Avatar src="/broken-image.jpg" />
@@ -143,7 +143,7 @@ const Navbar = () => {
                                 <div className='user-options'>
                                     <span style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                                         <Avatar src="/broken-image.jpg" />
-                                        <p>Profile</p>
+                                        <Link to={'/profile'} style={{ color: "#fff" }}>Profile</Link>
                                     </span>
                                     <Link to={'/orders'} style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "0.5rem" }}>
                                         <Avatar src="/broken-image.jpg" />
