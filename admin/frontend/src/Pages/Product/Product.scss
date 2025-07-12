@@ -1,6 +1,10 @@
 .product-outer-container {
     margin-top: 0.5rem;
-    margin-right: 2rem;
+    // margin-right: 2rem;
+    width: 76vw;
+    display: flex;
+    position: relative;
+    right: -105%;
 }
 
 .product-intro {
@@ -213,4 +217,8 @@
     filter: blur(1px);
     pointer-events: none;
     user-select: none;
+}
+
+.product-main-content {
+    width: 100%;
 }

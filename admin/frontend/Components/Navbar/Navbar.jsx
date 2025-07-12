@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import Administrator_Male from '../../src/assets/Navbar_assets/Administrator_Male.png';
 import Box from '../../src/assets/Navbar_assets/Box.png';
 import Customer from '../../src/assets/Navbar_assets/customer.png';
@@ -26,46 +27,46 @@ function Navbar() {
             <div className="nav-links">
                 <ul>
                     <li>
-                        <div>
+                        <NavLink to='/'>
                             <img src={Home} alt="" />
                             <p>Dashboard</p>
-                        </div>
+                        </NavLink>
                     </li>
                     <li>
-                        <div>
+                        <NavLink>
                             <img src={PurchaseOrder} alt="" />
                             <p> Orders</p>
-                        </div>
+                        </NavLink>
                     </li>
                     <li>
-                        <div>
+                        <NavLink to='/products'>
                             <img src={Box} alt="" />
                             <p>Products</p>
-                        </div>
+                        </NavLink>
                     </li>
                     <li>
-                        <div>
+                        <NavLink>
                             <img src={Customer} alt="" />
                             <p>Customers</p>
-                        </div>
+                        </NavLink>
                     </li>
                     <li>
-                        <div>
+                        <NavLink>
                             <img src={Star} alt="" />
                             <p>Reviews</p>
-                        </div>
+                        </NavLink>
                     </li>
                     <li>
-                        <div>
+                        <NavLink>
                             <img src={inTransit} alt="" />
                             <p> Shipping</p>
-                        </div>
+                        </NavLink>
                     </li>
                     <li>
-                        <div>
+                        <NavLink>
                             <img src={Settings} alt="" />
                             <p>Settings</p>
-                        </div>
+                        </NavLink>
                     </li>
                 </ul>
 

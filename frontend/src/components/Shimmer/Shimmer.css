@@ -1,4 +1,5 @@
 .shimmer-container {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 }/*# sourceMappingURL=Shimmer.css.map */

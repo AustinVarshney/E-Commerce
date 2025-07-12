@@ -42,14 +42,20 @@
     list-style: none;
 }
 
-.nav-links ul li div {
+.nav-links>ul>li>a {
     display: flex;
     // justify-content: center;
+    color: #111;
     align-items: center;
     gap: 1rem;
+    text-decoration: none;
 }
 
-.nav-links ul li div:hover {
+.nav-links>ul>li>a:active {
+    background-color: aqua;
+}
+
+.nav-links>ul>li>a:hover {
     background-color: rgba(131, 125, 125, 0.1);
     width: 100%;
     border-radius: 0.5rem;
@@ -57,7 +63,7 @@
     transition: padding ease-in-out 0.3s;
 }
 
-.nav-links ul li div p {
+.nav-links>ul>li>div>p {
     font-weight: 500;
     font-size: 1.2rem;
 }

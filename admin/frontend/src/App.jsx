@@ -1,7 +1,9 @@
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
-import './App.css'
-import MainLayout from './Main_Layout/MainLayout'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import './App.css';
+import MainLayout from './Main_Layout/MainLayout';
+import LandingPage from './Pages/LandingPage/LandingPage';
+import Product from './Pages/Product/Product';
 
 function App() {
 
@@ -10,10 +12,13 @@ function App() {
       <Router>
         <ToastContainer position="top-right" autoClose={3000} style={{ zIndex: 9999 }} />
         <Routes>
-          <Route path='/products' />
+          <Route path='/' element={<MainLayout />} >
+            <Route index element={<LandingPage />} />
+            <Route path='/products' element={<Product />} />
+          </Route>
         </Routes>
       </Router>
-      <MainLayout />
+      {/* <MainLayout /> */}
     </>
   )
 }

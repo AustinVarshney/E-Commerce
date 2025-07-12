@@ -6,6 +6,7 @@ import AllProducts from './components/AllProducts/AllProducts';
 import MovingBorder from './components/MovingBorder/MovingBorder';
 import ProductCard from './components/ProductCard/ProductCard';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop';
+import Shimmer from './components/Shimmer/Shimmer';
 import { AuthProvider } from './Context/AuthContext';
 import { CartProvider } from './Context/CartContext';
 import { WishlistProvider } from './Context/WishListContext';
@@ -53,6 +54,7 @@ function App() {
                       <CartPage />
                     </ProtectedRoute>} />
                   <Route path='orders' element={<MyOrders />} />
+                  <Route path='/shimmer' element={<Shimmer />} />
                 </Route>
               </Routes>
             </CartProvider>
