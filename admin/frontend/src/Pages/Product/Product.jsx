@@ -145,7 +145,7 @@ function Product() {
                                         pSold={product.productSold}
                                         pStatus={product.productStatus}
                                         numberOfRating={product.numberOfRating}
-                                        pImage={product.productImage}
+                                        pImage={product.pImageUrl}
                                         onProductDeleted={removeProductFromState}
                                     />
                                 ))}
