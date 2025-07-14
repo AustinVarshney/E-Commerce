@@ -8,7 +8,7 @@ import './AddToProduct.css';
 function AddToProduct({ onProductAdded, onCancel }) {
     const [product, setProduct] = useState({
         productName: '',
-        productImage: '',
+        pImageUrl: '',
         productPrice: '',
         productDiscount: '',
         productInitialStock: '',
@@ -47,7 +47,7 @@ function AddToProduct({ onProductAdded, onCancel }) {
             // Clear form
             setProduct({
                 productName: '',
-                productImage: '',
+                pImageUrl: '',
                 productPrice: '',
                 productDiscount: '',
                 productInitialStock: '',
@@ -68,7 +68,7 @@ function AddToProduct({ onProductAdded, onCancel }) {
 
         try {
             const pImageUrl = await uploadProductImage(file);
-            setProduct(prev => ({ ...prev, productImage: pImageUrl }));
+            setProduct(prev => ({ ...prev, pImageUrl }));
             setImageUrl(pImageUrl);
         } catch (err) {
             console.error("Image upload failed", err);
