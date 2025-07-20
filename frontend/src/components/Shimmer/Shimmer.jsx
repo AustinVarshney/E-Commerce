@@ -9,12 +9,10 @@ function Shimmer() {
                 <ShimmerProductCard />
                 <ShimmerProductCard />
                 <ShimmerProductCard />
-
                 <ShimmerProductCard />
-
                 <ShimmerProductCard />
-                <ShimmerProductCard /> <ShimmerProductCard />
-
+                <ShimmerProductCard />
+                <ShimmerProductCard />
             </div>
         </>
     )

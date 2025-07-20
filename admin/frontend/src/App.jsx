@@ -3,7 +3,8 @@ import { ToastContainer } from 'react-toastify';
 import './App.css';
 import MainLayout from './Main_Layout/MainLayout';
 import LandingPage from './Pages/LandingPage/LandingPage';
-import Product from './Pages/Product/Product';
+import ProductsPage from './Pages/ProductsPage/ProductsPage';
+import Navbar from '../Components/Navbar/Navbar';
 
 function App() {
 
@@ -14,7 +15,7 @@ function App() {
         <Routes>
           <Route path='/' element={<MainLayout />} >
             <Route index element={<LandingPage />} />
-            <Route path='/products' element={<Product />} />
+            <Route path='/products' element={<ProductsPage/>} />
           </Route>
         </Routes>
       </Router>

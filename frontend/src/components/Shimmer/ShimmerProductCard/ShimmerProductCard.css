@@ -1,6 +1,6 @@
 .outer-ProductCard-containr.shimmer {
   border: 1px solid #333;
-  padding: 1rem;
+  padding: 0 1rem;
   border-radius: 8px;
   background-color: #1a1a1a;
   display: flex;
@@ -8,6 +8,7 @@
   gap: 0.5rem;
   animation: pulse 1.5s infinite ease-in-out;
   flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .shimmer-bg {
@@ -59,9 +60,11 @@
   width: 100px;
   height: 30px;
   border-radius: 4px;
-  animation: addToCart 1.5s infinite;
-  border: none;
   background: linear-gradient(90deg, #2c2c2c 25%, #3c3c3c 50%, #2c2c2c 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+  border: none;
 }
 
 @keyframes shimmer {

@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { addProduct, uploadProductImage } from '../../API/api.jsx';
 import imageIcon from '../../assets/productImage.png';
 import Button from '../Button/button';
 import OutlineButton from '../OutlineButton/OutlineButton';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './AddToProduct.css';
+
 function AddToProduct({ onProductAdded, onCancel }) {
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+    const [whichCategory, setWhichCategory] = useState('All Categories');
+
+    const categoryRef = useRef(null);
+
     const [product, setProduct] = useState({
         productName: '',
         productImage: '',
@@ -26,6 +34,8 @@ function AddToProduct({ onProductAdded, onCancel }) {
             [name]: value
         }));
     };
+
+    const handleCategory = () => { setIsCategoryOpen(prev => !prev) };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -75,108 +85,114 @@ function AddToProduct({ onProductAdded, onCancel }) {
         }
     };
 
-    return (<>
-        <form className="addtoProduct-container" onSubmit={handleSubmit} noValidate>
-            <div>
-                <p>Add New Product</p>
-                <p>Create a new product in your catalog</p>
-            </div>
+    return (
+        <div>
+            <form className="addtoProduct-container" onSubmit={handleSubmit} noValidate>
+                <div>
+                    <p>Add New Product</p>
+                    <p>Create a new product in your catalog</p>
+                </div>
 
-            <div className='product-image-name-container'>
-                <div className='product-image-container'>
-                    <div>Product Image</div>
+                <div className='product-image-name-container'>
+                    <div className='product-image-container'>
+                        <div>Product Image</div>
 
-                    <div className="preview-and-upload">
-                        {selectedImage ? (
-                            <img src={selectedImage} alt="Preview" className='preview-img' />
-                        ) : (
-                            <img src={imageIcon} alt="placeholder" className='preview-img' />
-                        )}
-                        <input type="file" accept="image/*" onChange={handleImageUpload} />
+                        <div className="preview-and-upload">
+                            {selectedImage ? (
+                                <img src={selectedImage} alt="Preview" className='preview-img' />
+                            ) : (
+                                <img src={imageIcon} alt="placeholder" className='preview-img' />
+                            )}
+                            <input type="file" accept="image/*" onChange={handleImageUpload} style={{fontFamily: 'inherit'}}/>
+                        </div>
+                    </div>
+
+                    <div className='product-name-container'>
+                        <div>Product Name</div>
+                        <input
+                            type="text"
+                            placeholder='Enter product name'
+                            name="productName"
+                            value={product.productName}
+                            onChange={handleChange}
+                        />
                     </div>
                 </div>
 
-                <div className='product-name-container'>
-                    <div>Product Name</div>
-                    <input
-                        type="text"
-                        placeholder='enter product name'
-                        name="productName"
-                        value={product.productName}
+
+                <div className='product-price-discount-container'>
+                    <div className='product-price-container'>
+                        <div>Price</div>
+                        <input type="number" placeholder='0.00' name="productPrice" value={product.productPrice} onChange={handleChange} />
+                    </div>
+
+                    <div className='product-Discount-container'>
+                        <div>Discount</div>
+                        <input type="number" placeholder='0.0' name="productDiscount" value={product.productDiscount} onChange={handleChange} />
+                    </div>
+                </div>
+
+                <div className='product-stock-category-container'>
+                    <div className='product-stock-container'>
+                        <div>Initial Stock</div>
+                        <input type="number" placeholder='0.0' name="productInitialStock" value={product.productInitialStock} onChange={handleChange} />
+                    </div>
+
+                    <div className='product-Category-container'>
+                        <div>Category</div>
+                        <div className='products-category-add-product' onClick={handleCategory} ref={categoryRef}>
+                            <p>{whichCategory}</p>
+                            <p>{isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
+                            <div className='products-category-add-product-options' style={isCategoryOpen ? {} : { display: 'none' }}>
+                                <p onClick={() => { setWhichCategory('Electronics') }}>Electronics</p>
+                                <p onClick={() => { setWhichCategory('Clothes') }}>Clothes</p>
+                                <p onClick={() => { setWhichCategory('Medicine') }}>Medicine</p>
+                                <p onClick={() => { setWhichCategory('Footwear') }}>Footwear</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='product-description-container'>
+                    <div>Description</div>
+                    <textarea
+                        placeholder='Enter product description...'
+                        name="productDescription"
+                        rows={10}
+                        cols={95}
+                        value={product.productDescription}
                         onChange={handleChange}
+                        // style={{width: '100%'}}
+                        className='product-description-addProduct'
                     />
                 </div>
-            </div>
 
+                <div className='buttons'>
+                    <OutlineButton
+                        ObName={"Cancel"}
+                        type="button"
+                        onClick={() => {
+                            setSelectedImage(null);
+                            setImageUrl('');
+                            setProduct({
+                                productName: '',
+                                productImage: '',
+                                productPrice: '',
+                                productDiscount: '',
+                                productInitialStock: '',
+                                productCategory: '',
+                                productDescription: ''
+                            });
 
-            <div className='product-price-discount-container'>
-                <div className='product-price-container'>
-                    <div>Price</div>
-                    <input type="number" placeholder='0.00' name="productPrice" value={product.productPrice} onChange={handleChange} />
+                            // Close the popup
+                            if (onCancel) onCancel();
+                        }}
+                    />
+
+                    <Button bName={"Add to product"} type="submit" />
                 </div>
-
-                <div className='product-Discount-container'>
-                    <div>Discount</div>
-                    <input type="number" placeholder='0.0' name="productDiscount" value={product.productDiscount} onChange={handleChange} />
-                </div>
-            </div>
-
-            <div className='product-stock-category-container'>
-                <div className='product-stock-container'>
-                    <div>Initial Stock</div>
-                    <input type="number" placeholder='0.0' name="productInitialStock" value={product.productInitialStock} onChange={handleChange} />
-                </div>
-
-                <div className='product-Category-container'>
-                    <div>Category</div>
-                    <select name="productCategory" value={product.productCategory} onChange={handleChange} className='dropdown-options'>
-                        <option value="">Select Category</option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Medicine">Medicine</option>
-                        <option value="Clothes">Clothes</option>
-                        <option value="Footwear">Footwear</option>
-                    </select>
-                </div>
-            </div>
-
-            <div className='product-description-container'>
-                <div>Description</div>
-                <textarea
-                    placeholder='enter product description...'
-                    name="productDescription"
-                    rows={10}
-                    cols={95}
-                    value={product.productDescription}
-                    onChange={handleChange}
-                />
-            </div>
-
-            <div className='buttons'>
-                <OutlineButton
-                    ObName={"Cancel"}
-                    type="button"
-                    onClick={() => {
-                        setSelectedImage(null);
-                        setImageUrl('');
-                        setProduct({
-                            productName: '',
-                            productImage: '',
-                            productPrice: '',
-                            productDiscount: '',
-                            productInitialStock: '',
-                            productCategory: '',
-                            productDescription: ''
-                        });
-
-                        // Close the popup
-                        if (onCancel) onCancel();
-                    }}
-                />
-
-                <Button bName={"Add to product"} type="submit" />
-            </div>
-        </form>
-    </>
+            </form>
+        </div>
     );
 }
 

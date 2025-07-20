@@ -11,9 +11,9 @@ import Settings from '../../src/assets/Navbar_assets/Settings.png';
 import Star from '../../src/assets/Navbar_assets/Star.png';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({isNavOpen}) {
     return (
-        <div className='navbar-container'>
+        <div className={`navbar-container ${isNavOpen ? '' : 'noNavOpen'}`}>
             <div className="navbar-head-container">
                 <div className="head-logo">
                     <img src={navbar_logo} alt="" />

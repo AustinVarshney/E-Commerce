@@ -1,9 +1,16 @@
-  .outline-button {
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      border: 1px solid #ABABAB;
-      background: #ffffff9e;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-  }
+.outline-button {
+    padding: 0.3rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ABABAB;
+    background: #ffffff9e;
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+@media(max-width: 1000px) {
+    .outline-button{
+        font-size: 1rem;
+    }
+}

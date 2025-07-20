@@ -1,9 +1,16 @@
 .outline-button {
-  padding: 0.5rem 1rem;
+  padding: 0.3rem 1rem;
   border-radius: 6px;
   border: 1px solid #ABABAB;
   background: rgba(255, 255, 255, 0.6196078431);
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
+  font-family: inherit;
   cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .outline-button {
+    font-size: 1rem;
+  }
 }/*# sourceMappingURL=OutlineButton.css.map */

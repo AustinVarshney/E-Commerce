@@ -8,11 +8,8 @@
   height: fit-content;
   border: 1px solid rgb(0, 0, 0);
   padding: 1rem 2rem;
-  gap: 1.5rem;
+  gap: 0.8rem;
   margin: auto;
-  position: absolute;
-  left: 30%;
-  top: 5%;
   background-color: #fff;
   border-radius: 1rem;
   z-index: 100;
@@ -55,7 +52,6 @@
 
 .product-image-container > div:nth-child(2) {
   display: flex;
-  gap: 1rem;
   justify-content: flex-start;
 }
 
@@ -68,11 +64,57 @@
 .product-name-container > input,
 .product-price-container > input,
 .product-Discount-container > input,
-.product-stock-container > input,
-.product-Category-container > select {
+.product-stock-container > input {
   margin-top: 0.3rem;
   width: 20rem;
   padding: 0.5rem 0.5rem;
+  font-family: inherit;
+  height: 2.5rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.products-category-add-product {
+  border: 1px solid gray;
+  border-radius: 0.2rem;
+  background: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  width: 20rem;
+  margin-top: 4.8px;
+  height: 2.5rem;
+}
+
+.products-category-add-product:hover {
+  cursor: pointer;
+}
+
+.products-category-add-product > p > svg {
+  transform: translate(12%, 12%);
+}
+
+.products-category-add-product-options {
+  position: absolute;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 0.25rem;
+  width: 100%;
+  top: 38px;
+  left: 0;
+  z-index: 10;
+}
+
+.products-category-add-product-options > p {
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+}
+
+.products-category-add-product-options > p:hover {
+  background-color: rgb(202, 202, 202);
+  cursor: pointer;
 }
 
 .dropdown-options {
@@ -81,12 +123,17 @@
   padding: 0.5rem 0.5rem;
 }
 
+.product-description-container {
+  width: 100%;
+}
+
 .product-description-container > div {
   margin-bottom: 0.5rem;
 }
 
 .product-description-container > textarea {
   padding: 0.5rem 0.5rem;
+  outline: none;
 }
 
 .buttons {
@@ -107,4 +154,96 @@
 .preview-and-upload {
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 1000px) {
+  .product-name-container > input,
+  .product-price-container > input,
+  .product-Discount-container > input,
+  .product-stock-container > input {
+    width: 16.5rem;
+  }
+  .product-description-container > textarea {
+    width: 36rem;
+  }
+  .products-category-add-product {
+    width: 16.5rem;
+  }
+}
+@media (max-width: 680px) {
+  .product-description-container > textarea {
+    width: 34rem;
+  }
+}
+@media (max-width: 620px) {
+  .product-name-container > input,
+  .product-price-container > input,
+  .product-Discount-container > input,
+  .product-stock-container > input {
+    width: 14.5rem;
+  }
+  .product-description-container > textarea {
+    width: 30rem;
+  }
+  .products-category-add-product {
+    width: 14.5rem;
+  }
+  .product-description-addProduct {
+    width: 100% !important;
+  }
+}
+@media (max-width: 560px) {
+  .addtoProduct-container {
+    width: 100vw;
+  }
+  .product-image-name-container,
+  .product-price-discount-container,
+  .product-stock-category-container {
+    justify-content: space-between;
+  }
+  .product-price-container,
+  .product-Discount-container {
+    width: 48%;
+  }
+  .product-price-container > input,
+  .product-Discount-container > input,
+  .product-stock-container > input {
+    width: 100%;
+  }
+  .product-stock-container {
+    width: 36%;
+  }
+  .product-Category-container {
+    width: 60%;
+  }
+  .product-description-container {
+    width: 100%;
+  }
+  .product-image-name-container {
+    width: 100%;
+  }
+  .product-image-container {
+    width: 35%;
+  }
+  .product-name-container {
+    width: 60%;
+  }
+  .product-name-container > input {
+    width: 100%;
+  }
+  .addtoProduct-container {
+    padding: 1rem;
+  }
+  .addtoProduct-container > div:nth-child(1) {
+    margin-bottom: 0;
+  }
+  .addtoProduct-container {
+    gap: 0.5rem;
+  }
+  .products-category-add-product {
+    width: 100%;
+  }
+  .product-description-addProduct {
+    width: 100% !important;
+  }
 }/*# sourceMappingURL=AddToProduct.css.map */
