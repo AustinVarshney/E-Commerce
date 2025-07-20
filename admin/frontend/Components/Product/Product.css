@@ -67,7 +67,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 2rem;
 }
 
 .product-management-container {
@@ -157,7 +157,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
+  padding: 0 0.5rem;
   width: 8.75rem;
 }
 
@@ -208,12 +208,12 @@
   display: grid;
   grid-template-columns: 3.5fr 1.3fr 1.3fr 1.3fr 1.3fr 1.3fr 1.2fr 1fr;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 10px 20px;
 }
 
 .product-details {
-  padding-bottom: 12rem;
+  padding: 0.6rem 0.6rem 0.8rem;
 }
 
 .overlay-background {
@@ -285,12 +285,16 @@
   height: 20rem;
 }
 
+.product-status-dropdown {
+  display: flex;
+  gap: 1rem;
+}
+
 @media (max-width: 1220px) {
   .product-outer-container {
     width: 100%;
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem 2rem;
     right: 0;
-    padding-bottom: 12rem;
   }
   .Product {
     width: 100vw;
@@ -329,15 +333,74 @@
     display: none;
   }
 }
-@media (max-width: 620px) {
-  .product-management-head {
-    flex-direction: column;
-    gap: 0.5rem;
+@media screen and (max-width: 769px) {
+  .product-management-head > div > p:nth-child(1) {
+    font-size: 1.2rem;
+  }
+  .product-management-head > div > p:nth-child(2) {
+    font-size: 14px;
+  }
+  .export-btn {
+    padding: 0.3rem 0.6rem;
+  }
+  .add-product-btn {
+    padding: 0.4rem 0.6rem;
+  }
+  .add-product-btn > img {
+    height: 1.1rem;
+  }
+  .add-product-btn > p {
+    font-size: 0.8rem;
+    font-weight: 700;
   }
 }
 @media (max-width: 700px) {
   .product-status {
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+}
+@media screen and (max-width: 695px) {
+  .product-status > input {
+    width: 35%;
+    padding-block: 0.3rem;
+  }
+}
+@media screen and (max-width: 633px) {
+  .product-info-cards {
+    gap: 1rem;
+  }
+}
+@media (max-width: 620px) {
+  .product-management-head {
+    gap: 1rem;
+    align-items: baseline;
+  }
+}
+@media screen and (max-width: 601px) {
+  .product-outer-container {
+    padding-inline: 1rem;
+  }
+}
+@media (max-width: 530px) {
+  .product-management-head > div:nth-child(2) {
+    gap: 0.5rem;
+  }
+  .product-status > input {
+    width: 100%;
+    padding-block: 0.3rem;
+  }
+  .product-status-dropdown {
+    margin-block: 0.5rem;
+    width: 100%;
+  }
+  .products-category {
+    width: 100%;
+  }
+}
+@media (max-width: 380px) {
+  .product-management-head > div:nth-child(2) {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }/*# sourceMappingURL=Product.css.map */

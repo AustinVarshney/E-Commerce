@@ -1,15 +1,15 @@
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useEffect, useRef, useState } from 'react';
-import AddToProduct from '../AddToProduct/AddToProduct';
-import DetailsInfoCard from '../DetailsInfoCard/DetailsInfoCard';
-import ProductDetails from '../ProductDetails/ProductDetails';
+import { fetchProducts } from '../../API/api';
 import notificationIcon from '../../src/assets/Product/Notification.png';
 import plusIcon from '../../src/assets/Product/Plus.png';
 import ProductIcon from '../../src/assets/Product/Product.svg';
 import settingIcon from '../../src/assets/Product/Settings.png';
 import sideBar from '../../src/assets/Product/Sidebar.png';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { fetchProducts } from '../../API/api';
+import AddToProduct from '../AddToProduct/AddToProduct';
+import DetailsInfoCard from '../DetailsInfoCard/DetailsInfoCard';
+import ProductDetails from '../ProductDetails/ProductDetails';
 import './Product.css';
 
 function Product({ handleNavbar, isNavOpen }) {
@@ -144,41 +144,28 @@ function Product({ handleNavbar, isNavOpen }) {
 
                         <div className='product-status'>
                             <input type="text" placeholder='Search' value={val} onChange={handleSearch} />
+                            <div className='product-status-dropdown' >
+                                <div className='products-category' onClick={handleCategory} ref={categoryRef}>
+                                    <p>{whichCategory}</p>
+                                    <p>{isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
+                                    <div className='products-category-options' style={isCategoryOpen ? {} : { display: 'none' }}>
+                                        <p onClick={() => { setWhichCategory('Electronics') }}>Electronics</p>
+                                        <p onClick={() => { setWhichCategory('Clothes') }}>Clothes</p>
+                                        <p onClick={() => { setWhichCategory('Medicine') }}>Medicine</p>
+                                        <p onClick={() => { setWhichCategory('Footwear') }}>Footwear</p>
+                                    </div>
+                                </div>
 
-                            <div className='products-category' onClick={handleCategory} ref={categoryRef}>
-                                <p>{whichCategory}</p>
-                                <p>{isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
-                                <div className='products-category-options' style={isCategoryOpen ? {} : { display: 'none' }}>
-                                    <p onClick={() => { setWhichCategory('Electronics') }}>Electronics</p>
-                                    <p onClick={() => { setWhichCategory('Clothes') }}>Clothes</p>
-                                    <p onClick={() => { setWhichCategory('Medicine') }}>Medicine</p>
-                                    <p onClick={() => { setWhichCategory('Footwear') }}>Footwear</p>
+                                <div className='products-category' onClick={handleStatus} ref={statusRef}>
+                                    <p>{whichStatus}</p>
+                                    <p>{isStatusOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
+                                    <div className='products-category-options' style={isStatusOpen ? {} : { display: 'none' }}>
+                                        <p onClick={() => { setWhichStatus('All Status') }}>All Status</p>
+                                        <p onClick={() => { setWhichStatus('In Stock') }}>In Stock</p>
+                                        <p onClick={() => { setWhichStatus('Out of Stock') }}>Out of Stock</p>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div className='products-category' onClick={handleStatus} ref={statusRef}>
-                                <p>{whichStatus}</p>
-                                <p>{isStatusOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
-                                <div className='products-category-options' style={isStatusOpen ? {} : { display: 'none' }}>
-                                    <p onClick={() => { setWhichStatus('All Status') }}>All Status</p>
-                                    <p onClick={() => { setWhichStatus('In Stock') }}>In Stock</p>
-                                    <p onClick={() => { setWhichStatus('Out of Stock') }}>Out of Stock</p>
-                                </div>
-                            </div>
-
-                            {/* <select>
-                                <option value="">All Categories</option>
-                                <option value="option1">Electronics</option>
-                                <option value="option2">Clothes</option>
-                                <option value="option2">Medicine</option>
-                                <option value="option3">Footwear</option>
-                            </select>
-
-                            <select>
-                                <option value="">All Status</option>
-                                <option value="option1">In Stock</option>
-                                <option value="option2">Out of Stock</option>
-                            </select> */}
                         </div>
 
                         {/* <div className="product-details-container scroll-container">

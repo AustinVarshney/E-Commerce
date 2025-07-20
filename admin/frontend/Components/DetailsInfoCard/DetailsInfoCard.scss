@@ -17,3 +17,12 @@
     justify-content: space-between;
     align-items: center;
 }
+
+@media screen and (max-width:565px) {
+    .info-card{
+        width: 9.2rem;padding-inline: 0.5rem;   }
+
+        .info-card>p{
+            font-size: 1.2rem;
+        }
+}

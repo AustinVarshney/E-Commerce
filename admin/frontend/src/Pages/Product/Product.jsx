@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { fetchProducts } from '../../../API/api';
 import AddToProduct from '../../../Components/AddToProduct/AddToProduct';
 import DetailsInfoCard from '../../../Components/DetailsInfoCard/DetailsInfoCard';
 import ProductDetails from '../../../Components/ProductDetails/ProductDetails';
@@ -7,7 +8,6 @@ import plusIcon from '../../assets/Product/Plus.png';
 import ProductIcon from '../../assets/Product/Product.svg';
 import settingIcon from '../../assets/Product/Settings.png';
 import sideBar from '../../assets/Product/Sidebar.png';
-import { fetchProducts } from '../../../API/api';
 import './Product.css';
 
 function Product() {
