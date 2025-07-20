@@ -145,6 +145,8 @@ const ProductDetails = ({ pName, pRating, pPrice, pDiscount, pReview, pImage }) 
         return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isZoomed]);
 
+    console.log("pImage:", pImage);
+
     return (
         <div className="product-details">
             <div className="product_image">

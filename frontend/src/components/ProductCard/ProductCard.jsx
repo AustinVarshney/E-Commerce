@@ -121,8 +121,8 @@ const ProductCard = ({ PicImg = Pic1, discount = 10, heading = "lorem ipsum lore
 
                 <div className='content-ProCard-3'>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem', }}>
-                        <p className='price-ProCard'>&#8377;  {price - discount * price / 100}</p>
-                        <p style={discount == 0 ? { display: "none" } : { textDecoration: 'line-through' }} >{price}</p>
+                        <p className='price-ProCard'>&#8377; {Math.round(price - discount * price / 100)}</p>
+                        <p style={discount == 0 ? { display: "none" } : { textDecoration: 'line-through' }} >{Math.round(price)}</p>
                     </div>
 
                     <button
