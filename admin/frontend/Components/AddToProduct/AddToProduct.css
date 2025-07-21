@@ -37,6 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1.5rem;
 }
 
 .product-image-container > div:nth-child(1),
@@ -132,8 +133,10 @@
 }
 
 .product-description-container > textarea {
+  font-family: inherit;
   padding: 0.5rem 0.5rem;
   outline: none;
+  width: 100%;
 }
 
 .buttons {

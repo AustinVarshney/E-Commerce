@@ -18,6 +18,7 @@
     align-items: center;
 }
 
+<<<<<<< HEAD
 @media screen and (max-width:565px) {
     .info-card{
         width: 9.2rem;padding-inline: 0.5rem;   }
@@ -25,4 +26,10 @@
         .info-card>p{
             font-size: 1.2rem;
         }
+=======
+@media(max-width: 620px) {
+    .info-card p {
+        font-size: 1rem;
+    }
+>>>>>>> d3f1b1679411e656bd169fb478c64658038cb0b3
 }

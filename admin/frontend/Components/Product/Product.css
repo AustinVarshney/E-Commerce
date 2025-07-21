@@ -63,17 +63,21 @@
 
 .product-info-cards {
   margin-top: 1.5rem;
+  margin-left: 0.2rem;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
+<<<<<<< HEAD
   gap: 2rem;
+=======
+  gap: 1rem;
+>>>>>>> d3f1b1679411e656bd169fb478c64658038cb0b3
 }
 
 .product-management-container {
   border-radius: 13px;
-  margin-top: 2rem;
-  border: 1px solid rgba(131, 125, 125, 0.76);
+  margin-top: 1.2rem;
 }
 
 .product-management-head {
@@ -118,6 +122,7 @@
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+  font-family: inherit;
   cursor: pointer;
 }
 
@@ -175,7 +180,7 @@
   border: 1px solid gray;
   border-radius: 0.25rem;
   width: 100%;
-  top: 46px;
+  top: 37px;
   left: 0;
   z-index: 10;
 }
@@ -256,7 +261,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.5); /* optional dim background */
+  background: rgba(0, 0, 0, 0.5);
+  /* optional dim background */
   z-index: 1000;
 }
 
@@ -353,6 +359,23 @@
     font-size: 0.8rem;
     font-weight: 700;
   }
+  .product-management-heading {
+    text-align: center;
+  }
+  .product-management-head > div:nth-child(2) {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 1rem;
+  }
+  .export-btn {
+    width: 30%;
+  }
+  .add-product-btn {
+    width: 70%;
+  }
+  .product-status {
+    padding: 0;
+  }
 }
 @media (max-width: 700px) {
   .product-status {
@@ -360,6 +383,7 @@
     gap: 0.5rem;
   }
 }
+<<<<<<< HEAD
 @media screen and (max-width: 695px) {
   .product-status > input {
     width: 35%;
@@ -402,5 +426,32 @@
   .product-management-head > div:nth-child(2) {
     flex-direction: column;
     align-items: flex-start;
+=======
+@media (max-width: 660px) {
+  .product-details-head {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+}
+@media (max-width: 535px) {
+  .product-status {
+    gap: 0.3rem;
+    padding: 0;
+  }
+  .product-status > input {
+    width: 100%;
+  }
+  .products-category {
+    width: 49.1%;
+    padding: 0.2rem 0.5rem;
+  }
+  .products-category-options {
+    top: 35px;
+  }
+}
+@media (max-width: 710px) {
+  .product-management-head {
+    padding: 1rem 0.2rem;
+>>>>>>> d3f1b1679411e656bd169fb478c64658038cb0b3
   }
 }/*# sourceMappingURL=Product.css.map */
