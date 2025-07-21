@@ -123,19 +123,19 @@ function AddToProduct({ onProductAdded, onCancel }) {
                 <div className='product-price-discount-container'>
                     <div className='product-price-container'>
                         <div>Price</div>
-                        <input type="number" placeholder='0.00' name="productPrice" value={product.productPrice} onChange={handleChange} />
+                        <input type="number" min={1} placeholder='0.00' name="productPrice" value={product.productPrice} onChange={handleChange} />
                     </div>
 
                     <div className='product-Discount-container'>
                         <div>Discount</div>
-                        <input type="number" placeholder='0.0' name="productDiscount" value={product.productDiscount} onChange={handleChange} />
+                        <input type="number" placeholder='0.0' min={0} name="productDiscount" value={product.productDiscount} onChange={handleChange} />
                     </div>
                 </div>
 
                 <div className='product-stock-category-container'>
                     <div className='product-stock-container'>
                         <div>Initial Stock</div>
-                        <input type="number" placeholder='0.0' name="productInitialStock" value={product.productInitialStock} onChange={handleChange} />
+                        <input type="number" min={1} placeholder='0.0' name="productInitialStock" value={product.productInitialStock} onChange={handleChange} />
                     </div>
 
                     <div className='product-Category-container'>

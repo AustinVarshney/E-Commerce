@@ -219,13 +219,13 @@ function Product({ handleNavbar, isNavOpen }) {
                             <div className="scroll-container">
                                 <div className="product-details-head">
                                     <p style={{ minWidth: '153.86px' }}>Product</p>
-                                    <p style={{ minWidth: '63.91px' }}>Product_Id</p>
+                                    <p style={{ minWidth: '78.91px' }}>Product_Id</p>
                                     <p style={{ minWidth: '71.8px' }}>Category</p>
                                     <p style={{ minWidth: '50.54px' }}>Price</p>
-                                    <p style={{ minWidth: '24.89px' }}>Stock</p>
-                                    <p style={{ minWidth: '64px' }}>Status</p>
-                                    <p style={{ minWidth: '29.58px' }}>Rating</p>
-                                    <p style={{ minWidth: '10.56px' }}>Actions</p>
+                                    <p style={{ minWidth: '44.89px' }}>Stock</p>
+                                    <p style={{ minWidth: '55px' }}>Status</p>
+                                    <p style={{ minWidth: '45.58px' }}>Rating</p>
+                                    <p style={{ minWidth: '36.56px' }}>Actions</p>
                                 </div>
 
                                 <div className="product-details">
