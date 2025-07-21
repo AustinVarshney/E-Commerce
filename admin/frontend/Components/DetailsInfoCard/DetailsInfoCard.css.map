@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-{"version":3,"sources":["DetailsInfoCard.scss","DetailsInfoCard.css"],"names":[],"mappings":"AAAA;EAEI,cAAA;EACA,mBAAA;EACA,2CAAA;EACA,oBAAA;ACAJ;;ADGA;EACI,iBAAA;EACA,gBAAA;ACAJ;;ADGA;EACI,aAAA;EACA,WAAA;EACA,8BAAA;EACA,mBAAA;ACAJ;;ADGA;EACI;IACI,aAAA;IAAc,sBAAA;ECCpB;EDCM;IACI,iBAAA;ECCV;AACF","file":"DetailsInfoCard.css"}
-=======
 {"version":3,"sources":["DetailsInfoCard.scss","DetailsInfoCard.css"],"names":[],"mappings":"AAAA;EAEI,cAAA;EACA,mBAAA;EACA,2CAAA;EACA,oBAAA;ACAJ;;ADGA;EACI,iBAAA;EACA,gBAAA;ACAJ;;ADGA;EACI,aAAA;EACA,WAAA;EACA,8BAAA;EACA,mBAAA;ACAJ;;ADGA;EACI;IACI,eAAA;ECAN;AACF","file":"DetailsInfoCard.css"}
->>>>>>> d3f1b1679411e656bd169fb478c64658038cb0b3

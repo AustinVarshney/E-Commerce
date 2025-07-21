@@ -68,11 +68,7 @@
   justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-<<<<<<< HEAD
-  gap: 2rem;
-=======
   gap: 1rem;
->>>>>>> d3f1b1679411e656bd169fb478c64658038cb0b3
 }
 
 .product-management-container {
@@ -218,7 +214,7 @@
 }
 
 .product-details {
-  padding: 0.6rem 0.6rem 0.8rem;
+  padding-bottom: 12rem;
 }
 
 .overlay-background {
@@ -339,25 +335,10 @@
     display: none;
   }
 }
-@media screen and (max-width: 769px) {
-  .product-management-head > div > p:nth-child(1) {
-    font-size: 1.2rem;
-  }
-  .product-management-head > div > p:nth-child(2) {
-    font-size: 14px;
-  }
-  .export-btn {
-    padding: 0.3rem 0.6rem;
-  }
-  .add-product-btn {
-    padding: 0.4rem 0.6rem;
-  }
-  .add-product-btn > img {
-    height: 1.1rem;
-  }
-  .add-product-btn > p {
-    font-size: 0.8rem;
-    font-weight: 700;
+@media (max-width: 620px) {
+  .product-management-head {
+    flex-direction: column;
+    gap: 0.5rem;
   }
   .product-management-heading {
     text-align: center;
@@ -383,50 +364,6 @@
     gap: 0.5rem;
   }
 }
-<<<<<<< HEAD
-@media screen and (max-width: 695px) {
-  .product-status > input {
-    width: 35%;
-    padding-block: 0.3rem;
-  }
-}
-@media screen and (max-width: 633px) {
-  .product-info-cards {
-    gap: 1rem;
-  }
-}
-@media (max-width: 620px) {
-  .product-management-head {
-    gap: 1rem;
-    align-items: baseline;
-  }
-}
-@media screen and (max-width: 601px) {
-  .product-outer-container {
-    padding-inline: 1rem;
-  }
-}
-@media (max-width: 530px) {
-  .product-management-head > div:nth-child(2) {
-    gap: 0.5rem;
-  }
-  .product-status > input {
-    width: 100%;
-    padding-block: 0.3rem;
-  }
-  .product-status-dropdown {
-    margin-block: 0.5rem;
-    width: 100%;
-  }
-  .products-category {
-    width: 100%;
-  }
-}
-@media (max-width: 380px) {
-  .product-management-head > div:nth-child(2) {
-    flex-direction: column;
-    align-items: flex-start;
-=======
 @media (max-width: 660px) {
   .product-details-head {
     width: -moz-fit-content;
@@ -452,6 +389,5 @@
 @media (max-width: 710px) {
   .product-management-head {
     padding: 1rem 0.2rem;
->>>>>>> d3f1b1679411e656bd169fb478c64658038cb0b3
   }
 }/*# sourceMappingURL=Product.css.map */
