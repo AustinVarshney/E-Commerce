@@ -128,7 +128,7 @@ function Product({ handleNavbar, isNavOpen }) {
 
                     <div className="product-management-container">
                         <div className='product-management-head'>
-                            <div>
+                            <div className='product-management-heading'>
                                 <p>Product Management</p>
                                 <p>Manage your product catalog and inventory</p>
                             </div>
