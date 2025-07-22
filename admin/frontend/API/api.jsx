@@ -56,6 +56,17 @@ export const deleteProduct = async (id) => {
         console.log("Error in deleteing Product", err);
     }
 }
+export const updateProduct = async (id, updatedProduct) => {
+    try {
+        const response = await api.put(`/products/${id}`, updatedProduct);
+        return response.data;
+    } catch (err) {
+        console.error("Error updating product:", err);
+        throw err;
+    }
+};
+
+
 
 export const updateStock = async (id, stock) => {
     try {

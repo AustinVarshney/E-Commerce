@@ -1,14 +1,17 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import { addProduct, uploadProductImage } from '../../API/api.jsx';
+import { addProduct, updateProduct, uploadProductImage } from '../../API/api.jsx';
 import imageIcon from '../../assets/productImage.png';
 import Button from '../Button/button';
 import OutlineButton from '../OutlineButton/OutlineButton';
 import './AddToProduct.css';
 
-function AddToProduct({ onProductAdded, onCancel }) {
+function AddToProduct({ onProductAdded,
+    onCancel,
+    editMode,
+    productToEdit }) {
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [whichCategory, setWhichCategory] = useState('All Categories');
 
@@ -87,6 +90,29 @@ function AddToProduct({ onProductAdded, onCancel }) {
         }
     };
 
+    const handleEditMode = async () => {
+        if (editMode) {
+            try {
+                const updatedPayload = {
+                    ...productToEdit,   // old product
+                    ...product          // new edited fields
+                };
+                const updated = await updateProduct(productToEdit._id, updatedPayload);
+                toast.success("Product Updated Successfully");
+
+                // Replace in state
+                if (onProductAdded) onProductAdded({ ...updated, _id: productToEdit._id });
+            } catch (err) {
+                toast.error("Failed to update product.");
+                console.error(err);
+            }
+        } else {
+            const savedProduct = await addProduct(product);
+            toast.success("Product Added Successfully");
+            if (onProductAdded) onProductAdded(savedProduct);
+        }
+    };
+
     const handleImageUpload = async (e) => {
         const file = e.target.files[0];
         setSelectedImage(URL.createObjectURL(file)); // Preview
@@ -100,14 +126,55 @@ function AddToProduct({ onProductAdded, onCancel }) {
         }
     };
 
+    useEffect(() => {
+        if (editMode && productToEdit) {
+            setProduct({
+                productName: productToEdit.productName || '',
+                pImageUrl: productToEdit.pImageUrl || '',
+                productPrice: productToEdit.productPrice || '',
+                productDiscount: productToEdit.productDiscount || '',
+                productInitialStock: productToEdit.productInitialStock || '',
+                productCategory: productToEdit.productCategory || '',
+                productDescription: productToEdit.productDescription || ''
+            });
+            setWhichCategory(productToEdit.productCategory || 'All Categories');
+            if (productToEdit.pImageUrl) {
+                setSelectedImage(productToEdit.pImageUrl);
+                setImageUrl(productToEdit.pImageUrl);
+            }
+        } else {
+            setProduct({
+                productName: '',
+                pImageUrl: '',
+                productPrice: '',
+                productDiscount: '',
+                productInitialStock: '',
+                productCategory: '',
+                productDescription: ''
+            });
+            setWhichCategory('All Categories');
+            setSelectedImage(null);
+            setImageUrl('');
+        }
+    }, [editMode, productToEdit]);
+
+
     return (
         <div>
             <ToastContainer />
-            <form className="addtoProduct-container" onSubmit={handleSubmit} noValidate>
+            <form className="addtoProduct-container" onSubmit={(e) => {
+                e.preventDefault();
+                if (editMode) {
+                    handleEditMode(e);
+                } else {
+                    handleSubmit(e);
+                }
+            }} noValidate>
                 <div>
-                    <p>Add New Product</p>
-                    <p>Create a new product in your catalog</p>
+                    <p>{editMode ? "Edit Product" : "Add New Product"}</p>
+                    <p>{editMode ? "Update product details in your catalog" : "Create a new product in your catalog"}</p>
                 </div>
+
 
                 <div className='product-image-name-container'>
                     <div className='product-image-container'>
@@ -220,7 +287,7 @@ function AddToProduct({ onProductAdded, onCancel }) {
                         }}
                     />
 
-                    <Button bName={"Add to product"} type="submit" />
+                    <Button bName={editMode ? "Update Product" : "Add to Product"} type="submit" />
                 </div>
             </form>
         </div>

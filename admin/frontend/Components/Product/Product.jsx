@@ -21,6 +21,9 @@ function Product({ handleNavbar, isNavOpen }) {
     const [whichStatus, setWhichStatus] = useState('All Status');
     const [addToProduct, setAddtoProduct] = useState(false);
     const [val, setVal] = useState("");
+    const [editProduct, setEditProduct] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
+
 
     const categoryRef = useRef(null);
     const statusRef = useRef(null);
@@ -46,11 +49,23 @@ function Product({ handleNavbar, isNavOpen }) {
     };
 
 
-    const addProductToState = (newProduct) => {
-        setProducts(prev => [...prev, newProduct]);
-        console.log("Product added", products);
+    const addProductToState = (newOrUpdatedProduct) => {
+        setProducts(prev =>
+            prev.some(p => p._id === newOrUpdatedProduct._id)
+                ? prev.map(p => p._id === newOrUpdatedProduct._id ? newOrUpdatedProduct : p)
+                : [...prev, newOrUpdatedProduct]
+        );
+
+        setAllProducts(prev =>
+            prev.some(p => p._id === newOrUpdatedProduct._id)
+                ? prev.map(p => p._id === newOrUpdatedProduct._id ? newOrUpdatedProduct : p)
+                : [...prev, newOrUpdatedProduct]
+        );
+
         setAddtoProduct(false);
     };
+
+
 
     const showAddtoProductPopUp = () => {
         setAddtoProduct(prev => !prev);
@@ -81,7 +96,12 @@ function Product({ handleNavbar, isNavOpen }) {
         setVal(event.target.value);
     }
 
-    // //Prevent Scrolling when addToProduct div gets opened
+    const handleEditProduct = (product) => {
+        setEditProduct(product);
+        setIsEditMode(true);
+        setAddtoProduct(true);
+    };
+
     useEffect(() => {
         if (isNavOpen) {
             document.body.style.overflow = 'hidden';
@@ -288,6 +308,8 @@ function Product({ handleNavbar, isNavOpen }) {
                                                 numberOfRating={product.numberOfRating}
                                                 pImage={product.productImage}
                                                 onProductDeleted={removeProductFromState}
+                                                onEditProduct={handleEditProduct}
+                                                product={product}
                                                 onStockUpdated={(id, stock) => {
                                                     setProducts(prev =>
                                                         prev.map(p => p._id === id ? { ...p, productInitialStock: stock } : p)
@@ -306,13 +328,17 @@ function Product({ handleNavbar, isNavOpen }) {
                 </div>
 
             </div>
-            {/* <div className={`extra-div1 ${isNavOpen ? 'dimmed' : ''}`}></div> */}
             {addToProduct && (
                 <div className="popup-wrapper" >
-                    {/* <div className="overlay-background active" /> */}
                     <div className="add-product-popup" ref={popupRef}>
                         <AddToProduct onProductAdded={addProductToState}
-                            onCancel={() => setAddtoProduct(false)} />
+                            onCancel={() => {
+                                setAddtoProduct(false);
+                                setEditProduct(null);
+                                setIsEditMode(false);
+                            }}
+                            editMode={isEditMode}
+                            productToEdit={editProduct} />
                     </div>
                 </div>
             )}

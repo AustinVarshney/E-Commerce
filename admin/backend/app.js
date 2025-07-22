@@ -155,6 +155,17 @@ app.get('/products/product-details/:id', async (req, res) => {
     }
 });
 
+app.put("/products/:id", async (req, res) => {
+    const { id } = req.params;
+    const updatedProduct = await addProduct.findByIdAndUpdate(
+        id,
+        { $set: req.body },
+        { new: true }
+    );
+    res.json(updatedProduct);
+});
+
+
 app.patch("/products/updateStock/:id", async (req, res) => {
     const { id } = req.params;
     const { stock } = req.body;
