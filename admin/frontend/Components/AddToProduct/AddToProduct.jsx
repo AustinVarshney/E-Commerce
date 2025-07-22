@@ -1,11 +1,11 @@
-import { useState, useRef } from 'react';
-import { toast } from 'react-toastify';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useRef, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { addProduct, uploadProductImage } from '../../API/api.jsx';
 import imageIcon from '../../assets/productImage.png';
 import Button from '../Button/button';
 import OutlineButton from '../OutlineButton/OutlineButton';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import './AddToProduct.css';
 
 function AddToProduct({ onProductAdded, onCancel }) {
@@ -39,10 +39,25 @@ function AddToProduct({ onProductAdded, onCancel }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const { productPrice, productDiscount, productInitialStock } = product;
+        if (parseFloat(productPrice) < 0) {
+            toast.warn("Price cannot be negative.");
+            return;
+        }
+
+        if (parseFloat(productDiscount) < 0) {
+            toast.warn("Discount cannot be negative.");
+            return;
+        }
+
+        if (parseFloat(productInitialStock) < 0) {
+            toast.warn("Stock cannot be negative.");
+            return;
+        }
 
         try {
             if (!product.productName || !product.productPrice || !product.productCategory) {
-                alert("Please fill in all required fields.");
+                toast.warn("Please fill in all required fields.");
                 return;
             }
 
@@ -87,6 +102,7 @@ function AddToProduct({ onProductAdded, onCancel }) {
 
     return (
         <div>
+            <ToastContainer />
             <form className="addtoProduct-container" onSubmit={handleSubmit} noValidate>
                 <div>
                     <p>Add New Product</p>
@@ -103,7 +119,7 @@ function AddToProduct({ onProductAdded, onCancel }) {
                             ) : (
                                 <img src={imageIcon} alt="placeholder" className='preview-img' />
                             )}
-                            <input type="file" accept="image/*" onChange={handleImageUpload} style={{fontFamily: 'inherit'}}/>
+                            <input type="file" accept="image/*" onChange={handleImageUpload} style={{ fontFamily: 'inherit' }} />
                         </div>
                     </div>
 
@@ -144,10 +160,25 @@ function AddToProduct({ onProductAdded, onCancel }) {
                             <p>{whichCategory}</p>
                             <p>{isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                             <div className='products-category-add-product-options' style={isCategoryOpen ? {} : { display: 'none' }}>
-                                <p onClick={() => { setWhichCategory('Electronics') }}>Electronics</p>
-                                <p onClick={() => { setWhichCategory('Clothes') }}>Clothes</p>
-                                <p onClick={() => { setWhichCategory('Medicine') }}>Medicine</p>
-                                <p onClick={() => { setWhichCategory('Footwear') }}>Footwear</p>
+                                <p onClick={() => {
+                                    setWhichCategory('Electronics');
+                                    setProduct(prev => ({ ...prev, productCategory: 'Electronics' }));
+                                }}>Electronics</p>
+
+                                <p onClick={() => {
+                                    setWhichCategory('Clothes');
+                                    setProduct(prev => ({ ...prev, productCategory: 'Clothes' }));
+                                }}>Clothes</p>
+
+                                <p onClick={() => {
+                                    setWhichCategory('Medicine');
+                                    setProduct(prev => ({ ...prev, productCategory: 'Medicine' }));
+                                }}>Medicine</p>
+
+                                <p onClick={() => {
+                                    setWhichCategory('Footwear');
+                                    setProduct(prev => ({ ...prev, productCategory: 'Footwear' }));
+                                }}>Footwear</p>
                             </div>
                         </div>
                     </div>
