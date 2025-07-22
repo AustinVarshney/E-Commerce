@@ -226,7 +226,7 @@
     display: grid;
     grid-template-columns: 3.5fr 1.3fr 1.3fr 1.3fr 1.3fr 1.3fr 1.2fr 1fr;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     padding: 10px 20px;
 }
 
@@ -326,17 +326,12 @@
     height: 20rem;
 }
 
-.product-status-dropdown{
-    display: flex;
-    gap: 1rem;
-}
-
 @media(max-width: 1220px) {
     .product-outer-container {
         width: 100%;
-        padding: 0.5rem 2rem;
+        padding: 0.5rem 0.5rem;
         right: 0;
-        // padding-bottom: 12rem;
+        padding-bottom: 12rem;
     }
 
     .Product {
