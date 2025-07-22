@@ -155,6 +155,31 @@ app.get('/products/product-details/:id', async (req, res) => {
     }
 });
 
+app.patch("/products/updateStock/:id", async (req, res) => {
+    const { id } = req.params;
+    const { stock } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'Invalid product ID format' });
+    }
+
+    try {
+        const updatedProduct = await addProduct.findByIdAndUpdate(
+            id,
+            { productInitialStock: stock },
+            { new: true }
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+
+        res.json({ updatedProduct });
+    } catch (err) {
+        console.error("Error updating stock:", err);
+        res.status(500).json({ error: 'Server Error' });
+    }
+});
 
 app.use((err, req, res, next) => {
     console.error("🔥 Global Error Handler:", err.stack || err);

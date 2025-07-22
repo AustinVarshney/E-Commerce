@@ -164,11 +164,7 @@ function Product({ handleNavbar, isNavOpen }) {
                     <div className="product-info-cards">
                         <DetailsInfoCard Heading="Total Products" number={products.length} image={ProductIcon} />
                         <DetailsInfoCard Heading="Active" number={11} image={ProductIcon} />
-                        <DetailsInfoCard Heading="Out of Stock" number={products.reduce((sum, product) => {
-                            return sum + (product.productInitialStock || 0);
-                        }, 0) === 0 ? products.reduce((sum, product) => {
-                            return sum + (product.productInitialStock || 0);
-                        }, 0) : 0} image={ProductIcon} />
+                        <DetailsInfoCard Heading="Out of Stock" number={products.filter(product => product.productInitialStock === 0).length} image={ProductIcon} />
 
                         <DetailsInfoCard Heading="Low Stock" number={1} image={ProductIcon} />
                         <DetailsInfoCard Heading="Total Value" number={`₹ ${products.reduce((sum, price) => {
@@ -286,6 +282,14 @@ function Product({ handleNavbar, isNavOpen }) {
                                                 numberOfRating={product.numberOfRating}
                                                 pImage={product.productImage}
                                                 onProductDeleted={removeProductFromState}
+                                                onStockUpdated={(id, stock) => {
+                                                    setProducts(prev =>
+                                                        prev.map(p => p._id === id ? { ...p, productInitialStock: stock } : p)
+                                                    );
+                                                    setAllProducts(prev =>
+                                                        prev.map(p => p._id === id ? { ...p, productInitialStock: stock } : p)
+                                                    );
+                                                }}
                                             />
                                         ))}
                                 </div>

@@ -6,11 +6,13 @@ import editProduct from '../../src/assets/Product/editProduct.png'
 import viewDetails from '../../src/assets/Product/Eye.png'
 import updateStock from '../../src/assets/Product/updateStock.png'
 import viewReviews from '../../src/assets/Product/viewReview.png'
+import UpdateStockPopup from '../Popup/UpdateStock/UpdateStock'
 import './ProductDetails.css'
 
-function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating, pStatus = "Active", pCategory, numberOfRating, onProductDeleted }) {
+function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating, pStatus = "Active", pCategory, numberOfRating, onProductDeleted, product, onStockUpdated }) {
     const [showActions, setShowActions] = useState(false);
     const actionRef = useRef(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const toggleActions = () => {
         setShowActions(prev => !prev);
@@ -30,6 +32,21 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
             }, 300);
         } else {
             toast.error("Failed to delete product.");
+        }
+    };
+
+
+    const handleUpdateStock = () => {
+        setShowPopup(true);
+    };
+
+    const handleSubmitNewStock = async (newStock) => {
+        try {
+            const updatedProduct = await updateStock(product._id, newStock);
+            onStockUpdated(product._id, newStock);
+            setShowPopup(false);
+        } catch {
+            alert("Failed to update stock");
         }
     };
 
@@ -69,13 +86,20 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
                             <img src={viewDetails} alt="" />
                             <img src={editProduct} alt="" />
                             <img src={updateStock} alt="" />
+                            {showPopup && (
+                                <UpdateStockPopup
+                                    onClose={() => setShowPopup(false)}
+                                    onSubmit={handleSubmitNewStock}
+                                    currentStock={product.productInitialStock}
+                                />
+                            )}
                             <img src={viewReviews} alt="" />
                             <img src={deleteProductIcon} alt="" onClick={handleDelete} />
                         </li>
                         <li>
                             <p>View Details</p>
                             <p>Edit Product</p>
-                            <p>Update Stock</p>
+                            <p onClick={handleUpdateStock}>Update Stock</p>
                             <p>View Reviews</p>
                             <p onClick={handleDelete}>Delete Product</p>
                         </li>

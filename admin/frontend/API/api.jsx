@@ -56,3 +56,13 @@ export const deleteProduct = async (id) => {
         console.log("Error in deleteing Product", err);
     }
 }
+
+export const updateStock = async (id, stock) => {
+    try {
+        const res = await api.patch(`/products/updateStock/${id}`, { stock });
+        return res.data.updatedProduct;
+    } catch (err) {
+        console.error("Error updating stock:", err);
+        throw err;
+    }
+};
