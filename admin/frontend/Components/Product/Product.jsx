@@ -212,6 +212,7 @@ function Product({ handleNavbar, isNavOpen }) {
                                 <p>{whichCategory}</p>
                                 <p>{isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                                 <div className='products-category-options' style={isCategoryOpen ? {} : { display: 'none' }}>
+                                    <p onClick={(e) => selectCategory('All Categories', e)}>All Categories</p>
                                     <p onClick={(e) => selectCategory('Electronics', e)}>Electronics</p>
                                     <p onClick={(e) => selectCategory('Clothes', e)}>Clothes</p>
                                     <p onClick={(e) => selectCategory('Medicine', e)}>Medicine</p>

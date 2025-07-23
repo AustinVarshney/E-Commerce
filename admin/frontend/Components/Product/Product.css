@@ -356,7 +356,6 @@
 }
 @media (max-width: 700px) {
   .product-status {
-    flex-wrap: wrap;
     gap: 0.5rem;
   }
 }
@@ -366,7 +365,7 @@
     width: fit-content;
   }
 }
-@media (max-width: 535px) {
+@media (max-width: 572px) {
   .product-status {
     gap: 0.3rem;
     padding: 0;
@@ -380,6 +379,10 @@
   }
   .products-category-options {
     top: 35px;
+  }
+  .product-status {
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 @media (max-width: 710px) {
