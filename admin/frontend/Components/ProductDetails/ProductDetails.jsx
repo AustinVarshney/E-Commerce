@@ -6,11 +6,13 @@ import editProduct from '../../src/assets/Product/editProduct.png'
 import viewDetails from '../../src/assets/Product/Eye.png'
 import updateStock from '../../src/assets/Product/updateStock.png'
 import viewReviews from '../../src/assets/Product/viewReview.png'
+import UpdateStockPopup from '../Popup/UpdateStock/UpdateStock'
 import './ProductDetails.css'
 
-function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating, pStatus = "Active", pCategory, numberOfRating, onProductDeleted }) {
+function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating, pStatus = "Active", pCategory, numberOfRating, onProductDeleted, product, onStockUpdated, onEditProduct }) {
     const [showActions, setShowActions] = useState(false);
     const actionRef = useRef(null);
+    const [showPopup, setShowPopup] = useState(false);
 
     const toggleActions = () => {
         setShowActions(prev => !prev);
@@ -33,6 +35,21 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
         }
     };
 
+
+    const handleUpdateStock = () => {
+        setShowPopup(true);
+    };
+
+    const handleSubmitNewStock = async (newStock) => {
+        try {
+            const updatedProduct = await updateStock(product._id, newStock);
+            onStockUpdated(product._id, newStock);
+            setShowPopup(false);
+        } catch {
+            alert("Failed to update stock");
+        }
+    };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (actionRef.current && !actionRef.current.contains(event.target)) {
@@ -47,7 +64,7 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
 
     return (
         <>
-            <div className='product-image-name' style={{minWidth: '153.86px'}}>
+            <div className='product-image-name' style={{ minWidth: '153.86px' }}>
                 <ToastContainer />
                 <img src={pImage} alt='image' />
                 <div className='product-name'>
@@ -55,13 +72,13 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
                     <p>{pSold}</p>
                 </div>
             </div >
-            <p style={{minWidth: '78.91px'}}>{pId ? pId.slice(0, 8) : 'N/A'}</p>
-            <p style={{minWidth: '85.8px'}}>{pCategory}</p>
-            <p style={{minWidth: '71.54px'}}>&#8377; {pPrice}</p>
-            <p style={{minWidth: '44.89px'}}>{pQuantity}</p>
-            <p className='show-product-status' style={{minWidth: '70px'}}>{pStatus}</p>
-            <p  style={{minWidth: '45.58px'}}>{pRating ? pRating : 0} <sub> ({numberOfRating ? numberOfRating : 0})</sub></p>
-            <div className='product-action-container' ref={actionRef} style={{minWidth: '48.5px'}}>
+            <p style={{ minWidth: '78.91px' }}>{pId ? pId.slice(0, 8) : 'N/A'}</p>
+            <p style={{ minWidth: '85.8px' }}>{pCategory}</p>
+            <p style={{ minWidth: '71.54px' }}>&#8377; {pPrice}</p>
+            <p style={{ minWidth: '44.89px' }}>{pQuantity}</p>
+            <p className='show-product-status' style={{ minWidth: '70px' }}>{pStatus}</p>
+            <p style={{ minWidth: '45.58px' }}>{pRating ? pRating : 0} <sub> ({numberOfRating ? numberOfRating : 0})</sub></p>
+            <div className='product-action-container' ref={actionRef} style={{ minWidth: '48.5px' }}>
                 <p onClick={toggleActions} className='action-button'>...</p>
                 {showActions && (
                     <ul className='action-menu'>
@@ -69,13 +86,20 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
                             <img src={viewDetails} alt="" />
                             <img src={editProduct} alt="" />
                             <img src={updateStock} alt="" />
+                            {showPopup && (
+                                <UpdateStockPopup
+                                    onClose={() => setShowPopup(false)}
+                                    onSubmit={handleSubmitNewStock}
+                                    currentStock={product.productInitialStock}
+                                />
+                            )}
                             <img src={viewReviews} alt="" />
                             <img src={deleteProductIcon} alt="" onClick={handleDelete} />
                         </li>
                         <li>
                             <p>View Details</p>
-                            <p>Edit Product</p>
-                            <p>Update Stock</p>
+                            <p onClick={() => onEditProduct(product)}>Edit Product</p>
+                            <p onClick={handleUpdateStock}>Update Stock</p>
                             <p>View Reviews</p>
                             <p onClick={handleDelete}>Delete Product</p>
                         </li>

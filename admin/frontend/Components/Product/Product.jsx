@@ -1,25 +1,29 @@
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useEffect, useRef, useState } from 'react';
-import AddToProduct from '../AddToProduct/AddToProduct';
-import DetailsInfoCard from '../DetailsInfoCard/DetailsInfoCard';
-import ProductDetails from '../ProductDetails/ProductDetails';
+import { fetchProducts } from '../../API/api';
 import notificationIcon from '../../src/assets/Product/Notification.png';
 import plusIcon from '../../src/assets/Product/Plus.png';
 import ProductIcon from '../../src/assets/Product/Product.svg';
 import settingIcon from '../../src/assets/Product/Settings.png';
 import sideBar from '../../src/assets/Product/Sidebar.png';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { fetchProducts } from '../../API/api';
+import AddToProduct from '../AddToProduct/AddToProduct';
+import DetailsInfoCard from '../DetailsInfoCard/DetailsInfoCard';
+import ProductDetails from '../ProductDetails/ProductDetails';
 import './Product.css';
 
 function Product({ handleNavbar, isNavOpen }) {
     const [products, setProducts] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [whichCategory, setWhichCategory] = useState('All Categories');
     const [isStatusOpen, setIsStatusOpen] = useState(false);
     const [whichStatus, setWhichStatus] = useState('All Status');
     const [addToProduct, setAddtoProduct] = useState(false);
     const [val, setVal] = useState("");
+    const [editProduct, setEditProduct] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
+
 
     const categoryRef = useRef(null);
     const statusRef = useRef(null);
@@ -33,6 +37,7 @@ function Product({ handleNavbar, isNavOpen }) {
         const data = await fetchProducts();
         if (val == "") {
             console.log("Updated product list:", data);
+            setAllProducts(data);
             setProducts(data);
         } else {
             const filteredData = data.filter((product) =>
@@ -44,19 +49,43 @@ function Product({ handleNavbar, isNavOpen }) {
     };
 
 
-    const addProductToState = (newProduct) => {
-        setProducts(prev => [...prev, newProduct]);
-        console.log("Product added", products);
+    const addProductToState = (newOrUpdatedProduct) => {
+        setProducts(prev =>
+            prev.some(p => p._id === newOrUpdatedProduct._id)
+                ? prev.map(p => p._id === newOrUpdatedProduct._id ? newOrUpdatedProduct : p)
+                : [...prev, newOrUpdatedProduct]
+        );
+
+        setAllProducts(prev =>
+            prev.some(p => p._id === newOrUpdatedProduct._id)
+                ? prev.map(p => p._id === newOrUpdatedProduct._id ? newOrUpdatedProduct : p)
+                : [...prev, newOrUpdatedProduct]
+        );
+
         setAddtoProduct(false);
     };
+
+
 
     const showAddtoProductPopUp = () => {
         setAddtoProduct(prev => !prev);
     };
 
+    const selectCategory = (category, event) => {
+        event.stopPropagation();
+        setWhichCategory(category);
+        setIsCategoryOpen(false);
+    };
+
+    const selectStatus = (status, event) => {
+        event.stopPropagation();
+        setWhichStatus(status);
+        setIsStatusOpen(false);
+    };
+
     useEffect(() => {
         getAllProducts();
-    }, [val]);
+    }, []);
 
     const extraFunc = () => { };
 
@@ -67,7 +96,12 @@ function Product({ handleNavbar, isNavOpen }) {
         setVal(event.target.value);
     }
 
-    // //Prevent Scrolling when addToProduct div gets opened
+    const handleEditProduct = (product) => {
+        setEditProduct(product);
+        setIsEditMode(true);
+        setAddtoProduct(true);
+    };
+
     useEffect(() => {
         if (isNavOpen) {
             document.body.style.overflow = 'hidden';
@@ -96,6 +130,32 @@ function Product({ handleNavbar, isNavOpen }) {
         };
     }, []);
 
+    useEffect(() => {
+        let filtered = [...allProducts];
+
+        if (val.trim() !== "") {
+            filtered = filtered.filter(product =>
+                product.productName?.toLowerCase().includes(val.toLowerCase())
+            );
+        }
+
+        if (whichCategory !== 'All Categories') {
+            filtered = filtered.filter(product =>
+                product.productCategory === whichCategory
+            );
+        }
+
+        if (whichStatus !== 'All Status') {
+            if (whichStatus === 'In Stock') {
+                filtered = filtered.filter(product => product.productInitialStock > 0);
+            } else if (whichStatus === 'Out of Stock') {
+                filtered = filtered.filter(product => product.productInitialStock === 0);
+            }
+
+        }
+
+        setProducts(filtered);
+    }, [val, whichCategory, whichStatus, allProducts]);
 
     return (
         <div className='Product' onClick={isNavOpen ? handleNavbar : extraFunc}>
@@ -119,11 +179,14 @@ function Product({ handleNavbar, isNavOpen }) {
                     </div>
 
                     <div className="product-info-cards">
-                        <DetailsInfoCard Heading="Total Products" number={21} image={ProductIcon} />
+                        <DetailsInfoCard Heading="Total Products" number={products.length} image={ProductIcon} />
                         <DetailsInfoCard Heading="Active" number={11} image={ProductIcon} />
-                        <DetailsInfoCard Heading="Out of Stock" number={1} image={ProductIcon} />
+                        <DetailsInfoCard Heading="Out of Stock" number={products.filter(product => product.productInitialStock === 0).length} image={ProductIcon} />
+
                         <DetailsInfoCard Heading="Low Stock" number={1} image={ProductIcon} />
-                        <DetailsInfoCard Heading="Total Value" number={`₹ ${11250}`} image={ProductIcon} />
+                        <DetailsInfoCard Heading="Total Value" number={`₹ ${products.reduce((sum, price) => {
+                            return sum + (price.productPrice || 0);
+                        }, 0)}`} image={ProductIcon} />
                     </div>
 
                     <div className="product-management-container">
@@ -149,10 +212,10 @@ function Product({ handleNavbar, isNavOpen }) {
                                 <p>{whichCategory}</p>
                                 <p>{isCategoryOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                                 <div className='products-category-options' style={isCategoryOpen ? {} : { display: 'none' }}>
-                                    <p onClick={() => { setWhichCategory('Electronics') }}>Electronics</p>
-                                    <p onClick={() => { setWhichCategory('Clothes') }}>Clothes</p>
-                                    <p onClick={() => { setWhichCategory('Medicine') }}>Medicine</p>
-                                    <p onClick={() => { setWhichCategory('Footwear') }}>Footwear</p>
+                                    <p onClick={(e) => selectCategory('Electronics', e)}>Electronics</p>
+                                    <p onClick={(e) => selectCategory('Clothes', e)}>Clothes</p>
+                                    <p onClick={(e) => selectCategory('Medicine', e)}>Medicine</p>
+                                    <p onClick={(e) => selectCategory('Footwear', e)}>Footwear</p>
                                 </div>
                             </div>
 
@@ -160,9 +223,9 @@ function Product({ handleNavbar, isNavOpen }) {
                                 <p>{whichStatus}</p>
                                 <p>{isStatusOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}</p>
                                 <div className='products-category-options' style={isStatusOpen ? {} : { display: 'none' }}>
-                                    <p onClick={() => { setWhichStatus('All Status') }}>All Status</p>
-                                    <p onClick={() => { setWhichStatus('In Stock') }}>In Stock</p>
-                                    <p onClick={() => { setWhichStatus('Out of Stock') }}>Out of Stock</p>
+                                    <p onClick={(e) => { setWhichStatus('All Status', e); setIsStatusOpen(false); }}>All Status</p>
+                                    <p onClick={(e) => selectStatus('In Stock', e)}>In Stock</p>
+                                    <p onClick={(e) => selectStatus('Out of Stock', e)}>Out of Stock</p>
                                 </div>
                             </div>
 
@@ -245,6 +308,16 @@ function Product({ handleNavbar, isNavOpen }) {
                                                 numberOfRating={product.numberOfRating}
                                                 pImage={product.productImage}
                                                 onProductDeleted={removeProductFromState}
+                                                onEditProduct={handleEditProduct}
+                                                product={product}
+                                                onStockUpdated={(id, stock) => {
+                                                    setProducts(prev =>
+                                                        prev.map(p => p._id === id ? { ...p, productInitialStock: stock } : p)
+                                                    );
+                                                    setAllProducts(prev =>
+                                                        prev.map(p => p._id === id ? { ...p, productInitialStock: stock } : p)
+                                                    );
+                                                }}
                                             />
                                         ))}
                                 </div>
@@ -255,13 +328,17 @@ function Product({ handleNavbar, isNavOpen }) {
                 </div>
 
             </div>
-            {/* <div className={`extra-div1 ${isNavOpen ? 'dimmed' : ''}`}></div> */}
             {addToProduct && (
                 <div className="popup-wrapper" >
-                    {/* <div className="overlay-background active" /> */}
                     <div className="add-product-popup" ref={popupRef}>
                         <AddToProduct onProductAdded={addProductToState}
-                            onCancel={() => setAddtoProduct(false)} />
+                            onCancel={() => {
+                                setAddtoProduct(false);
+                                setEditProduct(null);
+                                setIsEditMode(false);
+                            }}
+                            editMode={isEditMode}
+                            productToEdit={editProduct} />
                     </div>
                 </div>
             )}
