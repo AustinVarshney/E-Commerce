@@ -1,5 +1,6 @@
 .outer-AllPro-container {
   margin-top: 1.5rem;
+  height: 100%;
 }
 
 .heading-AllPro {
@@ -109,7 +110,17 @@
 
 .filter-panel {
   position: fixed;
-  height: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: 80%;
   width: 100%;
   z-index: 101;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.filter-panel::-webkit-scrollbar {
+  display: none;
 }/*# sourceMappingURL=AllProducts.css.map */
