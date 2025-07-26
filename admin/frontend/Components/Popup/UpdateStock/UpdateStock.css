@@ -1,19 +1,17 @@
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .popup-content {
   background: white;
   padding: 20px;
   border-radius: 8px;
+  min-width: 30%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.popup-content > div > input[type=number] {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.4rem 0.4rem;
 }
 
 .popup-buttons {
@@ -22,6 +20,50 @@
   gap: 10px;
 }
 
-.popup-overlay:hover {
-  background: none;
+.popup-buttons > button:nth-child(1) {
+  width: 6rem;
+  font-size: 16px;
+  padding: 0.3rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ABABAB;
+  background: rgba(255, 255, 255, 0.6196078431);
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.popup-buttons > button:nth-child(2) {
+  width: 6rem;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(131, 125, 125, 0.17);
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  z-index: 1000;
 }/*# sourceMappingURL=UpdateStock.css.map */

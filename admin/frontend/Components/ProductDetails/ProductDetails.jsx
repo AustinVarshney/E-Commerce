@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
-import { deleteProduct } from '../../API/api'
+import { toast } from 'react-toastify'
+import { deleteProduct, updateStock } from '../../API/api'
 import deleteProductIcon from '../../src/assets/Product/DeleteProduct.png'
 import editProduct from '../../src/assets/Product/editProduct.png'
 import viewDetails from '../../src/assets/Product/Eye.png'
-import updateStock from '../../src/assets/Product/updateStock.png'
+import updateStockIcon from '../../src/assets/Product/updateStock.png'
 import viewReviews from '../../src/assets/Product/viewReview.png'
 import UpdateStockPopup from '../Popup/UpdateStock/UpdateStock'
 import './ProductDetails.css'
@@ -43,8 +43,11 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
     const handleSubmitNewStock = async (newStock) => {
         try {
             const updatedProduct = await updateStock(product._id, newStock);
+            console.log(updatedProduct)
+            toast.success("Stock updated successfully!");
             onStockUpdated(product._id, newStock);
             setShowPopup(false);
+            setShowActions(false);
         } catch {
             alert("Failed to update stock");
         }
@@ -65,7 +68,6 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
     return (
         <>
             <div className='product-image-name' style={{ minWidth: '153.86px' }}>
-                <ToastContainer />
                 <img src={pImage} alt='image' />
                 <div className='product-name'>
                     <p>{pName}</p>
@@ -92,7 +94,7 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
                             <p>Edit Product</p>
                         </div>
                         <div onClick={handleUpdateStock} className='action-menu-container'>
-                            <img src={updateStock} alt="" />
+                            <img src={updateStockIcon} alt="" />
                             <p>Update Stock</p>
                         </div>
                         {showPopup && (
