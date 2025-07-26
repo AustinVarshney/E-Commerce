@@ -78,9 +78,41 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
             <p style={{ minWidth: '44.89px' }}>{pQuantity}</p>
             <p className='show-product-status' style={{ minWidth: '70px' }}>{pStatus}</p>
             <p style={{ minWidth: '45.58px' }}>{pRating ? pRating : 0} <sub> ({numberOfRating ? numberOfRating : 0})</sub></p>
+
             <div className='product-action-container' ref={actionRef} style={{ minWidth: '48.5px' }}>
                 <p onClick={toggleActions} className='action-button'>...</p>
                 {showActions && (
+                    <div className='action-menu'>
+                        <div className='action-menu-container'>
+                            <img src={viewDetails} alt="" />
+                            <p>View Details</p>
+                        </div>
+                        <div onClick={() => onEditProduct(product)} className='action-menu-container'>
+                            <img src={editProduct} alt="" />
+                            <p>Edit Product</p>
+                        </div>
+                        <div onClick={handleUpdateStock} className='action-menu-container'>
+                            <img src={updateStock} alt="" />
+                            <p>Update Stock</p>
+                        </div>
+                        {showPopup && (
+                            <UpdateStockPopup
+                                onClose={() => setShowPopup(false)}
+                                onSubmit={handleSubmitNewStock}
+                                currentStock={product.productInitialStock}
+                            />
+                        )}
+                        <div className='action-menu-container'>
+                            <img src={viewReviews} alt="" />
+                            <p>View Reviews</p>
+                        </div>
+                        <div onClick={handleDelete} className='action-menu-container'>
+                            <img src={deleteProductIcon} alt="" />
+                            <p>Delete Product</p>
+                        </div>
+                    </div>
+                )}
+                {/* {showActions && (
                     <ul className='action-menu'>
                         <li>
                             <img src={viewDetails} alt="" />
@@ -105,7 +137,7 @@ function ProductDetails({ pImage, pName, pPrice, pQuantity, pSold, pId, pRating,
                         </li>
 
                     </ul>
-                )}
+                )} */}
             </div>
         </>
     )

@@ -20,4 +20,8 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.popup-overlay:hover {
+  background: none;
 }/*# sourceMappingURL=UpdateStock.css.map */

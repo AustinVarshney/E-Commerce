@@ -53,8 +53,9 @@ function AddToProduct({ onProductAdded,
             return;
         }
 
-        if (parseFloat(productInitialStock) < 0) {
-            toast.warn("Stock cannot be negative.");
+        if (parseFloat(productInitialStock) < 1) {
+            // toast.warn("Stock cannot be negative.");
+            toast.warn("Initial Stock must be atleast 1.");
             return;
         }
 
